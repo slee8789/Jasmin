@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private Fragment[] arrFragments;
