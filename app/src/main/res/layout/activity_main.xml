@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 <!--leesc 브랜치 테스트-->
+<!--leesc 브랜치 테스트2-->
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_pager"
         android:layout_width="match_parent"
