@@ -33,6 +33,14 @@ public class GroupMainActivity extends AppCompatActivity {
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabLayout(tabLayout);
+    }
+
+    public void setupTabLayout(TabLayout tabLayout) {
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_close_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_close_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_close_black_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_close_black_24dp);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
