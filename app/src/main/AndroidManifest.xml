@@ -90,7 +90,9 @@
         <activity android:name=".ui.activity.SendCustomerCenterActivity2" />
         <activity android:name=".ui.activity.ServiceHelpActivity" />
         <activity android:name=".ui.activity.GroupSettingAlarmListActivity" />
-        <activity android:name=".ui.activity.GroupSettingAlarmAddActivity"></activity>
+        <activity android:name=".ui.activity.GroupSettingAlarmAddActivity" />
+        <activity android:name=".ui.activity.GroupNoticeAddActivity" />
+        <activity android:name=".ui.activity.GroupNoticeDetailActivity"></activity>
     </application>
 
 </manifest>
