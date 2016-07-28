@@ -3,11 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="그룹세팅 프레그먼트" />
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="알람 설정"/>
+        <Button
+            android:id="@+id/btn_homework"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="과제 설정"
+            />
+        <Button
+            android:id="@+id/btn_group_setting"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="스터디 이름,소개,커버 설정"
+            />
+        <Button
+            android:id="@+id/btn_penalty_setting"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="스터디 디파짓, 벌금 설정"
+            />
+        <Button
+            android:id="@+id/btn_subgrant"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="관리자 권한 공유"
+            />
+        <Button
+            android:id="@+id/btn_grant"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="관리자 권한 위임"
+            />
 
+        <Button
+            android:id="@+id/btn_remove_member"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="멤버 강제 탈퇴"
+            />
+        <Button
+            android:id="@+id/btn_end_study"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="스터디 종료"
+            />
+        <Button
+            android:id="@+id/btn_secede_group"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="탈퇴하기"
+             />
+
+    </LinearLayout>
 </FrameLayout>

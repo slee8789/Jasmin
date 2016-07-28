@@ -16,7 +16,6 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_add);
-
         btn_complete = (Button) findViewById(R.id.btn_complete);
         btn_complete.setOnClickListener(this);
     }

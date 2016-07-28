@@ -14,7 +14,7 @@ public class FindPwDialog extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_pw_dialog);
+        setContentView(R.layout.activity_dialog_find_pw);
     }
 
     @Override

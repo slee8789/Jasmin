@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_group_notice_add"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF00DD"
+    tools:context="com.study.jasmin.jasmin.ui.fragment.GroupNoticeAddFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:text="노티스애드의 버튼"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="149dp" />
+
+</RelativeLayout>

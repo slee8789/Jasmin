@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notice_layout"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/receivables_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="주결경"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+
+    <TextView
+        android:id="@+id/receivables_date"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/receivables_name"
+        android:gravity="center"
+        android:text="16/06/28"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/receivables_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/receivables_date"
+        android:gravity="center"
+        android:text="지각"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/receivables_money"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/receivables_reason"
+        android:gravity="center"
+        android:text="4 / 6"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/receivables_cancel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:src="@drawable/ic_close_black_24dp" />
+
+</RelativeLayout>

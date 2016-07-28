@@ -46,6 +46,7 @@ public class GroupInviteActivity extends AppCompatActivity implements View.OnCli
         switch(v.getId()) {
             case R.id.btn_complete:
                 startActivity(new Intent(this,GroupMainActivity.class));
+
                 break;
         }
     }

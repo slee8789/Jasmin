@@ -1,0 +1,60 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/btn_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알람"/>
+
+        <Button
+            android:id="@+id/btn_homework"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="과제"
+            android:layout_below="@id/btn_alarm" />
+        <Button
+            android:id="@+id/set1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="스터디 세부사항 설정"
+            android:layout_below="@id/btn_homework" />
+        <Button
+            android:id="@+id/btn_group_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이름,소개,커버 설정"
+            android:layout_below="@id/set1" />
+        <Button
+            android:id="@+id/btn_penalty_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="디파짓, 벌금 설정"
+            android:layout_below="@id/btn_group_setting" />
+        <Button
+            android:id="@+id/btn_grant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="관리자 권한 공유"
+            android:layout_below="@id/btn_penalty_setting" />
+        <Button
+            android:id="@+id/btn_remove_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="멤버 강제 탈퇴"
+            android:layout_below="@id/btn_grant" />
+        <Button
+            android:id="@+id/btn_secede_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="탈퇴하기"
+            android:layout_below="@id/btn_remove_member" />
+     </RelativeLayout>
+</FrameLayout>

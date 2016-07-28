@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notice_layout"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/attendance_check_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/reply_id"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp" />
+
+    <Spinner
+        android:id="@+id/attendance_spinner_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/attendance_spinner_status"
+        android:layout_alignParentRight="true" />
+
+    <Spinner
+        android:id="@+id/attendance_spinner_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

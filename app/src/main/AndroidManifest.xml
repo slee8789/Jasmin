@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.study.jasmin.jasmin">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +14,7 @@
         <activity android:name=".ui.activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,10 +38,59 @@
             android:name=".ui.dialog.FindPwDialog"
             android:label="@string/login_find_password"
             android:theme="@style/AppDialogTheme" />
+        <activity
+            android:name=".ui.dialog.AlertDialog"
+            android:label="@string/manage_moneybook"
+            android:theme="@style/AppDialogTheme" />
         <activity android:name=".ui.activity.GroupAddActivity" />
-        <activity android:name=".ui.activity.GroupInviteActivity"
-            android:label="@string/invite_title"/>
+        <activity
+            android:name=".ui.dialog.MoneybookDialog"
+            android:theme="@style/AppDialogTheme" />
+        <activity
+            android:name=".ui.activity.GroupInviteActivity"
+            android:label="@string/invite_title" />
         <activity android:name=".ui.activity.GroupMainActivity" />
+        <activity
+            android:name=".ui.activity.GroupReplyActivity"
+            android:label="@string/reply_title" />
+        <activity
+            android:name=".ui.activity.AttendanceCheckActivity"
+            android:label="@string/attendance_title" />
+        <activity
+            android:name=".ui.activity.AssignmentCheckActivity"
+            android:label="@string/assignment_title" />
+        <activity android:name=".ui.activity.GroupStudyInfoActivity" />
+        <activity android:name=".ui.activity.GroupMemberInfoActivity" />
+        <activity android:name=".ui.activity.GroupPenaltyActivity" />
+        <activity android:name=".ui.activity.GroupAttendanceInfoActivity" />
+        <activity
+            android:name=".ui.activity.GroupMoneybookInfoActivity"
+            android:label="@string/title_activity_group_moneybook_info" />
+        <activity
+            android:name=".ui.activity.SettingAssignmentActivity"
+            android:label="@string/setting_assignmentList" />
+        <activity
+            android:name=".ui.activity.SettingAssignmentAddActivity"
+            android:label="@string/setting_assignmentAdd" />
+        <activity
+            android:name=".ui.activity.SettingGroupInfoActivity"
+            android:label="@string/setting_group_info" />
+        <activity
+            android:name=".ui.activity.SettingGroupPenaltyActivity"
+            android:label="@string/setting_group_penalty" />
+        <activity android:name=".ui.activity.MyScrabActivity" />
+        <activity android:name=".ui.activity.MyPenaltyActivity" />
+        <activity android:name=".ui.activity.MyActActivity" />
+        <activity android:name=".ui.activity.DeveloperActivity" />
+        <activity android:name=".ui.activity.EditInfoActivity" />
+        <activity
+            android:name=".ui.activity.SendCustomerCenterActivity"
+            android:label="@string/title_activity_send_customer_center"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.SendCustomerCenterActivity2" />
+        <activity android:name=".ui.activity.ServiceHelpActivity" />
+        <activity android:name=".ui.activity.GroupSettingAlarmListActivity" />
+        <activity android:name=".ui.activity.GroupSettingAlarmAddActivity"></activity>
     </application>
 
 </manifest>
