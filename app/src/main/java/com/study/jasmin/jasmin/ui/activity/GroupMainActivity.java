@@ -1,13 +1,12 @@
 package com.study.jasmin.jasmin.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,13 +14,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.util.JasminProtocol;
 import com.study.jasmin.jasmin.ui.fragment.GroupInfoFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupManageFragment;
-import com.study.jasmin.jasmin.ui.fragment.GroupNoticeAddFragment;
-import com.study.jasmin.jasmin.ui.fragment.GroupNoticeDetailFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupNoticeFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupSettingFragment;
+import com.study.jasmin.jasmin.util.JasminProtocol;
 
 public class GroupMainActivity extends AppCompatActivity implements GroupNoticeFragment.OnFragmentSelectedListener {
 
@@ -85,11 +82,12 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
         switch (v.getId()) {
             case R.id.notice_group_write:
                 Log.d(TAG,"onFragmentSelectd v clicked");
-                GroupNoticeAddFragment groupNoticeAddFragment = new GroupNoticeAddFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frag_container,groupNoticeAddFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+//                GroupNoticeAddFragment groupNoticeAddFragment = new GroupNoticeAddFragment();
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frag_container,groupNoticeAddFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+                startActivity(new Intent(this, GroupNoticeAddActivity.class));
 
             break;
         }
@@ -97,11 +95,12 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
     @Override
     public void onFragmentSelected(int position) {
         Log.d(TAG,"onFragmentSelectd p clicked position : " + position);
-        GroupNoticeDetailFragment groupNoticeDetailFragment = new GroupNoticeDetailFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frag_container,groupNoticeDetailFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        GroupNoticeDetailFragment groupNoticeDetailFragment = new GroupNoticeDetailFragment();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frag_container,groupNoticeDetailFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//          startActivity(new Intent(this, GroupNoticeDetailActivity.class));
     }
 
 //    public Fragment getVisibleFragment() {
