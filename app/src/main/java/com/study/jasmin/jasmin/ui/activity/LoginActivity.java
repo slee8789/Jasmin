@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
@@ -15,7 +16,8 @@ import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = "LoginActivity";
     Button btnDoLogin;
-    Button btnFindPassword;
+    TextView tvFindPassword;
+    FindPwDialog findPwDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +25,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         btnDoLogin = (Button)findViewById(R.id.btn_do_login);
         btnDoLogin.setOnClickListener(this);
-        btnFindPassword = (Button)findViewById(R.id.btn_find_password);
-        btnFindPassword.setOnClickListener(this);
+        tvFindPassword = (TextView)findViewById(R.id.tv_find_password);
+        tvFindPassword.setOnClickListener(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,18 +46,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public void showFindPwDialog() {
+        findPwDialog = new FindPwDialog(this);
+        findPwDialog.setCancelable(false);
+        findPwDialog.setOkOnClickListener(this);
+        findPwDialog.show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_do_login:
                 Log.d(TAG,"click btn_do_login");
                 startActivity(new Intent(this,MainActivity.class));
+                finish();
                 break;
 
-            case R.id.btn_find_password:
-                Log.d(TAG,"click btn_find_password");
-                startActivity(new Intent(this,FindPwDialog.class));
+            case R.id.tv_find_password:
+                Log.d(TAG,"click tv_find_password");
+                showFindPwDialog();
+//                startActivity(new Intent(this,FindPwDialog_backup.class));
+                break;
+
+            case R.id.send_button:
+                Log.d(TAG,"click send_button");
+                findPwDialog.dismiss();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG,"click onBackPressed");
     }
 }

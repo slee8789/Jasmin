@@ -95,12 +95,7 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
     @Override
     public void onFragmentSelected(int position) {
         Log.d(TAG,"onFragmentSelectd p clicked position : " + position);
-//        GroupNoticeDetailFragment groupNoticeDetailFragment = new GroupNoticeDetailFragment();
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frag_container,groupNoticeDetailFragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-//          startActivity(new Intent(this, GroupNoticeDetailActivity.class));
+          startActivity(new Intent(this, GroupNoticeDetailActivity.class));
     }
 
 //    public Fragment getVisibleFragment() {

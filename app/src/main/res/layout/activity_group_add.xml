@@ -8,64 +8,68 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
         android:layout_above="@+id/btn_complete"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/study_name"
-            android:textSize="30dp"/>
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:background="@drawable/round_gray"
             android:hint="@string/study_name"
-            android:textSize="30dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/study_introduce"
-            android:textSize="30dp"/>
+            android:paddingLeft="30dp" />
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_gray"
             android:hint="@string/study_introduce"
-            android:textSize="30dp"/>
+            android:paddingLeft="30dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/study_cover"
-            android:textSize="30dp"/>
-        
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_close_black_24dp"/>
+            android:textSize="20dp" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_album"/>
+            android:layout_marginTop="10dp">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/select_default"/>
+            <ImageView
+                android:id="@+id/group_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_background" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/group_cover"
+                android:layout_alignRight="@id/group_cover"
+                android:src="@drawable/ic_photo_camera_black_24dp" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_complete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/complete" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/round_green"
+        android:text="@string/complete"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
 </RelativeLayout>

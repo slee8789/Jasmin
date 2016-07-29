@@ -25,6 +25,7 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
         switch(v.getId()) {
             case R.id.btn_complete:
                 startActivity(new Intent(this,GroupInviteActivity.class));
+                finish();
                 break;
         }
     }

@@ -8,6 +8,7 @@ import android.os.Build;
  * Created by leesc on 2016-07-25.
  */
 public class JasminUtil {
+    public static final String TAG = "JasminUtil";
 
     /*public int getColor(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
@@ -26,5 +27,7 @@ public class JasminUtil {
             return context.getResources().getDrawable(id);
         }
     }
+
+
 
 }

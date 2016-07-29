@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 
@@ -16,15 +16,16 @@ import com.study.jasmin.jasmin.R;
 /**
  * Created by leesc on 2015-09-08.
  */
-public class FindPwDialog extends Dialog {
+public class TwoButtonDialog extends Dialog {
 
-    private final String TAG = "FindPwDialog";
+    private final String TAG = "TwoButtonDialog";
     private View.OnClickListener buttonOkListener;
-    private Button send;
-    private EditText name;
-    private EditText email;
+    private View.OnClickListener buttonCancelListener;
+    private Button ok;
+    private Button cancel;
+    private TextView comment;
 
-    public FindPwDialog(Context context) {
+    public TwoButtonDialog(Context context) {
         super(context);
 
     }
@@ -34,22 +35,20 @@ public class FindPwDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_find_pw);
+        setContentView(R.layout.dialog_twobutton);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        send = (Button)findViewById(R.id.send_button);
-        name = (EditText) findViewById(R.id.find_name);
-        email = (EditText) findViewById(R.id.find_email);
-        send.setOnClickListener(buttonOkListener);
+        comment = (TextView) findViewById(R.id.comment);
+        ok = (Button)findViewById(R.id.ok_twobutton);
+        cancel = (Button)findViewById(R.id.cancel_twobutton);
+        ok.setOnClickListener(buttonOkListener);
+        cancel.setOnClickListener(buttonCancelListener);
     }
 
     public void setOkOnClickListener(View.OnClickListener listener) {
         buttonOkListener = listener;
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.d(TAG,"click onBackPressed");
-        dismiss();
+    public void setCancelOnClickListener(View.OnClickListener listener) { buttonCancelListener = listener;    }
+    public void setComment(String comment) {
+        this.comment.setText(comment);
     }
 }

@@ -3,9 +3,7 @@ package com.study.jasmin.jasmin.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 
 import com.study.jasmin.jasmin.R;
@@ -30,10 +28,13 @@ public class IntroActivity extends Activity implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.btn_register:
                 startActivity(new Intent(this,RegistActivity.class));
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_right);
                 break;
 
             case R.id.btn_login:
                 startActivity(new Intent(this,LoginActivity.class));
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_right);
+//                finish();
                 break;
         }
     }

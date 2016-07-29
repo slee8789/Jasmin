@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.activity.AssignmentCheckActivity;
 import com.study.jasmin.jasmin.ui.activity.AttendanceCheckActivity;
 import com.study.jasmin.jasmin.ui.dialog.AlertDialog;
-import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.MoneybookDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentList;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;

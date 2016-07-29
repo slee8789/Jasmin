@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 
@@ -16,15 +16,14 @@ import com.study.jasmin.jasmin.R;
 /**
  * Created by leesc on 2015-09-08.
  */
-public class FindPwDialog extends Dialog {
+public class OneButtonDialog extends Dialog {
 
-    private final String TAG = "FindPwDialog";
+    private final String TAG = "OneButtonDialog";
     private View.OnClickListener buttonOkListener;
-    private Button send;
-    private EditText name;
-    private EditText email;
+    private Button ok;
+    private TextView comment;
 
-    public FindPwDialog(Context context) {
+    public OneButtonDialog(Context context) {
         super(context);
 
     }
@@ -34,22 +33,18 @@ public class FindPwDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_find_pw);
+        setContentView(R.layout.dialog_onebutton);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        send = (Button)findViewById(R.id.send_button);
-        name = (EditText) findViewById(R.id.find_name);
-        email = (EditText) findViewById(R.id.find_email);
-        send.setOnClickListener(buttonOkListener);
+        ok = (Button)findViewById(R.id.ok_onebutton);
+        comment = (TextView) findViewById(R.id.comment);
+        ok.setOnClickListener(buttonOkListener);
     }
 
     public void setOkOnClickListener(View.OnClickListener listener) {
         buttonOkListener = listener;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.d(TAG,"click onBackPressed");
-        dismiss();
+    public void setComment(String comment) {
+        this.comment.setText(comment);
     }
 }
