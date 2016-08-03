@@ -3,6 +3,7 @@ package com.study.jasmin.jasmin.util;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 
 /**
  * Created by leesc on 2016-07-25.
@@ -28,6 +29,22 @@ public class JasminUtil {
         }
     }
 
+    public static int[] getScreenSpec(Context context) {
+//        int deviceDip;
+        int deviceScreenWidth;
+        int deviceScreenHeight;
+//        int dipHeight;
+//        int dipWidth;
+//        deviceDip = displayMetrics.density;
+        deviceScreenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        deviceScreenHeight = context.getResources().getDisplayMetrics().heightPixels;
+//        dipHeight = (int) (deviceScreenHeight/deviceDip);
+//        dipWidth = (int) (deviceScreenWidth/deviceDip);
+        int [] spec = {deviceScreenWidth,deviceScreenHeight};
+        Log.d(TAG, "deviceScreen : " + deviceScreenWidth + " " + deviceScreenHeight);
+//        Log.d(TAG, "dip : " + dipWidth + " " + dipHeight);
+        return spec;
+    }
 
 
 }

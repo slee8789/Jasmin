@@ -2,6 +2,8 @@
     android:id="@+id/frag_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
     >
 
 
@@ -14,11 +16,11 @@
 
         <include
             android:id="@+id/include"
+            layout="@layout/list_notice_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            layout="@layout/list_notice_header" />
+            android:layout_marginRight="30dp" />
 
         <ListView
             android:id="@+id/list_notice"
@@ -28,7 +30,9 @@
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_weight="1.00" />
+            android:dividerHeight="5dp"
+            android:divider="#00000000"
+            />
 
     </RelativeLayout>
 </FrameLayout>

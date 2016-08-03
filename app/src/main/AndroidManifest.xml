@@ -11,15 +11,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.MainActivity"></activity>
+        <activity android:name=".ui.activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.IntroActivity">
-
         </activity>
         <activity
             android:name=".ui.activity.RegistActivity"
@@ -38,7 +36,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.IntroActivity" />
-
         </activity>
         <activity
             android:name=".ui.dialog.FindPwDialog_backup"
@@ -57,23 +54,23 @@
         <activity
             android:name=".ui.activity.GroupInviteActivity"
             android:label="@string/invite_title" />
-        <activity android:name=".ui.activity.GroupMainActivity" />
+        <activity android:name=".ui.activity.GroupMainActivity"></activity>
         <activity
             android:name=".ui.activity.GroupReplyActivity"
-            android:label="@string/reply_title" />
+            android:label="@string/reply_title"></activity>
         <activity
             android:name=".ui.activity.AttendanceCheckActivity"
             android:label="@string/attendance_title" />
         <activity
             android:name=".ui.activity.AssignmentCheckActivity"
             android:label="@string/assignment_title" />
-        <activity android:name=".ui.activity.GroupStudyInfoActivity" />
+        <activity
+            android:name=".ui.activity.GroupStudyInfoActivity"
+            android:label="@string/info_study" />
         <activity android:name=".ui.activity.GroupMemberInfoActivity" />
         <activity android:name=".ui.activity.GroupPenaltyActivity" />
         <activity android:name=".ui.activity.GroupAttendanceInfoActivity" />
-        <activity
-            android:name=".ui.activity.GroupMoneybookInfoActivity"
-            android:label="@string/title_activity_group_moneybook_info" />
+        <activity android:name=".ui.activity.GroupMoneybookInfoActivity" />
         <activity
             android:name=".ui.activity.SettingAssignmentActivity"
             android:label="@string/setting_assignmentList" />
@@ -91,16 +88,16 @@
         <activity android:name=".ui.activity.MyActActivity" />
         <activity android:name=".ui.activity.DeveloperActivity" />
         <activity android:name=".ui.activity.EditInfoActivity" />
-        <activity
-            android:name=".ui.activity.SendCustomerCenterActivity"
-            android:label="@string/title_activity_send_customer_center"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.SendCustomerCenterActivity" />
         <activity android:name=".ui.activity.SendCustomerCenterActivity2" />
         <activity android:name=".ui.activity.ServiceHelpActivity" />
         <activity android:name=".ui.activity.GroupSettingAlarmListActivity" />
         <activity android:name=".ui.activity.GroupSettingAlarmAddActivity" />
-        <activity android:name=".ui.activity.GroupNoticeAddActivity" />
+        <activity
+            android:name=".ui.activity.GroupNoticeAddActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".ui.activity.GroupNoticeDetailActivity"></activity>
+
     </application>
 
 </manifest>

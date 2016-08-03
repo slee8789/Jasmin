@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Jasmin</string>
+    <string name="action_settings">Settings</string>
+
     <!--Intro -->
     <string name="intro_service_name">Jasmin</string>
     <string name="intro_service_name_detail">서비스에 대한 간략한 설명</string>
@@ -19,6 +21,16 @@
     <string name="regist_male">남</string>
     <string name="regist_female">여</string>
     <string name="regist_do_register">회원가입 하기</string>
+
+    <!--regist_dialog-->
+    <string name="regist_dialog_auth">입력하신 메일로 인증번호를 전송하였습니다.</string>
+    <string name="regist_dialog_mail">이메일을 입력하여 주세요.</string>
+    <string name="regist_dialog_mailform">이메일 형식이 맞지 않습니다.</string>
+    <string name="regist_dialog_pw_disharmony">비밀번호가 일치하지 않습니다.</string>
+    <string name="regist_dialog_more8">비밀번호를 8자리 이상 입력하여주세요.</string>
+    <string name="regist_dialog_name">이름을 입력하여 주세요</string>
+    <string name="regist_dialog_sex">성별을 선택하여 주세요.</string>
+
     <!--Login -->
     <string name="login_login">로그인</string>
     <string name="login_email">이메일</string>
@@ -30,8 +42,6 @@
     <string name="login_find_password"><u> 비밀번호를 잊으셨나요? </u></string>
     <string name="login_find_password_title">비밀번호 찾기</string>
     <string name="login_kakao">카카오계정으로 로그인</string>
-
-    <!--Login -->
     <string name="temp_password">임시 비밀번호 전송</string>
 
     <!--Home -->
@@ -49,11 +59,11 @@
     <string name="invite_title">스터디 초대하기</string>
     <string name="invite_msg">스터디에 함께할 멤버를 초대하세요!</string>
     <string name="invite_link">초대 링크 복사</string>
+    <string name="invite">초대</string>
     <string name="invite_SMS">문자</string>
     <string name="kakaotalk">카카오톡</string>
     <string name="customer_service">고객 센터</string>
     <string name="setting">설정</string>
-    <string name="title_activity_send_customer_center">SendCustomerCenterActivity</string>
 
     <!-- group_notice -->
     <string name="notice_group">그룹 게시판</string>
@@ -75,6 +85,8 @@
     <string name="reply_title">댓글</string>
     <string name="reply_id">아이디</string>
     <string name="reply_content">내용</string>
+    <string name="reply_enroll_msg">댓글을 남겨보세요.</string>
+    <string name="reply_enroll">등록</string>
 
     <!-- list_management -->
     <string name="manage_attendance">출결</string>
@@ -104,18 +116,16 @@
     <string name="moneybook_withdraw">출금</string>
 
     <!--study_info -->
-    <string name="study_info">스터디 정보</string>
-    <string name="member_info">멤버 정보</string>
-    <string name="member_add">멤버 추가</string>
-    <string name="penalty">벌금</string>
-    <string name="attendance">출결</string>s
-    <string name="money_book">머니북</string>
-    <string name="title_activity_group_moneybook_info">GroupMoneybookInfoActivity</string>
+    <string name="info_study">스터디 정보</string>
+    <string name="info_member">멤버 정보</string>
+    <string name="info_member_add">멤버 추가</string>
+    <string name="info_penalty">벌금</string>
+    <string name="info_attendance">출결</string>s
+    <string name="info_moneybook">머니북</string>
 
     <!--group setting -->
     <string name="setting_assignmentList">과제 목록</string>
     <string name="setting_assignmentAdd">과제 추가</string>
-
     <string name="setting_assignment_name">과제 이름</string>
     <string name="setting_assignment_msg">과제 내용</string>
     <string name="setting_assignment_enddate">마감일</string>
@@ -125,7 +135,33 @@
     <string name="setting_authority_delegation">권한 위임</string>
     <string name="setting_authority_delete">권한 삭제</string>
 
+    <!--study_info-->
+    <string name="study_info_name">스터디 이름</string>
+    <string name="study_info_introduce">스터디 소개</string>
+    <string name="study_info_deposit">디파짓 유무</string>
+    <string name="study_info_deposit_default">기본 디파짓</string>
+    <string name="study_info_penalty_absent">결석 벌금</string>
+    <string name="study_info_penalty_tardy">지각 벌금</string>
+    <string name="study_info_tardy_max">최대 지각 시간</string>
 
     <string name="btn_cancel">취소</string>
+
+    <string name="menu_ok">확인</string>
+    <string name="menu_modify">수정</string>
+    <string name="menu_delete">삭제</string>
+    <string name="menu_reply">댓글</string>
+    <string name="menu_favorite">즐겨찾기</string>
+
+
+
+    <!-- ///////////////////////////////////test/////////////////////////////////////-->
+    <string name="season">시즌</string>
+    <string name="season_prompt">시즌 선택</string>
+    <string-array name="season_array">
+        <item>봄</item>
+        <item>여름</item>
+        <item>가을</item>
+        <item>겨울</item>
+    </string-array>
 
 </resources>

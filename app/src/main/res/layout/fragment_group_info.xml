@@ -1,71 +1,171 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="50dp"
-    android:layout_marginRight="50dp"
-    android:layout_marginTop="50dp"
+    android:background="@color/colorBackground2"
+    android:gravity="center"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="스터디 활동 정보" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_study_info"
+        <LinearLayout
+            android:id="@+id/btn_info_study"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/study_info" />
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_member_info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/member_info" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_priority_high_black_24dp" />
 
-        <Button
-            android:id="@+id/btn_member_add"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_study"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_info_member"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/member_add" />
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_people_outline_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_member"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_info_member_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_add_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_member_add"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_penalty"
+        <LinearLayout
+            android:id="@+id/btn_info_penalty"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/penalty" />
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_attendance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/attendance" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_poll_black_24dp" />
 
-        <Button
-            android:id="@+id/btn_money_book"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_penalty"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_info_attendance"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/money_book" />
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_poll_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_attendance"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_info_moneybook"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_bora2"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_poll_black_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/info_moneybook"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 </LinearLayout>
 
 

@@ -1,35 +1,28 @@
 package com.study.jasmin.jasmin.ui.list;
 
-import android.widget.Button;
-import android.widget.ImageView;
-
 public class ListInfoGroup {
-    private ImageView cover;
-    private Button invite;
+    private String name;
+    private int photo;
 
-    public ListInfoGroup() {
+    public ListInfoGroup(String name, int photo) {
+        this.name = name;
+        this.photo = photo;
     }
 
-    public ImageView getCover() {
-        return cover;
+    public String getName() {
+        return name;
     }
 
-    public void setCover(ImageView cover) {
-        this.cover = cover;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Button getInvite() {
-        return invite;
+    public int getPhoto() {
+        return photo;
     }
 
-    public void setInvite(Button invite) {
-        this.invite = invite;
-    }
-
-    public ListInfoGroup(ImageView cover, Button invite) {
-
-        this.cover = cover;
-        this.invite = invite;
+    public void setPhoto(int photo) {
+        this.photo = photo;
     }
 }
 

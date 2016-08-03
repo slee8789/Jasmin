@@ -1,12 +1,11 @@
 package com.study.jasmin.jasmin.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.study.jasmin.jasmin.R;
@@ -17,13 +16,7 @@ import java.util.ArrayList;
 
 public class GroupReplyActivity extends AppCompatActivity implements View.OnClickListener, AdaptInfoReplyList.onButtonClickListener{
     public static final String TAG = "GroupReplyActivity";
-    private View footer;
-    private ImageView btnWrite;
-    private ImageView btnDelete;
-    private ImageView btnFooterBack;
-    private ImageView btnFooterWrite;
-    private ImageView btnFooterFavorite;
-    private ImageView btnFooterReply;
+
     private ListView replyList;
     private ArrayList<ListInfoReply> arrayListInfo = new ArrayList<ListInfoReply>();
     private AdaptInfoReplyList adaptListInfo;
@@ -31,10 +24,9 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_reply);
+        setContentView(R.layout.activity_group_notice_reply);
         findViews();
         initViews();
-
 
         ArrayList<String> ReplyColumnTest0 = new ArrayList<String>();
         ReplyColumnTest0.add("id 0");
@@ -64,22 +56,9 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
 
     private void findViews() {
         replyList = (ListView)findViewById(R.id.list_reply);
-//        btnWrite = (ImageView) replyList.findViewById(R.id.reply_write);
-//        btnDelete = (ImageView) replyList.findViewById(R.id.reply_delete);
-        footer = findViewById(R.id.include);
-        btnFooterBack = (ImageView) footer.findViewById(R.id.btn_back);
-        btnFooterWrite = (ImageView) footer.findViewById(R.id.btn_write);
-        btnFooterFavorite = (ImageView) footer.findViewById(R.id.btn_favorite);
-        btnFooterReply = (ImageView) footer.findViewById(R.id.btn_reply);
     }
 
     private void initViews() {
-//        btnWrite.setOnClickListener(this);
-//        btnDelete.setOnClickListener(this);
-        btnFooterBack.setOnClickListener(this);
-        btnFooterWrite.setOnClickListener(this);
-        btnFooterFavorite.setOnClickListener(this);
-        btnFooterReply.setOnClickListener(this);
     }
 
     public void addSelectInfo(ArrayList<ArrayList<String>> parseredList) {
@@ -113,38 +92,12 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
 
-            case R.id.reply_write:
-                Log.d(TAG, "reply_write clicked");
-                break;
-
-            case R.id.reply_delete:
-                Log.d(TAG, "reply_delete clicked");
-                break;
-
-            case R.id.btn_back:
-                Log.d(TAG, "btn_back clicked");
-                break;
-
-            case R.id.btn_write:
-                Log.d(TAG, "btn_write clicked");
-                break;
-
-            case R.id.btn_favorite:
-                Log.d(TAG, "btn_favorite clicked");
-                break;
-
-            case R.id.btn_reply:
-                Log.d(TAG, "btn_reply clicked");
-//                startActivity(new Intent(this, GroupReplyActivity.class));
-                break;
-        }
     }
 
     @Override
-    public void onBtnWrite() {
-        Log.d(TAG, "onBtnWrite clicked");
+    public void onBtnModify() {
+        Log.d(TAG, "onBtnModify clicked");
     }
 
     @Override

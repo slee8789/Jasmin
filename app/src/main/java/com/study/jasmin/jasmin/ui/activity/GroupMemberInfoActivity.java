@@ -71,8 +71,6 @@ public class GroupMemberInfoActivity extends AppCompatActivity implements View.O
                 startActivity(new Intent(this,GroupInviteActivity.class));
                 finish();
                 break;
-            default:
-                break;
         }
     }
 }

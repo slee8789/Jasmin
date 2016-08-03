@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground2"
+    tools:context="com.study.jasmin.jasmin.ui.activity.GroupReplyActivity">
+
+    <TextView
+        android:id="@+id/reply_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorGray"
+        android:text="@string/notice_title"
+        android:textColor="@color/colorBlack"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:textSize="30sp"/>
+
+    <ListView
+        android:id="@+id/list_reply"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/reply_title"
+        android:layout_above="@+id/reply_bottom_layout"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:dividerHeight="5dp"
+        android:divider="#00000000"
+         />
+
+    <RelativeLayout
+        android:id="@+id/reply_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/reply_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_toLeftOf="@+id/reply_enroll"
+            android:hint="@string/reply_enroll_msg" />
+
+        <Button
+            android:id="@+id/reply_enroll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorBackground4"
+            android:text="@string/reply_enroll"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

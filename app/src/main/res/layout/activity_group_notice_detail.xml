@@ -1,77 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#CCCCCC">
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/fragment_group_notice"
+        android:id="@+id/detail_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp"
+        android:background="@color/colorGray">
 
-        <RelativeLayout
-            android:id="@+id/detail_top_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/detail_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notice_no"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/detail_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/detail_no"
-                android:text="@string/notice_title"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/detail_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/detail_no"
-                android:text="@string/notice_date"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/detail_writer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/detail_date"
-                android:layout_toRightOf="@id/detail_date"
-                android:text="@string/notice_writer"
-                android:textSize="30sp" />
-
-        </RelativeLayout>
-
-
-        <ExpandableListView
-            android:id="@+id/detail_attachment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/detail_top_layout"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="0.5dp"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
 
         <TextView
-            android:id="@+id/detail_content"
+            android:id="@+id/detail_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/include"
-            android:layout_below="@id/detail_attachment"
-            android:text="@string/reply_content" />
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:text="@string/notice_title"
+            android:textSize="30sp"
+            android:textColor="@color/colorBlack"/>
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/button_footer"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/detail_writer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:layout_below="@id/detail_title"
+            android:text="@string/notice_writer"
+            android:paddingLeft="20dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:id="@+id/detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@id/detail_writer"
+            android:layout_toRightOf="@id/detail_writer"
+            android:text="@string/notice_date"
+            android:textSize="15sp"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:id="@+id/detail_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@id/detail_date"
+            android:layout_toRightOf="@id/detail_date"
+            android:text="@string/notice_date"
+            android:textSize="15sp"
+            android:textColor="@color/colorBlack"/>
+
+
 
     </RelativeLayout>
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/detail_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/detail_top_layout"
+        android:background="@color/colorBackground3"
+        android:padding="10dp"
+        android:text="@string/reply_content" />
+
+
+</RelativeLayout>

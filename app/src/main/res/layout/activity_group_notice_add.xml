@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.study.jasmin.jasmin.ui.activity.GroupNoticeAddActivity">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/add_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorGray">
+
+
+        <EditText
+            android:id="@+id/add_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:layout_centerVertical="true"
+            android:hint="@string/notice_title"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/add_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/add_top_layout"
+        android:background="@color/colorBackground3"
+        android:padding="10dp"
+        android:gravity="top"
+        android:hint="@string/reply_content" />
 
 </RelativeLayout>

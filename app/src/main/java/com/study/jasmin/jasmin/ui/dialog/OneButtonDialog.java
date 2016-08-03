@@ -20,6 +20,7 @@ public class OneButtonDialog extends Dialog {
 
     private final String TAG = "OneButtonDialog";
     private View.OnClickListener buttonOkListener;
+    private TextView title;
     private Button ok;
     private TextView comment;
 
@@ -35,8 +36,9 @@ public class OneButtonDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_onebutton);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        ok = (Button)findViewById(R.id.ok_onebutton);
-        comment = (TextView) findViewById(R.id.comment);
+        title = (TextView) findViewById(R.id.onebutton_title);
+        ok = (Button)findViewById(R.id.onebutton_ok);
+        comment = (TextView) findViewById(R.id.onebutton_comment);
         ok.setOnClickListener(buttonOkListener);
     }
 
@@ -44,7 +46,17 @@ public class OneButtonDialog extends Dialog {
         buttonOkListener = listener;
     }
 
-    public void setComment(String comment) {
-        this.comment.setText(comment);
+    public void setComment(int commentId) {
+        this.comment.setText(getContext().getResources().getString(commentId));
+    }
+
+    public void setTitle(int titleId) {
+        this.title.setText(titleId);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.dismiss();
     }
 }

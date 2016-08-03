@@ -1,44 +1,67 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/notice_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="60dp"
+    android:background="@color/colorBackground3"
+    android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:paddingLeft="20dp">
+
+        <TextView
         android:id="@+id/reply_id"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/reply_id"
-        android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:text="홍길동"
+            android:textColor="@color/colorBlack"
+        />
+
+        <TextView
+            android:id="@+id/reply_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:layout_toRightOf="@id/reply_id"
+            android:text="16.07.30"
+            android:textColor="@color/colorBlack"
+            />
+
+        <ImageView
+            android:id="@+id/reply_modify"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/reply_delete"
+            android:src="@drawable/ic_create_black_24dp"/>
+
+        <ImageView
+            android:id="@+id/reply_delete"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_delete_forever_black_24dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#FF909090" />
+
 
     <TextView
         android:id="@+id/reply_content"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/reply_id"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:text="@string/reply_content"
         android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"/>
 
-    <ImageView
-        android:id="@+id/reply_write"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/reply_delete"
-        android:gravity="center"
-        android:src="@drawable/ic_close_black_24dp" />
-
-    <ImageView
-        android:id="@+id/reply_delete"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:src="@drawable/ic_close_black_24dp" />
-
-</RelativeLayout>
+</LinearLayout>

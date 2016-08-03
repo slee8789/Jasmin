@@ -5,16 +5,16 @@ import android.widget.ImageView;
 public class ListInfoReply {
     private String id;
     private String content;
-    private ImageView write;
+    private ImageView modify;
     private ImageView delete;
 
     public ListInfoReply() {
     }
 
-    public ListInfoReply(String id, String content, ImageView write, ImageView delete) {
+    public ListInfoReply(String id, String content, ImageView modify, ImageView delete) {
         this.id = id;
         this.content = content;
-        this.write = write;
+        this.modify = modify;
         this.delete = delete;
     }
 
@@ -34,12 +34,12 @@ public class ListInfoReply {
         this.content = content;
     }
 
-    public ImageView getWrite() {
-        return write;
+    public ImageView getModify() {
+        return modify;
     }
 
-    public void setWrite(ImageView write) {
-        this.write = write;
+    public void setModify(ImageView modify) {
+        this.modify = modify;
     }
 
     public ImageView getDelete() {

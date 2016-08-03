@@ -1,11 +1,11 @@
 package com.study.jasmin.jasmin.ui.list;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,13 +13,19 @@ import com.study.jasmin.jasmin.R;
 
 import java.util.ArrayList;
 
-public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> {
+public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements View.OnClickListener {
+    public static final String TAG = "AdaptInfoNoticeList";
     private ArrayList<ListInfoNotice> arraySelectInfo;
     private Context context;
+    private onButtonClickListener adptCallback = null;
 
     public interface onButtonClickListener {
-        void onAddBtnClick(ListInfoNotice selectInfo);
-        // void onSetNameText(SelectInfo selectInfo);
+        void onFavoriteState();
+        void onAddReply();
+    }
+
+    public void setOnButtonClickListener(onButtonClickListener callback) {
+        adptCallback = callback;
     }
 
     public AdaptInfoNoticeList(Context context, int resource, ArrayList<ListInfoNotice> objects) {
@@ -32,13 +38,6 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> {
         super(context, resource);
         // this.arraySelectInfo =objects;
         this.context = context;
-    }
-
-    private onButtonClickListener adptCallback = null;
-
-
-    public void setOnButtonClickListener(onButtonClickListener callback) {
-        adptCallback = callback;
     }
 
     public ArrayList<ListInfoNotice> getArraySelectInfo() {
@@ -59,24 +58,45 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> {
             LayoutInflater layoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_notice_info, null);
-            LinearLayout noticeLayout = (LinearLayout) view.findViewById(R.id.notice_layout);
-            if (position % 2 == 0) {
-                noticeLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorGrayWhite));
-            }
         }
         final ListInfoNotice listInfo = arraySelectInfo.get(position);
 
         if (listInfo != null) {
-            TextView no = (TextView) view.findViewById(R.id.notice_no);
+//            TextView no = (TextView) view.findViewById(R.id.notice_no);
             TextView title = (TextView) view.findViewById(R.id.notice_title);
+            TextView views = (TextView) view.findViewById(R.id.notice_views_count);
+//            View content = (View) view.findViewById(R.id.notice_content);
             TextView date = (TextView) view.findViewById(R.id.notice_date);
             TextView writer = (TextView) view.findViewById(R.id.notice_writer);
+            LinearLayout replyTxt = (LinearLayout) view.findViewById(R.id.notice_reply);
+            replyTxt.setOnClickListener(this);
+            TextView reply = (TextView) view.findViewById(R.id.notice_reply_count);
+            ImageView favorite = (ImageView) view.findViewById(R.id.notice_favorite);
+            favorite.setOnClickListener(this);
+
+//            no.setText(listInfo.getNo());
             title.setText(listInfo.getTitle());
-            no.setText(listInfo.getNo());
+            views.setText(listInfo.getViews());
+//            Todo: 컨텐츠 이미지포함 뷰 고려
             date.setText(listInfo.getDate());
             writer.setText(listInfo.getWriter());
+            reply.setText(listInfo.getReply());
+
         }
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.notice_reply:
+                adptCallback.onAddReply();
+                break;
+
+            case R.id.notice_favorite:
+                adptCallback.onFavoriteState();
+                break;
+        }
     }
 
 }

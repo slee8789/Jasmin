@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.activity.GroupAttendanceInfoActivity;
@@ -23,12 +23,12 @@ import com.study.jasmin.jasmin.ui.activity.GroupStudyInfoActivity;
  */
 public class GroupInfoFragment extends Fragment implements View.OnClickListener{
 
-    Button btnStudyInfo;
-    Button btnMemberInfo;
-    Button btnMemberAdd;
-    Button btnPenalty;
-    Button btnAttendance;
-    Button btnMoneyBook;
+    private LinearLayout btnStudyInfo;
+    private LinearLayout btnMemberInfo;
+    private LinearLayout btnMemberAdd;
+    private LinearLayout btnPenalty;
+    private LinearLayout btnAttendance;
+    private LinearLayout btnMoneyBook;
 
     public GroupInfoFragment() {
         // Required empty public constructor
@@ -44,12 +44,12 @@ public class GroupInfoFragment extends Fragment implements View.OnClickListener{
 
 
     private void findViews(View rootView) {
-        btnStudyInfo = (Button)rootView.findViewById(R.id.btn_study_info);
-        btnMemberInfo = (Button)rootView.findViewById(R.id.btn_member_info);
-        btnMemberAdd = (Button)rootView.findViewById(R.id.btn_member_add);
-        btnPenalty = (Button)rootView.findViewById(R.id.btn_penalty);
-        btnAttendance = (Button)rootView.findViewById(R.id.btn_attendance);
-        btnMoneyBook = (Button)rootView.findViewById(R.id.btn_money_book);
+        btnStudyInfo = (LinearLayout)rootView.findViewById(R.id.btn_info_study);
+        btnMemberInfo = (LinearLayout)rootView.findViewById(R.id.btn_info_member);
+        btnMemberAdd = (LinearLayout)rootView.findViewById(R.id.btn_info_member_add);
+        btnPenalty = (LinearLayout)rootView.findViewById(R.id.btn_info_penalty);
+        btnAttendance = (LinearLayout)rootView.findViewById(R.id.btn_info_attendance);
+        btnMoneyBook = (LinearLayout)rootView.findViewById(R.id.btn_info_moneybook);
     }
 
     private void initViews() {
@@ -65,27 +65,27 @@ public class GroupInfoFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.btn_study_info:
+            case R.id.btn_info_study:
                 startActivity(new Intent(getActivity(),GroupStudyInfoActivity.class));
                 break;
 
-            case R.id.btn_member_info:
+            case R.id.btn_info_member:
                 startActivity(new Intent(getActivity(),GroupMemberInfoActivity.class));
                 break;
 
-            case R.id.btn_member_add:
+            case R.id.btn_info_member_add:
                 startActivity(new Intent(getActivity(),GroupInviteActivity.class));
                 break;
 
-            case R.id.btn_penalty:
+            case R.id.btn_info_penalty:
                 startActivity(new Intent(getActivity(),GroupPenaltyActivity.class));
                 break;
 
-            case R.id.btn_attendance:
+            case R.id.btn_info_attendance:
                 startActivity(new Intent(getActivity(),GroupAttendanceInfoActivity.class));
                 break;
 
-            case R.id.btn_money_book:
+            case R.id.btn_info_moneybook:
                 startActivity(new Intent(getActivity(),GroupMoneybookInfoActivity.class));
                 break;
 

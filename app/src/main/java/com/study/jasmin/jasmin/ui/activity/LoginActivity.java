@@ -8,26 +8,45 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
+import com.study.jasmin.jasmin.util.CheckAvailability;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = "LoginActivity";
-    Button btnDoLogin;
-    TextView tvFindPassword;
-    FindPwDialog findPwDialog;
+    private Button btnDoLogin;
+    private EditText etEmail;
+    private EditText etPassword;
+    private CheckBox cbAuto;
+    private TextView tvFindPassword;
+    private FindPwDialog findPwDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        findViews();
+        initViews();
+
+    }
+
+    private void findViews() {
         btnDoLogin = (Button)findViewById(R.id.btn_do_login);
-        btnDoLogin.setOnClickListener(this);
+        etEmail = (EditText) findViewById(R.id.login_email);
+        etPassword = (EditText) findViewById(R.id.login_password);
+        cbAuto = (CheckBox) findViewById(R.id.login_auto);
         tvFindPassword = (TextView)findViewById(R.id.tv_find_password);
+    }
+
+    private void initViews() {
+        btnDoLogin.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share, menu);
@@ -58,6 +77,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.btn_do_login:
                 Log.d(TAG,"click btn_do_login");
+                boolean emptyChk = CheckAvailability.isNotNull(etEmail.getText().toString(), etPassword.getText().toString());
+                boolean mailChk = CheckAvailability.isEmail(etEmail.getText().toString());
+
                 startActivity(new Intent(this,MainActivity.class));
                 finish();
                 break;

@@ -2,6 +2,7 @@ package com.study.jasmin.jasmin.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.ui.activity.GroupReplyActivity;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoNoticeList;
 import com.study.jasmin.jasmin.ui.list.ListInfoNotice;
 
@@ -24,12 +25,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GroupNoticeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class GroupNoticeFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener, AdaptInfoNoticeList.onButtonClickListener {
     public static final String TAG = "GroupNoticeFragment";
     private View noticeListHeader;
     private ImageView btnWrite;
-    private ImageView btnOrderLiteral;
-    private ImageView btnOrderNumber;
+    private ImageView btnFavorite;
     private OnFragmentSelectedListener fragmentListener;
     private ListView noticeList;
     private ArrayList<ListInfoNotice> arrayListInfo = new ArrayList<ListInfoNotice>();
@@ -83,89 +83,66 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
         findViews(rootView);
         initViews();
 
+        // 0: No, 1: Title, 2: Views, 3: content, 4: date, 5: writer, 6: reply, 7: favorite
         ArrayList<String> NoticeColumnTest0 = new ArrayList<String>();
-        NoticeColumnTest0.add("No0");
-        NoticeColumnTest0.add("제목0");
-        NoticeColumnTest0.add("작성일0");
-        NoticeColumnTest0.add("작성자0");
+        NoticeColumnTest0.add("0");
+        NoticeColumnTest0.add("연습글 가낟라마바사");
+        NoticeColumnTest0.add("5");
+        NoticeColumnTest0.add("동해물과 백두산이 마르고 닳도록...");
+        NoticeColumnTest0.add("16.07.27");
+        NoticeColumnTest0.add("홍길동");
+        NoticeColumnTest0.add("8");
+        NoticeColumnTest0.add("true");
 
         ArrayList<String> NoticeColumnTest1 = new ArrayList<String>();
-        NoticeColumnTest1.add("No1");
-        NoticeColumnTest1.add("제목1");
-        NoticeColumnTest1.add("작성일1");
-        NoticeColumnTest1.add("작성자1");
+        NoticeColumnTest1.add("1");
+        NoticeColumnTest1.add("첫째주 숙제 입니다.");
+        NoticeColumnTest1.add("2");
+        NoticeColumnTest1.add("하느님이 보우하사 우리나라 만세 ");
+        NoticeColumnTest1.add("16.07.28");
+        NoticeColumnTest1.add("김길동");
+        NoticeColumnTest1.add("2");
+        NoticeColumnTest1.add("true");
 
         ArrayList<String> NoticeColumnTest2 = new ArrayList<String>();
-        NoticeColumnTest2.add("No2");
-        NoticeColumnTest2.add("제목2");
-        NoticeColumnTest2.add("작성일2");
-        NoticeColumnTest2.add("작성자2");
+        NoticeColumnTest2.add("2");
+        NoticeColumnTest2.add("긴급공지 입니다.");
+        NoticeColumnTest2.add("12");
+        NoticeColumnTest2.add("무궁화 삼천리 화려강산 대한사람... ");
+        NoticeColumnTest2.add("16.07.31");
+        NoticeColumnTest2.add("운영자");
+        NoticeColumnTest2.add("9");
+        NoticeColumnTest2.add("true");
 
         ArrayList<String> NoticeColumnTest3 = new ArrayList<String>();
-        NoticeColumnTest3.add("No2");
-        NoticeColumnTest3.add("제목2");
-        NoticeColumnTest3.add("작성일2");
-        NoticeColumnTest3.add("작성자2");
+        NoticeColumnTest3.add("3");
+        NoticeColumnTest3.add("abcfemkc아리ㅓㄷ");
+        NoticeColumnTest3.add("11");
+        NoticeColumnTest3.add("대한으로 길이 보전하세 ");
+        NoticeColumnTest3.add("16.08.02");
+        NoticeColumnTest3.add("이승철");
+        NoticeColumnTest3.add("9");
+        NoticeColumnTest3.add("true");
 
         ArrayList<String> NoticeColumnTest4 = new ArrayList<String>();
-        NoticeColumnTest4.add("No2");
-        NoticeColumnTest4.add("제목2");
-        NoticeColumnTest4.add("작성일2");
-        NoticeColumnTest4.add("작성자2");
+        NoticeColumnTest4.add("4");
+        NoticeColumnTest4.add("테스테스테스테스트");
+        NoticeColumnTest4.add("100");
+        NoticeColumnTest4.add("대한으로 길이 보전하세 ");
+        NoticeColumnTest4.add("15.02.02");
+        NoticeColumnTest4.add("아줌마");
+        NoticeColumnTest4.add("5");
+        NoticeColumnTest4.add("true");
 
         ArrayList<String> NoticeColumnTest5 = new ArrayList<String>();
-        NoticeColumnTest5.add("No2");
-        NoticeColumnTest5.add("제목2");
-        NoticeColumnTest5.add("작성일2");
-        NoticeColumnTest5.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest6 = new ArrayList<String>();
-        NoticeColumnTest6.add("No2");
-        NoticeColumnTest6.add("제목2");
-        NoticeColumnTest6.add("작성일2");
-        NoticeColumnTest6.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest7 = new ArrayList<String>();
-        NoticeColumnTest7.add("No2");
-        NoticeColumnTest7.add("제목2");
-        NoticeColumnTest7.add("작성일2");
-        NoticeColumnTest7.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest8 = new ArrayList<String>();
-        NoticeColumnTest8.add("No2");
-        NoticeColumnTest8.add("제목2");
-        NoticeColumnTest8.add("작성일2");
-        NoticeColumnTest8.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest9 = new ArrayList<String>();
-        NoticeColumnTest9.add("No2");
-        NoticeColumnTest9.add("제목2");
-        NoticeColumnTest9.add("작성일2");
-        NoticeColumnTest9.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest10 = new ArrayList<String>();
-        NoticeColumnTest10.add("No2");
-        NoticeColumnTest10.add("제목2");
-        NoticeColumnTest10.add("작성일2");
-        NoticeColumnTest10.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest11 = new ArrayList<String>();
-        NoticeColumnTest11.add("No2");
-        NoticeColumnTest11.add("제목2");
-        NoticeColumnTest11.add("작성일2");
-        NoticeColumnTest11.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest12 = new ArrayList<String>();
-        NoticeColumnTest12.add("No2");
-        NoticeColumnTest12.add("제목2");
-        NoticeColumnTest12.add("작성일2");
-        NoticeColumnTest12.add("작성자2");
-
-        ArrayList<String> NoticeColumnTest13 = new ArrayList<String>();
-        NoticeColumnTest13.add("No2");
-        NoticeColumnTest13.add("제목2");
-        NoticeColumnTest13.add("작성일2");
-        NoticeColumnTest13.add("작성자2");
+        NoticeColumnTest5.add("3");
+        NoticeColumnTest5.add("TestTestTest");
+        NoticeColumnTest5.add("11");
+        NoticeColumnTest5.add("대한으로 길이 보전하세 ");
+        NoticeColumnTest5.add("14.11.02");
+        NoticeColumnTest5.add("아줌마");
+        NoticeColumnTest5.add("9");
+        NoticeColumnTest5.add("true");
 
         ArrayList<ArrayList<String>> NoticeRowTest = new ArrayList<ArrayList<String>>();
 
@@ -175,16 +152,9 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
         NoticeRowTest.add(NoticeColumnTest3);
         NoticeRowTest.add(NoticeColumnTest4);
         NoticeRowTest.add(NoticeColumnTest5);
-        NoticeRowTest.add(NoticeColumnTest6);
-        NoticeRowTest.add(NoticeColumnTest7);
-        NoticeRowTest.add(NoticeColumnTest8);
-        NoticeRowTest.add(NoticeColumnTest9);
-        NoticeRowTest.add(NoticeColumnTest10);
-        NoticeRowTest.add(NoticeColumnTest11);
-        NoticeRowTest.add(NoticeColumnTest12);
-        NoticeRowTest.add(NoticeColumnTest13);
 
         adaptListInfo = new AdaptInfoNoticeList(getContext(), R.layout.list_notice_info, arrayListInfo);
+        adaptListInfo.setOnButtonClickListener(this);
         noticeList.setAdapter(adaptListInfo);
         addSelectInfo(NoticeRowTest);
         adaptListInfo.setArraySelectInfo(arrayListInfo);
@@ -193,12 +163,17 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
     }
 
     public void addSelectInfo(ArrayList<ArrayList<String>> parseredList) {
+        // 0: No, 1: Title, 2: Views, 3: content, 4: date, 5: writer, 6: reply, 7: favorite
         for (int i = 0; i < parseredList.size(); i++) {
             ListInfoNotice selectInfo = new ListInfoNotice();
             selectInfo.setNo(parseredList.get(i).get(0));
             selectInfo.setTitle(parseredList.get(i).get(1));
-            selectInfo.setDate(parseredList.get(i).get(2));
-            selectInfo.setWriter(parseredList.get(i).get(3));
+            selectInfo.setViews(parseredList.get(i).get(2));
+//            selectInfo.setContent(parseredList.get(i).get(3)); // Todo: 이미지 있는 컨텐츠 고려 작성
+            selectInfo.setDate(parseredList.get(i).get(4));
+            selectInfo.setWriter(parseredList.get(i).get(5));
+            selectInfo.setReply(parseredList.get(i).get(6));
+//            selectInfo.setFavorite(parseredList.get(i).get(7)); // Todo: 이미지 버튼 아직 안함..
 
             arrayListInfo.add(selectInfo);
         }
@@ -211,18 +186,14 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
         noticeList = (ListView) rootView.findViewById(R.id.list_notice);
         noticeListHeader = rootView.findViewById(R.id.include);
         btnWrite = (ImageView) noticeListHeader.findViewById(R.id.notice_group_write);
-        btnOrderLiteral= (ImageView) noticeListHeader.findViewById(R.id.notice_group_order_literal);
-        btnOrderNumber = (ImageView) noticeListHeader.findViewById(R.id.notice_group_order_number);
+        btnFavorite = (ImageView) noticeList.findViewById(R.id.notice_favorite);
 
     }
 
     private void initViews() {
         noticeList.setOnItemClickListener(this);
         btnWrite.setOnClickListener(this);
-        btnOrderLiteral.setOnClickListener(this);
-        btnOrderNumber.setOnClickListener(this);
     }
-
 
 
     public interface OnFragmentSelectedListener {
@@ -248,20 +219,23 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
                 Log.d(TAG,"click notice_group_write");
                 fragmentListener.onFragmentSelected(v);
                 break;
-
-            case R.id.notice_group_order_literal:
-                Log.d(TAG,"click notice_group_order_literal");
-                break;
-
-            case R.id.notice_group_order_number:
-                Log.d(TAG,"click notice_group_order_number");
-                break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getContext(),""+ position,Toast.LENGTH_SHORT).show();
         fragmentListener.onFragmentSelected(position);
+    }
+
+    @Override
+    public void onFavoriteState() {
+        Log.d(TAG, "click onFavoriteState");
+
+    }
+
+    @Override
+    public void onAddReply() {
+        Log.d(TAG, "click onAddReply");
+        startActivity(new Intent(getContext(), GroupReplyActivity.class));
     }
 }

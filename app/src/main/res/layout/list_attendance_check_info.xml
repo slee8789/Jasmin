@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notice_layout"
     android:layout_width="match_parent"
     android:layout_height="50dp">
@@ -12,16 +13,25 @@
         android:textColor="@color/colorBlack"
         android:textSize="30sp" />
 
-    <Spinner
-        android:id="@+id/attendance_spinner_minute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/attendance_spinner_status"
-        android:layout_alignParentRight="true" />
 
-    <Spinner
-        android:id="@+id/attendance_spinner_status"
-        android:layout_width="wrap_content"
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        app:ms_multiline="false"
+        app:ms_hint="hint"
+        app:ms_enableFloatingLabel="false"
+        app:ms_enableErrorLabel="false"
+        app:ms_floatingLabelText="floating label"
+        app:ms_baseColor="@color/spinner_base"
+        app:ms_highlightColor="@color/spinner_highlight"
+        app:ms_errorColor="@color/spinner_error"
+        app:ms_typeface="typeface.ttf"
+        app:ms_thickness="2dp"
+        app:ms_hintColor="@color/spinner_hint"
+        app:ms_arrowColor="@color/spinner_arrow"
+        app:ms_arrowSize="16dp"
+        app:ms_alignLabels="false"
+        app:ms_floatingLabelColor="@color/spinner_floating_label"/>
 </RelativeLayout>

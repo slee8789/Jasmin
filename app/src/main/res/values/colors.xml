@@ -2,11 +2,14 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="colorGray">#CCCCCC</color>
     <color name="colorGrayWhite">#a7a7a7</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBackground">#83babd</color>
+    <color name="colorBackground4">#81d4fa</color>
+    <color name="colorBackground2">#b3e5fc</color>
+    <color name="colorBackground3">#e1f5fe</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorBora">#7c26ff</color>
     <color name="colorBora2">#6a20d8</color>
@@ -15,6 +18,11 @@
     <color name="colorGrayAlpha">#CCFFFFFF</color>
     <color name="colorYellow">#ffff20</color>
     <color name="colorYellowHover">#ebeb1e</color>
-
-    <color name="colorFocused">#80C3E7FA</color>
+    <color name="colorKakao">#3c1e1e</color>
+    <color name="spinner_hint">#607d8b</color>
+    <color name="spinner_base">#eceff1</color>
+    <color name="spinner_highlight">#cfd8dc</color>
+    <color name="spinner_error">#b0bec5</color>
+    <color name="spinner_arrow">#90a4ae</color>
+    <color name="spinner_floating_label">#89909c</color>
 </resources>

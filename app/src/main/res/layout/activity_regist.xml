@@ -16,6 +16,7 @@
 
 
         <EditText
+            android:id="@+id/regist_mail"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/round_gray"
@@ -24,6 +25,7 @@
 
 
         <Button
+            android:id="@+id/btn_mail_auth"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
@@ -34,26 +36,34 @@
 
 
         <EditText
+            android:id="@+id/regist_pw"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/round_gray"
             android:hint="@string/regist_password_8to12"
+            android:inputType="textPassword"
+            android:maxLength="12"
             android:paddingLeft="30dp" />
 
         <EditText
+            android:id="@+id/regist_pw_check"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/round_gray"
             android:hint="@string/regist_password_8to12_check"
+            android:inputType="textPassword"
+            android:maxLength="12"
             android:paddingLeft="30dp" />
 
         <EditText
+            android:id="@+id/regist_name"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/round_gray"
+            android:privateImeOptions="defaultInputmode=korea"
             android:hint="@string/regist_name"
             android:paddingLeft="30dp" />
 
@@ -63,6 +73,7 @@
             android:layout_height="wrap_content">
 
             <RadioGroup
+                android:id="@+id/radio_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -70,18 +81,18 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/option1"
+                    android:id="@+id/radio_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/regist_male"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite" />
 
                 <RadioButton
-                    android:id="@+id/option2"
+                    android:id="@+id/radio_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/regist_female"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite" />
 
             </RadioGroup>
         </RelativeLayout>

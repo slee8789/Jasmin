@@ -18,7 +18,7 @@ public class AdaptInfoReplyList extends ArrayAdapter<ListInfoReply> implements V
     private onButtonClickListener adptCallback = null;
 
     public interface onButtonClickListener {
-        void onBtnWrite();
+        void onBtnModify();
         void onBtnDelete();
     }
 
@@ -55,12 +55,12 @@ public class AdaptInfoReplyList extends ArrayAdapter<ListInfoReply> implements V
         if (listInfo != null) {
             TextView id = (TextView) view.findViewById(R.id.reply_id);
             TextView content = (TextView) view.findViewById(R.id.reply_content);
-            ImageView write = (ImageView) view.findViewById(R.id.reply_write);
+            ImageView modify = (ImageView) view.findViewById(R.id.reply_modify);
             ImageView delete = (ImageView) view.findViewById(R.id.reply_delete);
 
             id.setText(listInfo.getId());
             content.setText(listInfo.getContent());
-            write.setOnClickListener(this);
+            modify.setOnClickListener(this);
             delete.setOnClickListener(this);
         }
         return view;
@@ -69,8 +69,8 @@ public class AdaptInfoReplyList extends ArrayAdapter<ListInfoReply> implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.reply_write:
-                adptCallback.onBtnWrite();
+            case R.id.reply_modify:
+                adptCallback.onBtnModify();
                 break;
 
             case R.id.reply_delete:

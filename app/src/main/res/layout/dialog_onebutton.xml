@@ -12,6 +12,7 @@
         android:layout_margin="20dp"
         android:layout_centerInParent="true">
         <TextView
+            android:id="@+id/onebutton_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
@@ -22,7 +23,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/comment"
+            android:id="@+id/onebutton_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="30dp"
@@ -40,7 +41,7 @@
             android:background="@color/colorWhite"
             android:orientation="vertical">
             <Button
-                android:id="@+id/ok_onebutton"
+                android:id="@+id/onebutton_ok"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"

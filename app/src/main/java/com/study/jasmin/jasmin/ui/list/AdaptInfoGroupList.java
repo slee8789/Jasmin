@@ -1,86 +1,41 @@
 package com.study.jasmin.jasmin.ui.list;
 
 import android.content.Context;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import com.study.jasmin.jasmin.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class AdaptInfoGroupList extends ArrayAdapter<ListInfoGroup> implements View.OnClickListener{
-    public static final String TAG = "AdaptInfoGroupList";
-    private ArrayList<ListInfoGroup> arraySelectInfo;
+public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupList> {
+
+    private List<ListInfoGroup> itemList;
     private Context context;
-    private onButtonClickListener adptCallback = null;
 
-    public interface onButtonClickListener {
-        void onBtnWrite();
-        void onBtnDelete();
-    }
-
-    public void setOnButtonClickListener(onButtonClickListener callback) {
-        adptCallback = callback;
-    }
-
-    public AdaptInfoGroupList(Context context, int resource, ArrayList<ListInfoGroup> objects) {
-        super(context, resource, objects);
-        this.arraySelectInfo = objects;
+    public AdaptInfoGroupList(Context context, List<ListInfoGroup> itemList) {
+        this.itemList = itemList;
         this.context = context;
     }
 
-    public ArrayList<ListInfoGroup> getArraySelectInfo() {
-        return arraySelectInfo;
-    }
+    @Override
+    public HolderInfoGroupList onCreateViewHolder(ViewGroup parent, int viewType) {
 
-    public void setArraySelectInfo(ArrayList<ListInfoGroup> arraySelectInfo) {
-        this.arraySelectInfo = arraySelectInfo;
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_list, null);
+        HolderInfoGroupList rcv = new HolderInfoGroupList(layoutView);
+        return rcv;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View view = convertView;
-
-        if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.list_group_info, null);
-        }
-        final ListInfoGroup listInfo = arraySelectInfo.get(position);
-
-        if (listInfo != null) {
-            ImageView cover = (ImageView) view.findViewById(R.id.group_cover);
-            Button invite = (Button) view.findViewById(R.id.group_invite);
-
-//            cover.setText(listInfo.getCover());
-//            invite.setText(listInfo.getInvite());
-            cover.setOnClickListener(this);
-            invite.setOnClickListener(this);
-        }
-        return view;
+    public void onBindViewHolder(HolderInfoGroupList holder, int position) {
+        holder.groupName.setText(itemList.get(position).getName());
+        holder.groupPhoto.setImageResource(itemList.get(position).getPhoto());
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.group_cover:
-                Log.d(TAG, "click group_cover");
-//                adptCallback.onBtnWrite();
-                break;
-
-            case R.id.group_invite:
-                Log.d(TAG, "click group_invite");
-//                adptCallback.onBtnDelete();
-                break;
-        }
+    public int getItemCount() {
+        return this.itemList.size();
     }
-
-
-
 }

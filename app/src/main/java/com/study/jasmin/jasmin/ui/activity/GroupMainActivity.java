@@ -71,10 +71,10 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
     }
 
     public void setupTabLayout(TabLayout tabLayout) {
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_close_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_close_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_close_black_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_close_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_dashboard_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_supervisor_account_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_info_black_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_settings_black_24dp);
     }
 
     @Override
@@ -98,38 +98,6 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
           startActivity(new Intent(this, GroupNoticeDetailActivity.class));
     }
 
-//    public Fragment getVisibleFragment() {
-//        for (Fragment fragment: getSupportFragmentManager().getFragments()) {
-//            if (fragment.isVisible()) {
-//                return ((Fragment)fragment);
-//            }
-//        }
-//        return null;
-//    }
-
-
-//    /**
-//     * Takes a Fragment TAG and tries to find the fragment in the manager if it exists and bring it to front.
-//     * if not, will return false;
-//     * @param manager
-//     * @param tag
-//     */
-//    public static boolean resurfaceFragment(FragmentManager manager, String tag ){
-//        Fragment fragment = manager.findFragmentByTag(tag);
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        if (fragment!=null){
-//            for (int i = 0; i < manager.getFragments().size(); i++) {
-//                Fragment f =  manager.getFragments().get(i);
-//                transaction.hide(f);
-//
-//            }
-//            transaction.show(fragment).commit();
-//            return true;
-//        }
-//
-//        return false;
-//    }
-
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private Fragment[] arrFragments;
@@ -149,22 +117,5 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
             return arrFragments.length;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position) {
-                case 0 :
-                    return "Notice";
-                case 1 :
-                    return "Manage";
-                case 2 :
-                    return "Info";
-                case 3 :
-                    return "Setting";
-                default :
-                    return "";
-            }
-
-        }
     }
 }
