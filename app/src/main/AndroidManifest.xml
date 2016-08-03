@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity"></activity>
+        <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,10 +54,10 @@
         <activity
             android:name=".ui.activity.GroupInviteActivity"
             android:label="@string/invite_title" />
-        <activity android:name=".ui.activity.GroupMainActivity"></activity>
+        <activity android:name=".ui.activity.GroupMainActivity" />
         <activity
             android:name=".ui.activity.GroupReplyActivity"
-            android:label="@string/reply_title"></activity>
+            android:label="@string/reply_title" />
         <activity
             android:name=".ui.activity.AttendanceCheckActivity"
             android:label="@string/attendance_title" />
@@ -96,8 +96,11 @@
         <activity
             android:name=".ui.activity.GroupNoticeAddActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".ui.activity.GroupNoticeDetailActivity"></activity>
-
+        <activity android:name=".ui.activity.GroupNoticeDetailActivity" />
+        <activity android:name=".ui.activity.GroupManageAttendanceActivity" />
+        <activity android:name=".ui.activity.GroupManageAssignmentActivity" />
+        <activity android:name=".ui.activity.GroupManageReceivablesActivity" />
+        <activity android:name=".ui.activity.GroupManageMoneybookActivity"></activity>
     </application>
 
 </manifest>
