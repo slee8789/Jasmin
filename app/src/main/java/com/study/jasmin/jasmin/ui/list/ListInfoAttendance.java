@@ -11,7 +11,6 @@ public class ListInfoAttendance {
         super();
         this.date = id;
         this.status = content;
-
     }
 
     public String getStatus() {
