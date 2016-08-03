@@ -18,10 +18,12 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
     private ArrayList<ListInfoNotice> arraySelectInfo;
     private Context context;
     private onButtonClickListener adptCallback = null;
+    private ListInfoNotice listInfo = null;
 
     public interface onButtonClickListener {
-        void onFavoriteState();
+        void onFavoriteState(ImageView v, boolean favorite);
         void onAddReply();
+
     }
 
     public void setOnButtonClickListener(onButtonClickListener callback) {
@@ -59,7 +61,7 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_notice_info, null);
         }
-        final ListInfoNotice listInfo = arraySelectInfo.get(position);
+        listInfo = arraySelectInfo.get(position);
 
         if (listInfo != null) {
 //            TextView no = (TextView) view.findViewById(R.id.notice_no);
@@ -94,7 +96,10 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
                 break;
 
             case R.id.notice_favorite:
-                adptCallback.onFavoriteState();
+                if(listInfo.getFavorite() == false) {
+                    listInfo.setFavorite(true);
+                } else listInfo.setFavorite(false);
+                adptCallback.onFavoriteState((ImageView)v, listInfo.getFavorite());
                 break;
         }
     }

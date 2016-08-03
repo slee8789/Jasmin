@@ -224,14 +224,21 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "click onFavoriteState position : "+ position + ", id : " + id);
         fragmentListener.onFragmentSelected(position);
     }
 
     @Override
-    public void onFavoriteState() {
-        Log.d(TAG, "click onFavoriteState");
+    public void onFavoriteState(ImageView v, boolean favorite) {
+        Log.d(TAG, "click onFavoriteState v : ");
+        if(favorite) {
+            v.setImageResource(R.drawable.ic_favorite_black_24dp);
+        } else {
+            v.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        }
 
     }
+
 
     @Override
     public void onAddReply() {

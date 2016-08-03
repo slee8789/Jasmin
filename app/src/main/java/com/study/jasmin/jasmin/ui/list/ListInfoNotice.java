@@ -81,7 +81,7 @@ public class ListInfoNotice {
         this.reply = reply;
     }
 
-    public boolean isFavorite() {
+    public boolean getFavorite() {
         return favorite;
     }
 
