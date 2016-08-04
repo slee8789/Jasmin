@@ -5,17 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.ui.dialog.AttendanceCheckDialog;
+import com.study.jasmin.jasmin.ui.dialog.AssignmentAddDialog;
+import com.study.jasmin.jasmin.ui.dialog.AssignmentCheckDialog;
+import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentCheckList;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentList;
 import com.study.jasmin.jasmin.ui.list.ListInfoAssignment;
-import com.study.jasmin.jasmin.ui.list.ListInfoAttendance;
+
 
 import java.util.ArrayList;
 
-public class GroupManageAssignmentActivity extends AppCompatActivity {
+public class GroupManageAssignmentActivity extends AppCompatActivity{
 
     Button btnAdd;
     ListView listView;
@@ -29,8 +30,6 @@ public class GroupManageAssignmentActivity extends AppCompatActivity {
 
         findViews();
         initViews();
-
-
     }
 
     public void findViews(){
@@ -44,12 +43,10 @@ public class GroupManageAssignmentActivity extends AppCompatActivity {
         listView.setAdapter(adapt);
         btnAdd.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                AttendanceCheckDialog dialog = new AttendanceCheckDialog(v.getContext());
+                AssignmentAddDialog dialog = new AssignmentAddDialog(v.getContext());
                 dialog.show();
             }
         });
-
-
     }
 
     public ArrayList<ListInfoAssignment> getItemFromDB(){
@@ -64,5 +61,6 @@ public class GroupManageAssignmentActivity extends AppCompatActivity {
         }
         return list;
     }
+
 
 }

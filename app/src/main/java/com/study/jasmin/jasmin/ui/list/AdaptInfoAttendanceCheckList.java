@@ -38,11 +38,11 @@ public class AdaptInfoAttendanceCheckList extends ArrayAdapter<ListInfoAttendanc
 
 
 
-    public AdaptInfoAttendanceCheckList(Context context, int resource, ArrayList<ListInfoAttendanceCheck> objects, Boolean bNewCheck, RadioGroupClickListener radioGroupClickListener) {
+    public AdaptInfoAttendanceCheckList(Context context, int resource, ArrayList<ListInfoAttendanceCheck> objects, Boolean bNewCheckr) {
         super(context, resource, objects);
         this.resourceId = resource;
         this.bNewCheck = bNewCheck;
-        this.rgClickListener = radioGroupClickListener;
+       // this.rgClickListener = radioGroupClickListener;
     }
 
     public interface  RadioGroupClickListener{

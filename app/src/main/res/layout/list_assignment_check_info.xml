@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/notice_layout"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="50dp"
+    >
 
     <TextView
         android:id="@+id/assignment_check_name"
@@ -11,7 +12,7 @@
         android:gravity="center"
         android:text="@string/reply_id"
         android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <Switch
         android:id="@+id/assignment_switch"
