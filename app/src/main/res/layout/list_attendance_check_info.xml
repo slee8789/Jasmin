@@ -4,34 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
-    <TextView
-        android:id="@+id/attendance_check_name"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+        android:id="@+id/tv_attendance_check_name"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/reply_id"
         android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:textSize="20sp"   />
+
+        <Spinner
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:entries="@array/group_late_time"
+            android:id="@+id/sp_late_time"
+            android:textSize="8sp"
+            android:visibility="visible"/>
 
 
-    <fr.ganfra.materialspinner.MaterialSpinner
-        android:id="@+id/spinner"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        app:ms_multiline="false"
-        app:ms_hint="hint"
-        app:ms_enableFloatingLabel="false"
-        app:ms_enableErrorLabel="false"
-        app:ms_floatingLabelText="floating label"
-        app:ms_baseColor="@color/spinner_base"
-        app:ms_highlightColor="@color/spinner_highlight"
-        app:ms_errorColor="@color/spinner_error"
-        app:ms_typeface="typeface.ttf"
-        app:ms_thickness="2dp"
-        app:ms_hintColor="@color/spinner_hint"
-        app:ms_arrowColor="@color/spinner_arrow"
-        app:ms_arrowSize="16dp"
-        app:ms_alignLabels="false"
-        app:ms_floatingLabelColor="@color/spinner_floating_label"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:id="@+id/rg_status"
+            android:checkedButton="@+id/rb_option1"
+            android:textSize="10sp">
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rb_option1"/>
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rb_option2"/>
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rb_option3"/>
+        </RadioGroup>
+    </LinearLayout>
+
 </RelativeLayout>

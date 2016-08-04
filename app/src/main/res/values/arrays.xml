@@ -31,4 +31,13 @@
         <item >60분</item>
         <item >90분</item>
     </string-array>
+
+    <string-array name="group_late_time">
+        <item >5분</item>
+        <item >10분</item>
+        <item >15분</item>
+        <item >20분</item>
+        <item >25분</item>
+        <item >30분</item>
+    </string-array>
 </resources>

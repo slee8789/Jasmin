@@ -8,6 +8,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.ui.dialog.AttendanceCheckDialog;
+import com.study.jasmin.jasmin.ui.dialog.MemberListDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;
 import com.study.jasmin.jasmin.ui.list.ListInfoAttendance;
 
@@ -18,6 +20,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
     Button                  btnAdd;
     ListView                listview;
     AdaptInfoAttendanceList adapter;
+    AttendanceCheckDialog   dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,8 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
     public void onClick(View v) {
          switch (v.getId()) {
              case R.id.btn_add:
-                 Toast.makeText(this, "추가 다이얼로그", Toast.LENGTH_SHORT).show();
-                 //startActivity(new Intent(this, SettingAssignmentAddActivity.class));
+                 dialog = new AttendanceCheckDialog(this);
+                 dialog.show();
                  break;
          }
     }
@@ -57,7 +60,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
     @Override
     public void onListBtnClick(int position) {
         //리스트의 버튼 클릭 시 실행되는 함수
-        Toast.makeText(this, Integer.toString(position+1) + "번 아이템 수정", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, Integer.toString(position+1) + "번 아이템 클릭", Toast.LENGTH_SHORT).show();
     }
 
     public void findViews(){

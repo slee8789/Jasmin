@@ -36,10 +36,10 @@ public class AttendanceCheckActivity extends AppCompatActivity {
         AttendanceCheckRowTest.add(AttendanceCheckColumnTest0);
         AttendanceCheckRowTest.add(AttendanceCheckColumnTest1);
 
-        adaptListInfo = new AdaptInfoAttendanceCheckList(getApplicationContext(), R.layout.list_attendance_check_info, arrayListInfo);
+       // adaptListInfo = new AdaptInfoAttendanceCheckList(getApplicationContext(), R.layout.list_attendance_check_info, arrayListInfo,true);
         attendanceCheckList.setAdapter(adaptListInfo);
         addSelectInfo(AttendanceCheckRowTest);
-        adaptListInfo.setArraySelectInfo(arrayListInfo);
+       // adaptListInfo.setArraySelectInfo(arrayListInfo);
         attendanceCheckList.setAdapter(adaptListInfo);
 
 //        attendanceCheckList = (ListView)findViewById(R.id.list_attendance_check);
