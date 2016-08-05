@@ -16,7 +16,7 @@ public class IntroActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro2);
+        setContentView(R.layout.activity_intro);
         findViews();
         initViews();
     }

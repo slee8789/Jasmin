@@ -23,7 +23,8 @@ public class SplashActivity extends AppCompatActivity {
             if (introState) {
                 intent = new Intent(SplashActivity.this, MainActivity.class);
             } else {
-                intent = new Intent(SplashActivity.this, Intro2Activity.class);
+                intent = new Intent(SplashActivity.this, IntroActivity.class);
+                //Todo: 프로그레스 추가 후 서버 로그인
             }
             startActivity(intent);
             finish();
@@ -34,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_intro);
+        setContentView(R.layout.activity_splash);
         mPrefs = getSharedPreferences("userInfo", MODE_PRIVATE);
         introState = mPrefs.getBoolean("autoLogin", false);
         introHandler.postDelayed(introRunnable, 2000);  // 2초 후 러너블 테스트

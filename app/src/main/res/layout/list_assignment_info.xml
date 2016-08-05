@@ -10,7 +10,8 @@
         android:gravity="center"
         android:text="첫번째 과제입니다."
         android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:textSize="20sp"
+        android:layout_marginRight="10dp"/>
 
 
     <TextView
@@ -18,19 +19,22 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_toLeftOf="@+id/assignment_check"
+        android:layout_marginRight="5dp"
         android:gravity="center"
         android:text="4 / 6"
         android:textColor="@color/colorBlack"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/assignment_check"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:src="@drawable/ic_close_black_24dp" />
+        android:src="@drawable/ic_close_black_24dp"
+        />
 
     <Button
         android:id="@+id/assignment_do_check"
@@ -40,7 +44,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:visibility="gone"
-        android:text="@string/manage_do_assignment"/>
+        android:text="@string/manage_do_assignment"
+        />
 
 
 </RelativeLayout>

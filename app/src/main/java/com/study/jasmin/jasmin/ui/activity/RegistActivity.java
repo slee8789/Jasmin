@@ -1,5 +1,6 @@
 package com.study.jasmin.jasmin.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.RadioButton;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
+import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.util.CheckAvailability;
 
 public class RegistActivity extends AppCompatActivity implements View.OnClickListener {
@@ -24,7 +26,11 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private EditText etMail;
     private RadioButton radioMale;
     private RadioButton radioFemale;
-    private OneButtonDialog mailAuthDialog;
+    private OneButtonDialog oneButtonDialog;
+    private int dialogTitle;
+    private int dialogMsg;
+    private ProgressDialog TestProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         etName.setOnClickListener(this);
         etPw.setOnClickListener(this);
         etPwCheck.setOnClickListener(this);
+        TestProgress = new ProgressDialog(this);
     }
 
     @Override
@@ -72,13 +79,13 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void showMailAuthDialog(int title, int comment) {
-        mailAuthDialog = new OneButtonDialog(this);
-        mailAuthDialog.setCancelable(false);
-        mailAuthDialog.setOkOnClickListener(this);
-        mailAuthDialog.show();
-        mailAuthDialog.setTitle(title);
-        mailAuthDialog.setComment(comment);
+    public void showOneButtonDialog(int title, int comment) {
+        oneButtonDialog = new OneButtonDialog(this);
+        oneButtonDialog.setCancelable(false);
+        oneButtonDialog.setOkOnClickListener(this);
+        oneButtonDialog.show();
+        oneButtonDialog.setTitle(title);
+        oneButtonDialog.setComment(comment);
     }
 
     @Override
@@ -93,21 +100,33 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 boolean pwLengthChk = CheckAvailability.isMoreThan(8, etPw.getText().toString());
                 boolean sexChk = CheckAvailability.isRadioChk(radioMale, radioFemale);
 
-                Log.d(TAG,"emptyChk : "+emptyChk);
-                Log.d(TAG,"mailChk : "+mailChk);
-                Log.d(TAG,"pwChk : "+pwChk);
-                Log.d(TAG,"pwLengthChk : "+pwLengthChk);
-                Log.d(TAG,"sexChk : "+sexChk);
+                dialogTitle = R.string.regist_dialog_title;
+                if(!emptyChk) dialogMsg = R.string.regist_dialog_input_error;
+                else if(!mailChk) dialogMsg = R.string.regist_dialog_mailform;
+                else if(!pwChk) dialogMsg = R.string.regist_dialog_pw_disharmony;
+                else if(!pwLengthChk) dialogMsg = R.string.regist_dialog_more8;
+                else if(!sexChk) dialogMsg = R.string.regist_dialog_sex;
+                //Todo: 메일 인증하기 추가.
+                else {
+                    dialogTitle = R.string.regist_regist;
+                    dialogMsg = R.string.regist_dialog_ok;
+                }
+                showOneButtonDialog(dialogTitle, dialogMsg);
+
                 break;
 
             case R.id.btn_mail_auth:
                 Log.d(TAG, "click btn_mail_auth");
-                showMailAuthDialog(R.string.regist_do_mail_auth, R.string.regist_dialog_auth);
+                dialogTitle = R.string.regist_do_mail_auth;
+                dialogMsg = R.string.regist_dialog_auth;
+//                showOneButtonDialog(dialogTitle, dialogMsg);
+//                TestProgress.show();
                 break;
 
             case R.id.onebutton_ok:
                 Log.d(TAG, "click onebutton_ok");
-                mailAuthDialog.dismiss();
+                if(dialogMsg == R.string.regist_dialog_ok) startActivity(new Intent(this,LoginActivity.class));
+                oneButtonDialog.dismiss();
 
 
         }

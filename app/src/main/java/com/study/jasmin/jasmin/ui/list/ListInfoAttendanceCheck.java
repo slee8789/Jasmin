@@ -2,8 +2,10 @@ package com.study.jasmin.jasmin.ui.list;
 
 public class ListInfoAttendanceCheck {
     private String name;
+    private int status; // 1:출석  2:지각  3:결석 (DB의 숫자 의미 일치 필요!!)
 
     public ListInfoAttendanceCheck() {
+        this.name = null;
     }
 
     public ListInfoAttendanceCheck(String name) {
@@ -14,8 +16,15 @@ public class ListInfoAttendanceCheck {
         return name;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+    public void setStatus(String name) {
+        this.status = status;
     }
 }
 

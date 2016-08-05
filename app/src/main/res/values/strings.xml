@@ -24,12 +24,14 @@
 
     <!--regist_dialog-->
     <string name="regist_dialog_auth">입력하신 메일로 인증번호를 전송하였습니다.</string>
-    <string name="regist_dialog_mail">이메일을 입력하여 주세요.</string>
+    <string name="regist_dialog_input_error">작성하지 않은 항목이 있습니다.</string>
     <string name="regist_dialog_mailform">이메일 형식이 맞지 않습니다.</string>
     <string name="regist_dialog_pw_disharmony">비밀번호가 일치하지 않습니다.</string>
     <string name="regist_dialog_more8">비밀번호를 8자리 이상 입력하여주세요.</string>
     <string name="regist_dialog_name">이름을 입력하여 주세요</string>
     <string name="regist_dialog_sex">성별을 선택하여 주세요.</string>
+    <string name="regist_dialog_title">입력 오류</string>
+    <string name="regist_dialog_ok">회원가입을 축하합니다.</string>
 
     <!--Login -->
     <string name="login_login">로그인</string>
@@ -71,6 +73,7 @@
     <string name="notice_title">제목</string>
     <string name="notice_date">작성일</string>
     <string name="notice_writer">작성자</string>
+    <string name="notice_views">조회수</string>
 
     <!-- group_notice_detail -->
     <string name="detail_attachment">첨부파일</string>
@@ -153,8 +156,10 @@
     <string name="menu_favorite">즐겨찾기</string>
 
 
-
     <!-- ///////////////////////////////////test/////////////////////////////////////-->
+
+    <string name="connecting">연결중 입니다...</string>
+
     <string name="season">시즌</string>
     <string name="season_prompt">시즌 선택</string>
     <string-array name="season_array">

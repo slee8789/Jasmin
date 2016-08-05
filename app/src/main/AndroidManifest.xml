@@ -13,9 +13,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.IntroActivity">
+        </activity>
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -97,15 +98,19 @@
             android:name=".ui.activity.GroupNoticeAddActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".ui.activity.GroupNoticeDetailActivity" />
-        <activity android:name=".ui.activity.GroupManageAttendanceActivity"
-            android:label="@string/manage_attendance">
-            </activity>
-        <activity android:name=".ui.activity.GroupManageAssignmentActivity"
-            android:label="@string/manage_assignment"/>
-        <activity android:name=".ui.activity.GroupManageReceivablesActivity"
-            android:label="@string/manage_receivables"/>
-        <activity android:name=".ui.activity.GroupManageMoneybookActivity"
-            android:label="@string/manage_moneybook"></activity>
+        <activity
+            android:name=".ui.activity.GroupManageAttendanceActivity"
+            android:label="@string/manage_attendance"></activity>
+        <activity
+            android:name=".ui.activity.GroupManageAssignmentActivity"
+            android:label="@string/manage_assignment" />
+        <activity
+            android:name=".ui.activity.GroupManageReceivablesActivity"
+            android:label="@string/manage_receivables" />
+        <activity
+            android:name=".ui.activity.GroupManageMoneybookActivity"
+            android:label="@string/manage_moneybook" />
+
     </application>
 
 </manifest>

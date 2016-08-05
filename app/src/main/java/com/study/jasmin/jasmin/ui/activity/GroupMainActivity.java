@@ -95,7 +95,13 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
     @Override
     public void onFragmentSelected(int position) {
         Log.d(TAG,"onFragmentSelectd p clicked position : " + position);
-          startActivity(new Intent(this, GroupNoticeDetailActivity.class));
+        Intent intent = new Intent(this, GroupNoticeDetailActivity.class);
+//        intent.putExtra("title","");
+//        intent.putExtra("writer","");
+//        intent.putExtra("date","");
+//        intent.putExtra("views","");
+//        intent.putExtra("content","");
+        startActivity(intent);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

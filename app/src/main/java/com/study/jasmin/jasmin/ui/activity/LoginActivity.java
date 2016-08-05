@@ -1,6 +1,7 @@
 package com.study.jasmin.jasmin.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox cbAuto;
     private TextView tvFindPassword;
     private FindPwDialog findPwDialog;
+    private SharedPreferences mPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         findViews();
         initViews();
+
 
     }
 
@@ -45,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initViews() {
         btnDoLogin.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
+
     }
 
     @Override
@@ -72,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findPwDialog.show();
     }
 
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -87,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.tv_find_password:
                 Log.d(TAG,"click tv_find_password");
                 showFindPwDialog();
+
 //                startActivity(new Intent(this,FindPwDialog_backup.class));
                 break;
 
@@ -98,8 +105,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStop");
+        mPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putBoolean("autoLogin",cbAuto.isChecked());
+        editor.commit();
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         Log.d(TAG,"click onBackPressed");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy");
+        mPref = getSharedPreferences("userInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putBoolean("autoLogin",cbAuto.isChecked());
+        editor.commit();
+    }
+
+
 }

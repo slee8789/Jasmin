@@ -2,6 +2,7 @@ package com.study.jasmin.jasmin.ui.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.activity.EditInfoActivity;
-import com.study.jasmin.jasmin.ui.activity.SettingGroupPenaltyActivity;
 
 
 /**
@@ -22,6 +22,7 @@ import com.study.jasmin.jasmin.ui.activity.SettingGroupPenaltyActivity;
  */
 public class SettingFragment extends Fragment {
     static final String[] LIST_MENU = {"","회원정보 수정", "로그아웃","카카오톡 연동하기"};
+    private SharedPreferences mPref;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -47,6 +48,10 @@ public class SettingFragment extends Fragment {
                         startActivity(new Intent(getActivity(),EditInfoActivity.class));
                         break;
                     case 2:
+                        mPref = getContext().getSharedPreferences("userInfo", getContext().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = mPref.edit();
+                        editor.putBoolean("autoLogin",false);
+                        editor.commit();
                         //startActivity(new Intent(getActivity(), MyPenaltyActivity.class));
                         break;
                     case 3:

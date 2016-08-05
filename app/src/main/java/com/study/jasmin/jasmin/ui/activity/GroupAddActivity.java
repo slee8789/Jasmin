@@ -3,6 +3,7 @@ package com.study.jasmin.jasmin.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import com.study.jasmin.jasmin.R;
 
 public class GroupAddActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "GroupAddActivity";
 
     private Button btn_complete;
     private EditText groupName;
@@ -31,7 +33,8 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
         switch(v.getId()) {
             case R.id.btn_complete:
                 Intent intent = new Intent(this,GroupInviteActivity.class);
-                intent.putExtra("groupname",groupName.getText());
+                Log.d(TAG,"groupName : "+ groupName.getText());
+                intent.putExtra("groupname",groupName.getText().toString());
 //                intent.putExtra("groupcover",groupCover.getI)
                 startActivity(intent);
                 finish();
