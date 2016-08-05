@@ -2,7 +2,7 @@ package com.study.jasmin.jasmin.ui.list;
 
 public class ListInfoAttendanceCheck {
     private String name;
-    private int status; // 1:Ãâ¼®  2:Áö°¢  3:°á¼® (DBÀÇ ¼ıÀÚ ÀÇ¹Ì ÀÏÄ¡ ÇÊ¿ä!!)
+    private int status; // 1. ì¶œì„ 2. ì§€ê° 3. ê²°ì„
 
     public ListInfoAttendanceCheck() {
         this.name = null;

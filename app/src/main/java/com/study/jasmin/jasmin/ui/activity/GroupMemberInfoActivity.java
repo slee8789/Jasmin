@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.item.ListViewAuthoritySharingAdapter;
@@ -15,21 +16,18 @@ import com.study.jasmin.jasmin.ui.item.ListViewMember;
 import java.util.ArrayList;
 
 public class GroupMemberInfoActivity extends AppCompatActivity implements View.OnClickListener{
-
-    ListView    listview;
-    Button      btnInvite;
-    Button      btnComplete;
+    public static final String TAG = "IntroActivity";
+    private ListView    listview;
+    private TextView    memberCount;
+    private Button      btnInvite;
+    private Button      btnComplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member_info);
-
-        //add button listener
-        btnInvite   = (Button)findViewById(R.id.btn_invite_member);
-        btnComplete = (Button)findViewById(R.id.btn_complete);
-        btnInvite.setOnClickListener(this);
-        btnComplete.setOnClickListener(this);
+        findViews();
+        initViews();
 
         //add ListView adapter
         ListViewAuthoritySharingAdapter adapter;
@@ -42,6 +40,22 @@ public class GroupMemberInfoActivity extends AppCompatActivity implements View.O
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.lv_member);
         listview.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void findViews() {
+        btnInvite   = (Button)findViewById(R.id.btn_invite_member);
+        btnComplete = (Button)findViewById(R.id.btn_complete);
+        memberCount = (TextView)findViewById(R.id.info_member_count);
+    }
+
+    private void initViews() {
+        btnInvite.setOnClickListener(this);
+        btnComplete.setOnClickListener(this);
     }
 
     public boolean loadItemsFromDB(ArrayList<ListViewMember> list) {
@@ -67,9 +81,9 @@ public class GroupMemberInfoActivity extends AppCompatActivity implements View.O
             case R.id.btn_complete:
                 finish();
                 break;
+
             case R.id.btn_invite_member:
                 startActivity(new Intent(this,GroupInviteActivity.class));
-                finish();
                 break;
         }
     }

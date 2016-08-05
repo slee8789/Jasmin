@@ -121,6 +121,9 @@
     <!--study_info -->
     <string name="info_study">스터디 정보</string>
     <string name="info_member">멤버 정보</string>
+    <string name="member">멤버</string>
+    <string name="info_count">(0)</string>
+    <string name="info_member_invite">멤버 초대</string>
     <string name="info_member_add">멤버 추가</string>
     <string name="info_penalty">벌금</string>
     <string name="info_attendance">출결</string>s

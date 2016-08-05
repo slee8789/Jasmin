@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.core.JasminGetDataTask;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.util.CheckAvailability;
@@ -21,15 +22,20 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private Button btnDoRegister;
     private Button btnMailAuth;
     private EditText etName;
+    private String name;
     private EditText etPw;
+    private String pw;
     private EditText etPwCheck;
     private EditText etMail;
+    private String mail;
     private RadioButton radioMale;
     private RadioButton radioFemale;
+    private String sex; // 0: male, 1 : female
     private OneButtonDialog oneButtonDialog;
     private int dialogTitle;
     private int dialogMsg;
     private ProgressDialog TestProgress;
+    private JasminGetDataTask jasminGetDataTask;
 
 
     @Override
@@ -38,6 +44,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_regist);
         findViews();
         initViews();
+
     }
 
     private void findViews() {
@@ -101,13 +108,18 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 boolean sexChk = CheckAvailability.isRadioChk(radioMale, radioFemale);
 
                 dialogTitle = R.string.regist_dialog_title;
-                if(!emptyChk) dialogMsg = R.string.regist_dialog_input_error;
-                else if(!mailChk) dialogMsg = R.string.regist_dialog_mailform;
-                else if(!pwChk) dialogMsg = R.string.regist_dialog_pw_disharmony;
-                else if(!pwLengthChk) dialogMsg = R.string.regist_dialog_more8;
-                else if(!sexChk) dialogMsg = R.string.regist_dialog_sex;
+                if(!emptyChk) {dialogMsg = R.string.regist_dialog_input_error;}
+                else if(!mailChk) {dialogMsg = R.string.regist_dialog_mailform;}
+                else if(!pwChk) {dialogMsg = R.string.regist_dialog_pw_disharmony;}
+                else if(!pwLengthChk) {dialogMsg = R.string.regist_dialog_more8;}
+                else if(!sexChk) {dialogMsg = R.string.regist_dialog_sex;}
                 //Todo: 메일 인증하기 추가.
                 else {
+                    mail = etMail.getText().toString();
+                    pw = etPw.getText().toString();
+                    name = etName.getText().toString();
+                    sex = radioMale.isChecked() ? 0+"" : 1+"";
+
                     dialogTitle = R.string.regist_regist;
                     dialogMsg = R.string.regist_dialog_ok;
                 }
@@ -119,7 +131,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d(TAG, "click btn_mail_auth");
                 dialogTitle = R.string.regist_do_mail_auth;
                 dialogMsg = R.string.regist_dialog_auth;
-//                showOneButtonDialog(dialogTitle, dialogMsg);
+                showOneButtonDialog(dialogTitle, dialogMsg);
 //                TestProgress.show();
                 break;
 
@@ -127,7 +139,9 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d(TAG, "click onebutton_ok");
                 if(dialogMsg == R.string.regist_dialog_ok) startActivity(new Intent(this,LoginActivity.class));
                 oneButtonDialog.dismiss();
-
+                oneButtonDialog.cancel();
+                jasminGetDataTask = JasminGetDataTask.getInstance("api/regiRequest", mail,pw,name,sex);
+                jasminGetDataTask.execute(jasminGetDataTask.getParams());
 
         }
     }

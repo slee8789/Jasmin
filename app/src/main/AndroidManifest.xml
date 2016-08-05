@@ -3,6 +3,7 @@
     package="com.study.jasmin.jasmin">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".core.JasminApplication"
@@ -12,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.IntroActivity">
-        </activity>
+        <activity android:name=".ui.activity.IntroActivity"></activity>
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,7 +69,9 @@
         <activity
             android:name=".ui.activity.GroupStudyInfoActivity"
             android:label="@string/info_study" />
-        <activity android:name=".ui.activity.GroupMemberInfoActivity" />
+        <activity
+            android:name=".ui.activity.GroupMemberInfoActivity"
+            android:label="@string/info_member" />
         <activity android:name=".ui.activity.GroupPenaltyActivity" />
         <activity android:name=".ui.activity.GroupAttendanceInfoActivity" />
         <activity android:name=".ui.activity.GroupMoneybookInfoActivity" />
@@ -100,7 +103,7 @@
         <activity android:name=".ui.activity.GroupNoticeDetailActivity" />
         <activity
             android:name=".ui.activity.GroupManageAttendanceActivity"
-            android:label="@string/manage_attendance"></activity>
+            android:label="@string/manage_attendance" />
         <activity
             android:name=".ui.activity.GroupManageAssignmentActivity"
             android:label="@string/manage_assignment" />
@@ -111,6 +114,10 @@
             android:name=".ui.activity.GroupManageMoneybookActivity"
             android:label="@string/manage_moneybook" />
 
+        <service
+            android:name=".core.JasminService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
