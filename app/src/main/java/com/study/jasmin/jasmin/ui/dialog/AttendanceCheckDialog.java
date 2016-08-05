@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by swan on 2016-08-03.
  */
-public class AttendanceCheckDialog extends Dialog{
+public class AttendanceCheckDialog extends Dialog  {
 
     private final String TAG = "AttendanceCheckDialog";
     private View.OnClickListener buttonOkListener;
@@ -64,7 +64,7 @@ public class AttendanceCheckDialog extends Dialog{
     }
 
     public void initViews() {
-        adapter = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, getItemsFromDB(), true);
+        adapter = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, getItemsFromDB(), true, this);
         listView.setAdapter(adapter);
         btnOk.setOnClickListener(buttonOkListener);
         btnCancel.setOnClickListener(buttonCancelListener);
