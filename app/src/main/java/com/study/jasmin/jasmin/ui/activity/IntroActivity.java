@@ -10,15 +10,23 @@ import com.study.jasmin.jasmin.R;
 
 public class IntroActivity extends Activity implements View.OnClickListener{
     public static final String TAG = "IntroActivity";
-    Button btnRegist;
-    Button btnLogin;
+    private Button btnRegist;
+    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
+        setContentView(R.layout.activity_intro2);
+        findViews();
+        initViews();
+    }
+
+    private void findViews() {
         btnRegist = (Button)findViewById(R.id.btn_register);
         btnLogin = (Button)findViewById(R.id.btn_login);
+    }
+
+    private void initViews() {
         btnRegist.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
     }
