@@ -55,7 +55,7 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<ListInfoAttendance> im
         // ListBtnClickListener(SettingAssignmentActivity)의 onListBtnClick() 함수 호출.
         if (this.listBtnClickListener != null) {
             this.listBtnClickListener.onListBtnClick((int)v.getTag()) ;
-            //Toast.makeText(this.getContext(), "어뎁터 아이템 클릭 테스트", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), "어뎁터 아이템 클릭 테스트", Toast.LENGTH_SHORT).show();
         }
     }
 
