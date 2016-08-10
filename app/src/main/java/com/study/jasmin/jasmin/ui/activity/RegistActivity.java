@@ -11,13 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.core.JasminGetDataTask;
+import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.util.CheckAvailability;
 
-public class RegistActivity extends AppCompatActivity implements View.OnClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class RegistActivity extends AppCompatActivity implements View.OnClickListener, Callback {
     public static final String TAG = "RegistActivity";
     private Button btnDoRegister;
     private Button btnMailAuth;
@@ -35,8 +41,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private int dialogTitle;
     private int dialogMsg;
     private ProgressDialog TestProgress;
-    private JasminGetDataTask jasminGetDataTask;
-
+//    private JasminGetDataTask jasminGetDataTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,9 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_regist);
         findViews();
         initViews();
-
     }
+
+
 
     private void findViews() {
         btnDoRegister = (Button) findViewById(R.id.btn_do_register);
@@ -140,11 +146,33 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 if(dialogMsg == R.string.regist_dialog_ok) startActivity(new Intent(this,LoginActivity.class));
                 oneButtonDialog.dismiss();
                 oneButtonDialog.cancel();
-                jasminGetDataTask = JasminGetDataTask.getInstance("api/regiRequest", mail,pw,name,sex);
-                jasminGetDataTask.execute(jasminGetDataTask.getParams());
+
+//                jasminGetDataTask = JasminGetDataTask.getInstance();
+//                jasminGetDataTask.setUrl("api/regiRequest");
+//                jasminGetDataTask.setKeyParams("mail","pw","name","sex");
+//                jasminGetDataTask.setValueParams(mail,pw,name,sex);
+//                jasminGetDataTask.setExecute();
+
+                RestClient.RestService service = RestClient.getClient();
+                Call<JsonObject> call = service.registerResult(mail,pw,name,sex);
+                call.enqueue(this);
 
         }
     }
 
+    @Override
+    public void onResponse(Call call, Response response) {
+        Log.d(TAG,"Status Code = " + response.code());
+        Log.d(TAG,"Status Message = " + response.message());
+        Gson gson = new Gson();
+        String jsonInString = gson.toJson(response.body());
+        Log.d(TAG,"Status Message to Json = " + jsonInString);
 
+
+    }
+
+    @Override
+    public void onFailure(Call call, Throwable t) {
+        Log.d(TAG,"ResponseFail = " + call);
+    }
 }

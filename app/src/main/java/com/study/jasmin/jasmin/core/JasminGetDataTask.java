@@ -2,10 +2,10 @@ package com.study.jasmin.jasmin.core;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.webkit.CookieManager;
 
 import com.study.jasmin.jasmin.http.HttpRequester;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,16 +16,17 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
     public static final String TAG = "JasminGetDataTask";
 
     private String url;
-    private String[] params;
+    private String[] valueParams;
+    private String[] keyParams;  // json key로 사용할 변수
 
     private static JasminGetDataTask instance;
 
     public JasminGetDataTask() {
+        CookieManager cookieManager = CookieManager.getInstance();
     }
 
-    public JasminGetDataTask(String url, String ... params) {
-        this.url = url;
-        this.params = params;
+    public void setExecute() {
+        this.execute(keyParams);
     }
 
     /** Returns singleton class instance */
@@ -40,26 +41,23 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
         return instance;
     }
 
-    public static JasminGetDataTask getInstance(String url, String ... params) {
-
-        if (instance == null) {
-            synchronized (JasminGetDataTask.class) {
-                if (instance == null) {
-                    instance = new JasminGetDataTask(url, params);
-                }
-            }
-        }
-        return instance;
-
+    public void setUrl(String url) {
+        this.url = url;
     }
+
+    public void setValueParams(String ... params) {
+        this.valueParams = params;
+    }
+
+    public void setKeyParams(String ... params) {
+        this.keyParams = params;
+    }
+
 
     public String getUrl() {
         return url;
     }
 
-    public String[] getParams() {
-        return params;
-    }
 
     @Override
     protected void onPreExecute() {
@@ -68,13 +66,11 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... params) {
-        HttpRequester httpRequester = new HttpRequester("http://172.30.103.155:8080/jasmin/" + url);
-        httpRequester.addParameter("mail", params[0]);
-        httpRequester.addParameter("pw", params[1]);
-        httpRequester.addParameter("name", params[2]);
-        httpRequester.addParameter("sex", params[3]);
+//        Log.d(TAG,"key : " + keyParams[i] + ", value : " + valueParams[i]);
+        HttpRequester httpRequester = new HttpRequester("http://192.168.0.2:8080/jasmin/" + url);
+        for( int i=0; i < params.length; i++ ) httpRequester.addParameter(keyParams[i],valueParams[i]);
         String result = httpRequester.sendPost();
-
+        Log.d(TAG,"sendPost result : " + result);
         return result;
     }
 
@@ -84,9 +80,10 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
 
         try {
             JSONObject jsObject = new JSONObject(string);
-            jsObject.get("result");
-            JSONArray jsArray = jsObject.getJSONArray("result");
-//            Log.d(TAG,"result : " + jsArray);
+            Object result = jsObject.get("result");
+
+            Log.d(TAG,"result : " + result.toString());
+//            JSONArray jsArray = jsObject.getJSONArray("result");
             /*for (int i = 0; i < jsArray.length(); i++) {
                 JSONObject jobj = jsArray.getJSONObject(i);
                 String mail = jobj.getString("mail");
@@ -98,5 +95,6 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
         } catch (JSONException e) {
             Log.d(TAG,"e : " + e);
         }
+
     }
 }
