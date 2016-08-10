@@ -117,7 +117,9 @@
     <string name="moneybook_add">추가</string>
     <string name="moneybook_deposit">입금</string>
     <string name="moneybook_withdraw">출금</string>
-
+    <string name="moneybook_money">금액</string>
+    <string name="moneybook_comment">내역</string>
+    <string name="moneybook_date">일자</string>
     <!--study_info -->
     <string name="info_study">스터디 정보</string>
     <string name="info_member">멤버 정보</string>

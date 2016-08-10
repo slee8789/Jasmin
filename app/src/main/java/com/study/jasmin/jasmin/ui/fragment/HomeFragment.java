@@ -94,7 +94,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private List<ListInfoGroup> getGroupItemList(){
-
         groupItems = new ArrayList<ListInfoGroup>();
         return groupItems;
     }
@@ -102,7 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private GridLayoutManager lLayout;
 
     private void addStudy(String name, int cover) {
-        groupItems.add(new ListInfoGroup("United States", R.drawable.one));
+        groupItems.add(new ListInfoGroup(0,"United States", R.drawable.one));
         rcAdapter.notifyDataSetChanged();
     }
 

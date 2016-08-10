@@ -12,16 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.ui.activity.AssignmentCheckActivity;
-import com.study.jasmin.jasmin.ui.activity.AttendanceCheckActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageAssignmentActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageAttendanceActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageMoneybookActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageReceivablesActivity;
-import com.study.jasmin.jasmin.ui.dialog.AlertDialog;
-import com.study.jasmin.jasmin.ui.dialog.MoneybookDialog;
 
-import com.study.jasmin.jasmin.ui.list.ListAdapterManagement;
 
 
 public class GroupManageFragment extends Fragment implements View.OnClickListener {

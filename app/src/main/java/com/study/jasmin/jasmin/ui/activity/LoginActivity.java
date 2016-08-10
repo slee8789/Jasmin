@@ -1,5 +1,6 @@
 package com.study.jasmin.jasmin.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,10 +13,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.util.CheckAvailability;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = "LoginActivity";
@@ -25,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox cbAuto;
     private TextView tvFindPassword;
     private FindPwDialog findPwDialog;
-    private SharedPreferences mPref;
+    private JasminPreference mPref;
 
 
     @Override
@@ -49,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initViews() {
         btnDoLogin.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
-
+        mPref = new JasminPreference(this);
     }
 
     @Override
@@ -93,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.tv_find_password:
                 Log.d(TAG,"click tv_find_password");
                 showFindPwDialog();
-
 //                startActivity(new Intent(this,FindPwDialog_backup.class));
                 break;
 
@@ -108,10 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         Log.d(TAG,"onStop");
-        mPref = getSharedPreferences("userInfo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putBoolean("autoLogin",cbAuto.isChecked());
-        editor.commit();
+        mPref.put("userInfo",cbAuto.isChecked());
     }
 
     @Override
@@ -124,11 +123,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"onDestroy");
-        mPref = getSharedPreferences("userInfo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putBoolean("autoLogin",cbAuto.isChecked());
-        editor.commit();
     }
-
-
 }

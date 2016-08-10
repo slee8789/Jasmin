@@ -12,13 +12,21 @@ import com.study.jasmin.jasmin.R;
 
 import java.util.ArrayList;
 
-public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> {
+public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> implements View.OnClickListener{
     private ArrayList<ListInfoReceivables> arraySelectInfo;
     private Context context;
-    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<ListInfoReceivables> objects) {
+    private ListBtnClickListener listBtnClickListener;
+
+    public interface ListBtnClickListener{
+        void onListBtnClick(ListInfoReceivables listInfoReceivables);
+    }
+
+    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<ListInfoReceivables> objects,ListBtnClickListener clickListener) {
         super(context, resource, objects);
         this.arraySelectInfo = objects;
         this.context = context;
+        this.listBtnClickListener = clickListener ;
+
     }
 
     public ArrayList<ListInfoReceivables> getArraySelectInfo() {
@@ -47,13 +55,27 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
             TextView date = (TextView) view.findViewById(R.id.receivables_date);
             TextView reason = (TextView) view.findViewById(R.id.receivables_reason);
             TextView money = (TextView) view.findViewById(R.id.receivables_money);
+            ImageView cancle = (ImageView)view.findViewById(R.id.receivables_cancel);
 
             name.setText(listInfo.getName());
             date.setText(listInfo.getDate());
             reason.setText(listInfo.getReason());
             money.setText(listInfo.getMoney());
+
+            cancle.setTag(listInfo);
+            cancle.setOnClickListener(this);
         }
+
+
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (this.listBtnClickListener != null) {
+            this.listBtnClickListener.onListBtnClick((ListInfoReceivables)v.getTag()) ;
+
+        }
+
+    }
 }
