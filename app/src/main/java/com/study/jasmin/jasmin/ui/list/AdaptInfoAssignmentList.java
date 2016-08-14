@@ -1,8 +1,6 @@
 package com.study.jasmin.jasmin.ui.list;
-import android.app.Dialog;
+
 import android.content.Context;
-import android.media.Image;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Assignment;
 import com.study.jasmin.jasmin.ui.dialog.AssignmentCheckDialog;
-import com.study.jasmin.jasmin.ui.item.ListViewAlarmAdapter;
 
 import java.util.ArrayList;
 
-public class AdaptInfoAssignmentList extends ArrayAdapter<ListInfoAssignment> implements View.OnClickListener {
-    private ArrayList<ListInfoAssignment> arraySelectInfo;
+public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment> implements View.OnClickListener {
+    private ArrayList<Assignment> arraySelectInfo;
     private Context context;
     private onButtonClickListener listButtonClickListener;
 
@@ -27,7 +25,7 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<ListInfoAssignment> im
         // void onSetNameText(SelectInfo selectInfo);
     }
 
-    public AdaptInfoAssignmentList(Context context, int resource, ArrayList<ListInfoAssignment> objects) {
+    public AdaptInfoAssignmentList(Context context, int resource, ArrayList<Assignment> objects) {
         super(context, resource, objects);
         this.arraySelectInfo = objects;
         this.context = context;
@@ -46,11 +44,11 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<ListInfoAssignment> im
         adptCallback = callback;
     }
 
-    public ArrayList<ListInfoAssignment> getArraySelectInfo() {
+    public ArrayList<Assignment> getArraySelectInfo() {
         return arraySelectInfo;
     }
 
-    public void setArraySelectInfo(ArrayList<ListInfoAssignment> arraySelectInfo) {
+    public void setArraySelectInfo(ArrayList<Assignment> arraySelectInfo) {
         this.arraySelectInfo = arraySelectInfo;
     }
 
@@ -65,13 +63,13 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<ListInfoAssignment> im
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_assignment_info, null);
         }
-        final ListInfoAssignment listInfo = arraySelectInfo.get(position);
+        final Assignment listInfo = arraySelectInfo.get(position);
 
         if (listInfo != null) {
             TextView title = (TextView) view.findViewById(R.id.assignment_title);
             TextView status = (TextView) view.findViewById(R.id.assignment_status);
-            title.setText(listInfo.getTitle());
-            status.setText(listInfo.getStatus());
+            title.setText(listInfo.getHomework_title());
+            status.setText(listInfo.getHomework_content());
         }
 
         ImageView iv = (ImageView)view.findViewById(R.id.assignment_check);

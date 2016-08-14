@@ -1,8 +1,6 @@
 package com.study.jasmin.jasmin.util;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.Log;
 
 /**
@@ -20,14 +18,14 @@ public class JasminUtil {
         }
     }*/
 
-    public Drawable getDrawable(Context context, int id) {
+    /*public Drawable getDrawable(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= Build.VERSION_CODES.LOLLIPOP) {
             return context.getDrawable(id);
         } else {
             return context.getResources().getDrawable(id);
         }
-    }
+    }*/
 
     public static int[] getScreenSpec(Context context) {
 //        int deviceDip;
@@ -44,6 +42,12 @@ public class JasminUtil {
         Log.d(TAG, "deviceScreen : " + deviceScreenWidth + " " + deviceScreenHeight);
 //        Log.d(TAG, "dip : " + dipWidth + " " + dipHeight);
         return spec;
+    }
+
+
+    public static String dateYYYY_MM_DD (int year, int month, int day) {  // yyyy-mm-dd
+        String formattedDate = String.format("%d-%02d-%02d",year,month+1,day);
+        return formattedDate;
     }
 
 

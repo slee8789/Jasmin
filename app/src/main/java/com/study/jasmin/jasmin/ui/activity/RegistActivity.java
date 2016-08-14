@@ -41,6 +41,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private int dialogTitle;
     private int dialogMsg;
     private ProgressDialog TestProgress;
+    private boolean register;
 //    private JasminGetDataTask jasminGetDataTask;
 
     @Override

@@ -7,24 +7,32 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Assignment;
 import com.study.jasmin.jasmin.ui.dialog.AssignmentAddDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentList;
-import com.study.jasmin.jasmin.ui.list.ListInfoAssignment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GroupManageAssignmentActivity extends AppCompatActivity{
-
-    Button btnAdd;
-    ListView listView;
-    View.OnClickListener listener;
-    AdaptInfoAssignmentList adapt;
+    public static final String TAG = "GMAA";
+    private Button btnAdd;
+    private ListView listView;
+    private View emptyView;
+    private AdaptInfoAssignmentList adapt;
+    private Assignment[] assignments;
+    private ArrayList<Assignment> assignmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_manage_assignment);
 
+
+        Bundle extras = getIntent().getExtras();
+        assignments = (Assignment[])extras.get("assignments");
+        assignmentList = new ArrayList<Assignment>();
+        Collections.addAll(assignmentList, assignments);
         findViews();
         initViews();
     }
@@ -32,12 +40,14 @@ public class GroupManageAssignmentActivity extends AppCompatActivity{
     public void findViews(){
         btnAdd = (Button)findViewById(R.id.btn_add);
         listView = (ListView)findViewById(R.id.lv_assignment);
+        emptyView = findViewById(R.id.list_empty);
     }
 
     public void initViews(){
 
-        adapt = new AdaptInfoAssignmentList(this, R.layout.list_assignment_info, getItemFromDB());
+        adapt = new AdaptInfoAssignmentList(this, R.layout.list_assignment_info, assignmentList);
         listView.setAdapter(adapt);
+        listView.setEmptyView(emptyView);
         btnAdd.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 AssignmentAddDialog dialog = new AssignmentAddDialog(v.getContext());
@@ -45,19 +55,5 @@ public class GroupManageAssignmentActivity extends AppCompatActivity{
             }
         });
     }
-
-    public ArrayList<ListInfoAssignment> getItemFromDB(){
-        ArrayList<ListInfoAssignment> list = new ArrayList<ListInfoAssignment>();
-        ListInfoAssignment item;
-        //item �Է�
-        for(int i=0; i<20; i++){
-            item = new ListInfoAssignment();
-            item.setTitle(Integer.toString(i+1)+"dfdfdf");
-            item.setStatus("0/0");
-            list.add(item);
-        }
-        return list;
-    }
-
 
 }
