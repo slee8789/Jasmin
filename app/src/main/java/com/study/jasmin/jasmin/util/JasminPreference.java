@@ -3,6 +3,15 @@ package com.study.jasmin.jasmin.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.study.jasmin.jasmin.entity.QnA;
+import com.study.jasmin.jasmin.entity.Study;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by swan on 2016-08-10.
@@ -55,6 +64,30 @@ public class JasminPreference {
         } catch (Exception e) {
             return dftValue;
         }
+    }
+
+    public Object getJSONValue(String key, String dftValue) {
+        Gson gson = new GsonBuilder().create();
+        ArrayList <Object> list = new ArrayList<Object>();
+        switch (key) {
+            case "qnaList":
+                Log.d("","qnaList ");
+                QnA[] qnas = gson.fromJson(this.getValue(key,dftValue), QnA[].class);
+                Collections.addAll(list,qnas);
+                return list;
+
+            case "studyList":
+                Study[] studies = gson.fromJson(this.getValue(key,dftValue), Study[].class);
+                Collections.addAll(list,studies);
+                return list;
+        }
+        try {
+
+
+        } catch (Exception e) {
+            return null;
+        }
+        return list;
     }
 
     public long getValue(String key, long dftValue) {

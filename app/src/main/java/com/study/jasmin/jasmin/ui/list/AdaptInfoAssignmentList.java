@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
@@ -14,16 +14,9 @@ import com.study.jasmin.jasmin.ui.dialog.AssignmentCheckDialog;
 
 import java.util.ArrayList;
 
-public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment> implements View.OnClickListener {
+public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment>  {
     private ArrayList<Assignment> arraySelectInfo;
     private Context context;
-    private onButtonClickListener listButtonClickListener;
-
-    public interface onButtonClickListener {
-        //void onAddBtnClick(ListInfoAssignment selectInfo);
-        void onListBtnClick(int  positon);
-        // void onSetNameText(SelectInfo selectInfo);
-    }
 
     public AdaptInfoAssignmentList(Context context, int resource, ArrayList<Assignment> objects) {
         super(context, resource, objects);
@@ -31,30 +24,8 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment> implements
         this.context = context;
     }
 
-    public AdaptInfoAssignmentList(Context context, int resource) {
-        super(context, resource);
-        // this.arraySelectInfo =objects;
-        this.context = context;
-    }
-
-    private onButtonClickListener adptCallback = null;
-
-
-    public void setOnButtonClickListener(onButtonClickListener callback) {
-        adptCallback = callback;
-    }
-
-    public ArrayList<Assignment> getArraySelectInfo() {
-        return arraySelectInfo;
-    }
-
-    public void setArraySelectInfo(ArrayList<Assignment> arraySelectInfo) {
-        this.arraySelectInfo = arraySelectInfo;
-    }
-
-
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View view = convertView;
 
@@ -67,22 +38,20 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment> implements
 
         if (listInfo != null) {
             TextView title = (TextView) view.findViewById(R.id.assignment_title);
-            TextView status = (TextView) view.findViewById(R.id.assignment_status);
             title.setText(listInfo.getHomework_title());
-            status.setText(listInfo.getHomework_content());
         }
 
-        ImageView iv = (ImageView)view.findViewById(R.id.assignment_check);
-        iv.setOnClickListener(this);
+        Button btnDoCheck = (Button)view.findViewById(R.id.assignment_do_check);
+        btnDoCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AssignmentCheckDialog dialog = new AssignmentCheckDialog(v.getContext(),listInfo.getHomework_title());
+                dialog.show();
+
+            }
+        });
         return view;
     }
-    @Override
-    public void onClick(View v) {
-        AssignmentCheckDialog dialog = new AssignmentCheckDialog(v.getContext());
-        dialog.show();
-        if (this.listButtonClickListener != null) {
-            this.listButtonClickListener.onListBtnClick((int)v.getTag()) ;
 
-        }
-    }
 }

@@ -6,9 +6,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:layout_margin="20dp"
-        android:layout_centerInParent="true">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -18,63 +18,66 @@
             android:text="과제 체크"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/colorWhite"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:id="@+id/tv_title"
-                android:text="title : 과제명"
-                android:gravity="left"
-                android:textColor="@color/colorBlack"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:background="@color/colorWhite"
+            android:gravity="left"
+            android:text="과제명"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lv_assignment_check"
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center"
             android:background="@color/colorWhite"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorBlack"></ListView>
+            android:textColor="@color/colorBlack"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorWhite"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_ok"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:text="확인"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:text="취소"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

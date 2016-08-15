@@ -72,6 +72,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
 
             case R.id.btn_attendance:
+                id = R.id.btn_attendance;
                 startActivity(new Intent(getActivity(), GroupManageAttendanceActivity.class));
                 break;
 
@@ -92,6 +93,8 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                 break;
         }
     }
+
+    int id;
 
     @Override
     public void onResponse(Call call, Response response) {

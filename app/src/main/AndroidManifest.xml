@@ -63,12 +63,6 @@
             android:name=".ui.activity.GroupReplyActivity"
             android:label="@string/reply_title" />
         <activity
-            android:name=".ui.activity.AttendanceCheckActivity"
-            android:label="@string/attendance_title" />
-        <activity
-            android:name=".ui.activity.AssignmentCheckActivity"
-            android:label="@string/assignment_title" />
-        <activity
             android:name=".ui.activity.GroupStudyInfoActivity"
             android:label="@string/info_study" />
         <activity

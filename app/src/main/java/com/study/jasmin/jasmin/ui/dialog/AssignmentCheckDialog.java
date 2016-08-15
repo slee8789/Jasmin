@@ -8,16 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentCheckList;
-import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceCheckList;
 import com.study.jasmin.jasmin.ui.list.ListInfoAssignmentCheck;
-import com.study.jasmin.jasmin.ui.list.ListInfoAttendanceCheck;
 
 import java.util.ArrayList;
 
@@ -32,10 +28,12 @@ public class AssignmentCheckDialog extends Dialog {
     private Button btnCancel;
     private TextView tvTitle;
     private ListView list;
+    private String title;
     ArrayList<ListInfoAssignmentCheck> items;
 
-    public AssignmentCheckDialog(Context context) {
+    public AssignmentCheckDialog(Context context, String title) {
         super(context);
+        this.title = title;
     }
 
     @Override
@@ -69,6 +67,7 @@ public class AssignmentCheckDialog extends Dialog {
     }
 
     public void initViews() {
+        tvTitle.setText(title);
         btnOk.setOnClickListener(buttonOkListener);
         btnCancel.setOnClickListener(buttonCancelListener);
         items = getItemsFromDB();

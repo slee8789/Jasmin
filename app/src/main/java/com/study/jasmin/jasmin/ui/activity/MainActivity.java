@@ -1,6 +1,5 @@
 package com.study.jasmin.jasmin.ui.activity;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,26 +7,30 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Display;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.QnA;
+import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.ui.fragment.ChattingFragment;
 import com.study.jasmin.jasmin.ui.fragment.HomeFragment;
 import com.study.jasmin.jasmin.ui.fragment.MyPageFragment;
 import com.study.jasmin.jasmin.ui.fragment.ServiceFragment;
 import com.study.jasmin.jasmin.ui.fragment.SettingFragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
+    private Study[] studies;
+    private QnA[] qnas;
+    private ArrayList<Study> studyList;
+    private ArrayList<QnA> qnaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         //Fragment
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_tabs);
@@ -81,25 +84,6 @@ public class MainActivity extends AppCompatActivity {
             return arrFragments.length;
         }
 
-        /*@Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position) {
-                case 0:
-                    return "Home";
-                case 1:
-                    return "MyPage";
-                case 2:
-                    return "Chatting";
-                case 3:
-                    return "Service";
-                case 4:
-                    return "Setting";
-                default:
-                    return "";
-            }
-
-        }*/
     }
 
 

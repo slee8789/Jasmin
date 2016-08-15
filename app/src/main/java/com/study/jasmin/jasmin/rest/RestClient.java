@@ -13,8 +13,8 @@ import retrofit2.http.POST;
 public class RestClient{
 
     private static RestService restService;
-//    private static String baseUrl = "http://172.20.10.12:8080/jasmin/" ;
-    private static String baseUrl = "http://172.20.10.12:8080/test/" ;
+    private static String baseUrl = "http://54.201.72.195:8081/test/" ; // aws
+//    private static String baseUrl = "http://172.20.10.12:8080/test/" ;
 
 
     public static RestService getClient() {
@@ -45,7 +45,7 @@ public class RestClient{
 
         @FormUrlEncoded
         @POST("api/regiRequest")
-        Call<JsonObject> registerResult(@Field("mail") String mail,
+        Call<JsonObject> registerResult(@Field("email") String mail,
                                         @Field("pw") String pw,
                                         @Field("name") String name,
                                         @Field("sex") String sex
@@ -54,6 +54,11 @@ public class RestClient{
         @FormUrlEncoded
         @POST("m/homework")
         Call<JsonObject> getAssignmentListByStudyNo(@Field("studyNo") int studyNo);
+
+        @FormUrlEncoded
+        @POST("m/check")
+        Call<JsonObject> Login(@Field("email") String email,
+                                  @Field("password") String password);
 
         @FormUrlEncoded
         @POST("m/homework/insert")

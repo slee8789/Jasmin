@@ -1,70 +1,63 @@
 package com.study.jasmin.jasmin.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by leesc on 2016-08-12.
  */
-public class User {
-    private String userNo;
-    private String userSex;
-    private String userName;
-    private String userEmail;
-    private String userKkid;
-    private String userPassword;
+public class User implements Serializable {
 
-    public User(String userNo, String userSex, String userName, String userEmail, String userKkid, String userPassword) {
-        this.userNo = userNo;
-        this.userSex = userSex;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.userKkid = userKkid;
-        this.userPassword = userPassword;
+    private int user_no;
+    private int user_sex;
+    private String user_email;
+    private String user_name;
+    private String user_kkid;
+
+    public User(int user_no, int user_sex, String user_email, String user_name, String user_kkid) {
+        this.user_no = user_no;
+        this.user_sex = user_sex;
+        this.user_email = user_email;
+        this.user_name = user_name;
+        this.user_kkid = user_kkid;
     }
 
-    public String getUserNo() {
-        return userNo;
+    public int getUser_no() {
+        return user_no;
     }
 
-    public void setUserNo(String userNo) {
-        this.userNo = userNo;
+    public void setUser_no(int user_no) {
+        this.user_no = user_no;
     }
 
-    public String getUserSex() {
-        return userSex;
+    public int getUser_sex() {
+        return user_sex;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex;
+    public void setUser_sex(int user_sex) {
+        this.user_sex = user_sex;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUser_email() {
+        return user_email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getUserKkid() {
-        return userKkid;
+    public String getUser_kkid() {
+        return user_kkid;
     }
 
-    public void setUserKkid(String userKkid) {
-        this.userKkid = userKkid;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setUser_kkid(String user_kkid) {
+        this.user_kkid = user_kkid;
     }
 }

@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.ui.activity.GroupAddActivity;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoGroupList;
-import com.study.jasmin.jasmin.ui.list.ListInfoGroup;
 import com.study.jasmin.jasmin.util.JasminProtocol;
 
 import java.util.ArrayList;
@@ -29,8 +29,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button btnMakeStudy;
     private RecyclerView rView;
     private AdaptInfoGroupList rcAdapter;
-    private List<ListInfoGroup> groupItems;
+    private List<Study> groupItems;
     private BroadcastReceiver broadcastReceiver = null;
+    private ArrayList<Study> studyList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "registerReceiver onReceive " + result);
                 switch (result) {
                     case "groupname":
-                        addStudy(result,0); //Todo: 서비스 또는 핸들러 고려
+//                        addStudy(result,0); //Todo: 서비스 또는 핸들러 고려
                         break;
                 }
             }
@@ -70,7 +71,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG,"onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+//        studyList = (ArrayList<Study>) getArguments().get("studies");
+//        Log.d(TAG,"studyList : " + studyList.toString());
         findViews(rootView);
         initViews();
         return rootView;
@@ -85,25 +90,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initViews() {
         registerReceiver();
         btnMakeStudy.setOnClickListener(this);
-        List<ListInfoGroup> rowListItem = getGroupItemList();
-        rView.setHasFixedSize(true);
-        rView.setLayoutManager(lLayout);
-        rcAdapter = new AdaptInfoGroupList(getContext(), rowListItem);
-        rView.setAdapter(rcAdapter);
-        rView.refreshDrawableState();
+//        List<Study> rowListItem = getGroupItemList();
+//        rView.setHasFixedSize(true);
+//        rView.setLayoutManager(lLayout);
+//        rcAdapter = new AdaptInfoGroupList(getContext(), rowListItem);
+//        rView.setAdapter(rcAdapter);
+//        rView.refreshDrawableState();
     }
 
-    private List<ListInfoGroup> getGroupItemList(){
-        groupItems = new ArrayList<ListInfoGroup>();
-        return groupItems;
+    private List<Study> getGroupItemList(){
+//        groupItems = new ArrayList<Study>();
+        return studyList;
     }
 
     private GridLayoutManager lLayout;
 
-    private void addStudy(String name, int cover) {
+    /*private void addStudy(String name, int cover) {
         groupItems.add(new ListInfoGroup(0,"United States", R.drawable.one));
         rcAdapter.notifyDataSetChanged();
-    }
+    }*/
 
 
     @Override

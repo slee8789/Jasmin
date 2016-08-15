@@ -1,28 +1,32 @@
 package com.study.jasmin.jasmin.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ExpandableListView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.QnA;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class ServiceHelpActivity extends AppCompatActivity {
 
     private ExpandableListView elvHelp;
     private  ArrayList<String> arrayGroup = new ArrayList<String>();
-
+    private JasminPreference mPref;
+    private ArrayList<QnA> qnaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_help);
+        mPref = new JasminPreference(this);
 
+        ArrayList<QnA> dfdf = (ArrayList<QnA>)mPref.getJSONValue("qnaList","null");
+        Log.d("ss","qnaList : " + dfdf.get(0).getQna_answer());
         elvHelp = (ExpandableListView) this.findViewById(R.id.elv_help);
         elvHelp.setAdapter(new BaseExpandableAdapter(this, getArrayGroup(), getArrayChild()));
         // 그룹이 열릴 경우 이벤트

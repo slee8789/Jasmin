@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
@@ -62,7 +62,7 @@ public class AdaptInfoAssignmentCheckList extends ArrayAdapter<ListInfoAssignmen
 
         if (listInfo != null) {
             TextView name = (TextView) view.findViewById(R.id.assignment_check_name);
-            Switch status = (Switch) view.findViewById(R.id.assignment_switch);
+            CheckBox status = (CheckBox) view.findViewById(R.id.assignment_switch);
             name.setText(listInfo.getName());
         }
         return view;
