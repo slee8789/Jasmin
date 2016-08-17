@@ -5,100 +5,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:layout_marginBottom="5dp"
     >
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/tv_ampm"
-        android:text="am"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:id="@+id/tv_time"
-        android:text="10:00"/>
-
     <LinearLayout
+        android:layout_weight="5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:id="@+id/iv_repeat"
-            android:text="반복"
-            android:layout_weight="1"
-            />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_day_mon"
-                android:text="월"
-                />
+        android:orientation="vertical"
 
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/tv_time"
+            android:text="10:00"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_marginRight="5dp"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/tv_repeat"
+                        android:text="매주"
+                        android:gravity="center"
+                        android:textSize="10sp"
+                        />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="0dp"
+                        android:id="@+id/tv_day_mon"
+                        android:text="월"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        />
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_day_tues"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/tv_day_tue"
                 android:text="화"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
                 android:id="@+id/tv_day_wed"
                 android:text="수"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
                 android:id="@+id/tv_day_thur"
                 android:text="목"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
                 android:id="@+id/tv_day_fri"
                 android:text="금"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
                 android:id="@+id/tv_day_sat"
                 android:text="토"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
                 android:id="@+id/tv_day_sun"
                 android:text="일"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-            </LinearLayout>
-            </LinearLayout>
-    <ImageView
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_setting"
-        />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/tv_context"
+            android:text="알람 정보 텍스트 출력"
+            android:gravity="left"/>
+        </LinearLayout>
 
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:id="@+id/iv_setting"
+        android:gravity="center"
+        />
 </LinearLayout>

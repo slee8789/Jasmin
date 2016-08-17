@@ -1,22 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="126dp"
-        android:layout_height="42dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/setting"
         android:id="@+id/setting"
-        android:layout_gravity="left|top"
         android:layout_marginLeft="15dp" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="476dp"
         android:id="@+id/lv3"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_below="@+id/setting"/>
 
-</FrameLayout>
+</RelativeLayout>

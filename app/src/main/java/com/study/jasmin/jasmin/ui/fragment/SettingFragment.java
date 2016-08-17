@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.ui.activity.EditInfoActivity;
+import com.study.jasmin.jasmin.ui.activity.LoginActivity;
+import com.study.jasmin.jasmin.ui.activity.MainActivity;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends Fragment {
-    static final String[] LIST_MENU = {"","회원정보 수정", "로그아웃","카카오톡 연동하기"};
-    private SharedPreferences mPref;
+    static final String[] LIST_MENU = {"회원정보 수정", "로그아웃","카카오톡 연동하기"};
+    private JasminPreference mPref = new JasminPreference(this.getContext());
 
     public SettingFragment() {
         // Required empty public constructor
@@ -34,27 +39,27 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);
-
         final ListView listView = (ListView) view.findViewById(R.id.lv3);
-        listView.setAdapter(adapter);
+        listView.setAdapter(new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU));
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getActivity(), Integer.toString(position), Toast.LENGTH_SHORT).show();
                 switch (position) {
-                    case 1:
+                    case 0: //회원정보수정
                         startActivity(new Intent(getActivity(),EditInfoActivity.class));
                         break;
-                    case 2:
-                        mPref = getContext().getSharedPreferences("userInfo", getContext().MODE_PRIVATE);
-                        SharedPreferences.Editor editor = mPref.edit();
-                        editor.putBoolean("autoLogin",false);
-                        editor.commit();
-                        //startActivity(new Intent(getActivity(), MyPenaltyActivity.class));
+                    case 1://로그아웃
+                        mPref = new JasminPreference(getActivity());
+                        mPref.put("qnaList","");
+                        mPref.put("userInfo","");
+                        mPref.put("studyList","");
+                        mPref.put("autoLogin",false);
+                        startActivity(new Intent(getActivity(),LoginActivity.class));
+                        getActivity().finish();
                         break;
-                    case 3:
+                    case 2://카카오톡 연동하기
                         //startActivity(new Intent(getActivity(), MyPenaltyActivity.class));
                         break;
                     default:

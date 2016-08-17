@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.study.jasmin.jasmin.ui.activity.GroupSettingAlarmAddActivity">
-
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout3">
-        <TextView
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.study.jasmin.jasmin.ui.activity.GroupSettingAlarmAddActivity"
+        android:id="@+id/linearLayout3"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_today"/>
-        <TimePicker
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tp_time"></TimePicker>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜/시간"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_today"
+                android:text=""/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TimePicker
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tp_time"
+                    android:timePickerMode="spinner"
+                    android:layout_gravity="center"
+                    />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,26 +90,38 @@
                 android:text="일"
                 android:id="@+id/btn_day_sun"
                 android:layout_weight="1"/>
-
         </LinearLayout>
-
-
-
-        <SeekBar
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/sb_sound"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:gravity="right">
+        <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="매주반복"
+                android:textSize="15dp"
+                android:id="@+id/cb_repeat"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내용"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/et_content"
+            android:hint="알람 내용을 입력하주세요"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="알람음"
-            android:id="@+id/btn_select_sound"
-            />
+            android:layout_alignParentBottom="true"
+            android:id="@+id/btn_add"
+            android:gravity="center"
+            android:text="추가"/>
 
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

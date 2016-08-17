@@ -32,21 +32,6 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
 
     }
 
-    public ArrayList<ListInfoAttendance> getItemsFromDB() {
-
-        ArrayList<ListInfoAttendance> list  = new ArrayList<ListInfoAttendance>();
-        ListInfoAttendance item ;
-
-        //item 입력
-        for(int i=0; i<20; i++){
-            item = new ListInfoAttendance();
-            item.setDate("yy-mm-dd");
-            item.setStatus("0/0/0");
-            list.add(item);
-        }
-        return list ;
-    }
-
     @Override
     public void onClick(View v) {
          switch (v.getId()) {
@@ -73,5 +58,22 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         listview.setAdapter(adapter);
         btnAdd.setOnClickListener(this);
     }
+
+
+    public ArrayList<ListInfoAttendance> getItemsFromDB() {
+
+        ArrayList<ListInfoAttendance> list  = new ArrayList<ListInfoAttendance>();
+        ListInfoAttendance item ;
+
+        //item 입력
+        for(int i=0; i<20; i++){
+            item = new ListInfoAttendance();
+            item.setDate("yy-mm-dd");
+            item.setStatus("0/0/0");
+            list.add(item);
+        }
+        return list ;
+    }
+
 
 }

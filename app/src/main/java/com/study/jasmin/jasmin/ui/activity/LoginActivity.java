@@ -12,8 +12,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
@@ -24,6 +27,9 @@ import com.study.jasmin.jasmin.util.JasminPreference;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private int dialogMsg;
     private String mail;
     private String pw;
+    private List<Object> userList;
     private ProgressDialog LoginProgress;
     private OneButtonDialog oneButtonDialog;
 
@@ -50,11 +57,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        autoLogin();
         findViews();
         initViews();
 
     }
 
+    private void autoLogin(){
+
+
+    }
     private void findViews() {
         btnDoLogin = (Button) findViewById(R.id.btn_do_login);
         etEmail = (EditText) findViewById(R.id.login_email);
@@ -107,9 +120,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.btn_do_login:
                 Log.d(TAG, "click btn_do_login");
+
+                mail = etEmail.getText().toString();
+                pw = etPassword.getText().toString();
+
+                userList = new ArrayList<Object>();
+                User u1 = new User(1,1,"email1","name1","kkid1");
+                User u2 = new User(2,2,"email2","name2","kkid2");
+                User u3 = new User(3,3,"email3","name3","kkid3");
+                userList.add(u1);
+                userList.add(u2);
+                userList.add(u3);
+
+                Gson gson = new Gson();
+                String strJson = gson.toJson(userList);
+
+                LoginProgress.show();
+
+                //Test_swan_001 _List 전달
+                /*
+                userList = new ArrayList<Object>();
+                User u1 = new User(1,1,"email1","name1","kkid1");
+                User u2 = new User(2,2,"email2","name2","kkid2");
+                User u3 = new User(3,3,"email3","name3","kkid3");
+                userList.add(u1);
+                userList.add(u2);
+                userList.add(u3);
+
+                RestClient.RestService service = RestClient.getClient();
+                Call<JsonObject> call = service.Login(mail, pw, userList);
+                */
+
+                RestClient.RestService service = RestClient.getClient();
+                Call<JsonObject> call = service.Login(mail, pw, strJson);
+                call.enqueue(this);
+
+/*
                 boolean emptyChk = CheckAvailability.isNotNull(etEmail.getText().toString(), etPassword.getText().toString());
                 boolean mailChk = CheckAvailability.isEmail(etEmail.getText().toString());
 
@@ -128,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Call<JsonObject> call = service.Login(mail, pw);
                     call.enqueue(this);
                 }
-
+                */
                 break;
 
             case R.id.onebutton_ok:
@@ -153,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
-        mPref.put("userInfo", cbAuto.isChecked());
+//        mPref.put("autoLogin", cbAuto.isChecked());
     }
 
     @Override
@@ -174,8 +224,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onResponse(Call call, Response response) {
         Log.d(TAG, "Retro Status Code = " + response.code());
         try {
+            String strTest = response.body().toString();
 
-            JSONObject jsObject = new JSONObject(response.body().toString());
+            JSONObject jsObject = new JSONObject(strTest);
             JSONArray userObj = jsObject.getJSONArray("userInfo");
             JSONArray studyObj = jsObject.getJSONArray("studyList");
             JSONArray qnaObj = jsObject.getJSONArray("qnaList");
@@ -183,12 +234,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPref.put("qnaList",qnaObj.toString());
             mPref.put("userInfo",userObj.toString());
             mPref.put("studyList",studyObj.toString());
-            Intent intent = new Intent(this, MainActivity.class);
+
+           Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             LoginProgress.cancel();
             LoginProgress.dismiss();
-            finish();
-
+           finish();
         } catch (JSONException e) {
             Log.d(TAG, "e : " + e);
         }

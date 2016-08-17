@@ -24,7 +24,7 @@ public class ServiceFragment extends Fragment {
 
     public static final String TAG = "ServiceFragment";
 
-    static final String[] LIST_MENU = {"","도움말", "문의 하기", "개발자"};
+    static final String[] LIST_MENU = {"도움말", "문의 하기", "개발자 정보"};
     private ArrayList<QnA> qnaList;
 
     public ServiceFragment() {
@@ -48,15 +48,14 @@ public class ServiceFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
-                    case 1:
+                    case 0:
                         Intent intent = new Intent(getActivity(), ServiceHelpActivity.class);
                         startActivity(intent);
-
                         break;
-                    case 2:
+                    case 1:
                         startActivity(new Intent(getActivity(), SendCustomerCenterActivity2.class));
                         break;
-                    case 3:
+                    case 2:
                          startActivity(new Intent(getActivity(), DeveloperActivity.class));
                         break;
                     default:

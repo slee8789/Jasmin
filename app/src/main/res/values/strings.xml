@@ -22,6 +22,10 @@
     <string name="regist_female">여</string>
     <string name="regist_do_register">회원가입 하기</string>
 
+    <!--userInfo modify-->
+    <string name="edit_info_dialog_err">오류</string>
+    <string name="edit_info_dialog_err_pw">비밀번호를 입력해주세요</string>
+
     <!--regist_dialog-->
     <string name="regist_dialog_auth">입력하신 메일로 인증번호를 전송하였습니다.</string>
     <string name="regist_dialog_input_error">작성하지 않은 항목이 있습니다.</string>
