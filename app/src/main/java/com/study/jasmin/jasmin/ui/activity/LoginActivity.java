@@ -14,21 +14,17 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
-import com.study.jasmin.jasmin.util.CheckAvailability;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -80,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginProgress = new ProgressDialog(this);
         btnDoLogin.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
-        mPref = new JasminPreference(this);
+        mPref = JasminPreference.getInstance(this);
     }
 
     @Override
@@ -128,35 +124,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mail = etEmail.getText().toString();
                 pw = etPassword.getText().toString();
 
-                userList = new ArrayList<Object>();
-                User u1 = new User(1,1,"email1","name1","kkid1");
-                User u2 = new User(2,2,"email2","name2","kkid2");
-                User u3 = new User(3,3,"email3","name3","kkid3");
-                userList.add(u1);
-                userList.add(u2);
-                userList.add(u3);
 
                 Gson gson = new Gson();
                 String strJson = gson.toJson(userList);
 
                 LoginProgress.show();
 
-                //Test_swan_001 _List 전달
-                /*
-                userList = new ArrayList<Object>();
-                User u1 = new User(1,1,"email1","name1","kkid1");
-                User u2 = new User(2,2,"email2","name2","kkid2");
-                User u3 = new User(3,3,"email3","name3","kkid3");
-                userList.add(u1);
-                userList.add(u2);
-                userList.add(u3);
-
                 RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.Login(mail, pw, userList);
-                */
-
-                RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.Login(mail, pw, strJson);
+                Call<JsonObject> call = service.Login(mail, pw);
                 call.enqueue(this);
 
 /*
@@ -231,9 +206,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             JSONArray studyObj = jsObject.getJSONArray("studyList");
             JSONArray qnaObj = jsObject.getJSONArray("qnaList");
 
-            mPref.put("qnaList",qnaObj.toString());
-            mPref.put("userInfo",userObj.toString());
-            mPref.put("studyList",studyObj.toString());
+//            mPref.put("qnaList",qnaObj.toString());
+//            mPref.put("userInfo",userObj.toString());
+//            mPref.put("studyList",studyObj.toString());
+            mPref.putJson("qnaList",qnaObj.toString());
+            mPref.putJson("userInfo",userObj.toString());
+            mPref.putJson("studyList",studyObj.toString());
 
            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

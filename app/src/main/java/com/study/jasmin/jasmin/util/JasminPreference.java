@@ -3,14 +3,9 @@ package com.study.jasmin.jasmin.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.study.jasmin.jasmin.entity.QnA;
 import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.entity.User;
@@ -21,15 +16,35 @@ import java.util.Collections;
 /**
  * Created by swan on 2016-08-10.
  */
-public class JasminPreference {
+ public class JasminPreference {
     private final String PREF_NAME = "com.study.jasmin.jasmin";
     public final static String PREF_INTRO_USER_AGREEMENT = "PREF_USER_AGREEMENT";
     public final static String PREF_MAIN_VALUE = "PREF_MAIN_VALUE";
+    private static JasminPreference instance;
+    private Gson gson                   = new GsonBuilder().create();
+    private Object obj                  = new Object();
+    private ArrayList <Object> list     = new ArrayList<Object>();
+
+    private User[] users;
+    private QnA[] qnas;
+    private Study[] studies;
+
 
     static Context mContext;
 
     public JasminPreference(Context context) {
         mContext = context;
+    }
+
+    public static JasminPreference getInstance(Context context) {
+        if (instance == null) {
+            synchronized (JasminPreference.class) {
+                if (instance == null) {
+                    instance = new JasminPreference(context);
+                }
+            }
+        }
+        return instance;
     }
 
     public void remove(String key) {
@@ -46,6 +61,31 @@ public class JasminPreference {
         editor.putString(key, value);
         editor.commit();
     }
+
+    public void putJson(String key, String value) {
+        SharedPreferences pref = mContext.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+        switch (key){
+            case "qnaList":
+                qnas = gson.fromJson(value, QnA[].class);
+                break;
+
+            case "userInfo":
+                users = gson.fromJson(value, User[].class);
+                break;
+
+            case "studyList":
+                studies = gson.fromJson(value, Study[].class);
+                break;
+
+            case "groupInfo":
+                break;
+        }
+    }
+
 
     public void put(String key, boolean value) {
         SharedPreferences pref = mContext.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
@@ -93,15 +133,12 @@ public class JasminPreference {
 
     public Object getObjectValue(String key){
         String strJson              = getValue(key,"");
-        Gson gson                   = new GsonBuilder().create();
-        Object obj                  = new Object();
 
         if(strJson =="")  return null;
 
         switch (key){
             case "userInfo":
-                User[] user = gson.fromJson(strJson, User[].class);
-                obj = user[0];
+                obj = users[0];
                 break;
             case "groupInfo":
                 break;
@@ -109,23 +146,62 @@ public class JasminPreference {
         return obj;
     }
 
-    public  ArrayList <Object> getListValue(String key) {
-        Gson gson               = new GsonBuilder().create();
-        ArrayList <Object> list = new ArrayList<Object>();
+    public ArrayList<Object> getListValue(String key) {
         String strJson          = getValue(key,"");
 
         if(strJson =="")  return null;
 
         switch (key) {
-            case "qnaList":
-                QnA[] qnas = gson.fromJson(strJson, QnA[].class);
-                Collections.addAll(list, qnas);
+            case "userInfo":
+                Collections.addAll(list, users);
                 break;
-            default:
+
+            case "studyList":
+                Collections.addAll(list, studies);
+                break;
+
+            case "qnaList":
+                Collections.addAll(list, qnas);
                 break;
         }
         return list;
     }
+
+//    public Object getObjectValue(String key){
+//        String strJson              = getValue(key,"");
+//        Object obj                  = new Object();
+//
+//        if(strJson =="")  return null;
+//
+//        switch (key){
+//            case "userInfo":
+//                obj = user[0];
+//                break;
+//            case "groupInfo":
+//                break;
+//        }
+//        return obj;
+//    }
+
+//    public  ArrayList <Object> getListValue(String key) {
+//        Gson gson               = new GsonBuilder().create();
+//        ArrayList <Object> list = new ArrayList<Object>();
+//        String strJson          = getValue(key,"");
+//
+//        if(strJson =="")  return null;
+//
+//        switch (key) {
+//            case "qnaList":
+//                QnA[] qnas = gson.fromJson(strJson, QnA[].class);
+//                Collections.addAll(list, qnas);
+//                break;
+//            default:
+//                break;
+//        }
+//        return list;
+//    }
+
+
 }
 
 

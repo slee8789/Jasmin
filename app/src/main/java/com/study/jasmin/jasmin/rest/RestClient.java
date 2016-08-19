@@ -1,9 +1,6 @@
 package com.study.jasmin.jasmin.rest;
 
 import com.google.gson.JsonObject;
-import com.study.jasmin.jasmin.entity.User;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -64,8 +61,7 @@ public class RestClient{
         @FormUrlEncoded
         @POST("api/login")
         Call<JsonObject> Login(@Field("email") String email,
-                                  @Field("password") String password,
-                                    @Field("uselist") String userList
+                                  @Field("password") String password
         );
 
 

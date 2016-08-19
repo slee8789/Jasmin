@@ -2,23 +2,18 @@ package com.study.jasmin.jasmin.ui.fragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.ui.activity.EditInfoActivity;
 import com.study.jasmin.jasmin.ui.activity.LoginActivity;
-import com.study.jasmin.jasmin.ui.activity.MainActivity;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 
@@ -27,7 +22,7 @@ import com.study.jasmin.jasmin.util.JasminPreference;
  */
 public class SettingFragment extends Fragment {
     static final String[] LIST_MENU = {"회원정보 수정", "로그아웃","카카오톡 연동하기"};
-    private JasminPreference mPref = new JasminPreference(this.getContext());
+    private JasminPreference mPref = JasminPreference.getInstance(getContext());
 
     public SettingFragment() {
         // Required empty public constructor
@@ -51,7 +46,7 @@ public class SettingFragment extends Fragment {
                         startActivity(new Intent(getActivity(),EditInfoActivity.class));
                         break;
                     case 1://로그아웃
-                        mPref = new JasminPreference(getActivity());
+                        mPref = JasminPreference.getInstance(getContext());
                         mPref.put("qnaList","");
                         mPref.put("userInfo","");
                         mPref.put("studyList","");

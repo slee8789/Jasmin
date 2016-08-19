@@ -1,6 +1,5 @@
 package com.study.jasmin.jasmin.ui.activity;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ExpandableListView;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 public class ServiceHelpActivity extends AppCompatActivity {
     public static final String TAG = "Serviece";
     private ExpandableListView elvHelp;
-    private JasminPreference mPref = new JasminPreference(this);
+    private JasminPreference mPref;
     private ArrayList<Object> qnaList;
     ArrayList<String> arrayGroup = new ArrayList<String>();
 
@@ -23,7 +22,7 @@ public class ServiceHelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_help);
-
+        mPref = JasminPreference.getInstance(this);
         qnaList= mPref.getListValue("qnaList");
 
         elvHelp = (ExpandableListView) this.findViewById(R.id.elv_help);
