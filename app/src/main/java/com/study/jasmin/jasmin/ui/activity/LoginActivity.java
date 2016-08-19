@@ -12,13 +12,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
+import com.study.jasmin.jasmin.util.CheckAvailability;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 import org.json.JSONArray;
@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private int dialogMsg;
     private String mail;
     private String pw;
-    private List<Object> userList;
     private ProgressDialog LoginProgress;
     private OneButtonDialog oneButtonDialog;
 
@@ -53,17 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        autoLogin();
         findViews();
         initViews();
-
+        autoLogin();
     }
 
-    private void autoLogin(){
-
-
-    }
     private void findViews() {
         btnDoLogin = (Button) findViewById(R.id.btn_do_login);
         etEmail = (EditText) findViewById(R.id.login_email);
@@ -76,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginProgress = new ProgressDialog(this);
         btnDoLogin.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
+        cbAuto.setClickable(true);
+        cbAuto.setOnClickListener(this);
         mPref = JasminPreference.getInstance(this);
     }
 
@@ -91,7 +86,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_share:
                 Log.d(TAG, "click btn_share");
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -113,49 +107,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         oneButtonDialog.setComment(comment);
     }
 
-
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.btn_do_login:
                 Log.d(TAG, "click btn_do_login");
-
-                mail = etEmail.getText().toString();
-                pw = etPassword.getText().toString();
-
-
-                Gson gson = new Gson();
-                String strJson = gson.toJson(userList);
-
-                LoginProgress.show();
-
-                RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.Login(mail, pw);
-                call.enqueue(this);
-
-/*
-                boolean emptyChk = CheckAvailability.isNotNull(etEmail.getText().toString(), etPassword.getText().toString());
-                boolean mailChk = CheckAvailability.isEmail(etEmail.getText().toString());
-
-                dialogTitle = R.string.regist_dialog_title;
-                if (!emptyChk) {
-                    dialogMsg = R.string.regist_dialog_input_error;
-                    showOneButtonDialog(dialogTitle, dialogMsg);
-                } else if (!mailChk) {
-                    dialogMsg = R.string.regist_dialog_mailform;
-                    showOneButtonDialog(dialogTitle, dialogMsg);
-                } else {
+                //if(loginValidity()){
+                if(true){
                     mail = etEmail.getText().toString();
                     pw = etPassword.getText().toString();
-                    LoginProgress.show();
-                    RestClient.RestService service = RestClient.getClient();
-                    Call<JsonObject> call = service.Login(mail, pw);
-                    call.enqueue(this);
+                    doLogin(mail, pw);
                 }
-                */
                 break;
-
             case R.id.onebutton_ok:
                 oneButtonDialog.cancel();
                 oneButtonDialog.dismiss();
@@ -166,10 +129,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 showFindPwDialog();
 //                startActivity(new Intent(this,FindPwDialog_backup.class));
                 break;
-
             case R.id.send_button:
                 Log.d(TAG, "click send_button");
                 findPwDialog.dismiss();
+                break;
+            case R.id.login_auto:
+                mPref.put("autoLogin",cbAuto.isChecked());
                 break;
         }
     }
@@ -178,7 +143,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
-//        mPref.put("autoLogin", cbAuto.isChecked());
     }
 
     @Override
@@ -193,8 +157,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG, "onDestroy");
     }
 
-
-
     @Override
     public void onResponse(Call call, Response response) {
         Log.d(TAG, "Retro Status Code = " + response.code());
@@ -206,24 +168,67 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             JSONArray studyObj = jsObject.getJSONArray("studyList");
             JSONArray qnaObj = jsObject.getJSONArray("qnaList");
 
-//            mPref.put("qnaList",qnaObj.toString());
-//            mPref.put("userInfo",userObj.toString());
-//            mPref.put("studyList",studyObj.toString());
             mPref.putJson("qnaList",qnaObj.toString());
             mPref.putJson("userInfo",userObj.toString());
             mPref.putJson("studyList",studyObj.toString());
 
-           Intent intent = new Intent(this, MainActivity.class);
+            //AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
+            if(cbAuto.isChecked()) {
+                String mail = etEmail.getText().toString();
+                String pw = etPassword.getText().toString();
+                mPref.put("autoLoginId", mail);
+                mPref.put("autoLoginPw", pw);
+            }
+
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             LoginProgress.cancel();
             LoginProgress.dismiss();
-           finish();
+            finish();
         } catch (JSONException e) {
             Log.d(TAG, "e : " + e);
         }
 
     }
 
+    public boolean loginValidity() {
+
+        boolean bResult = false;
+        boolean emptyChk = CheckAvailability.isNotNull(etEmail.getText().toString(), etPassword.getText().toString());
+        boolean mailChk = CheckAvailability.isEmail(etEmail.getText().toString());
+
+
+        dialogTitle = R.string.regist_dialog_title;
+        if (!emptyChk) {
+            dialogMsg = R.string.regist_dialog_input_error;
+            showOneButtonDialog(dialogTitle, dialogMsg);
+        } else if (!mailChk) {
+            dialogMsg = R.string.regist_dialog_mailform;
+            showOneButtonDialog(dialogTitle, dialogMsg);
+        } else {
+            bResult = true;
+        }
+        return bResult;
+    }
+
+    private void doLogin(String mail, String pw){
+        LoginProgress.show();
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.Login(mail, pw);
+        call.enqueue(this);
+    }
+
+    private void autoLogin(){
+
+        String mail = mPref.getValue("autoLoginId","");
+        String pw = mPref.getValue("autoLoginPw","");
+        boolean bAuto =  mPref.getValue("autoLogin",false);
+
+        if(mail !="" && pw !="" &&bAuto){
+            Log.d(TAG, "doAutoLogin >>>  mail : "+mail+" pw : "+pw+" checked : "+ bAuto);
+            doLogin(mail, pw);
+        }
+    }
     @Override
     public void onFailure(Call call, Throwable t) {
         Log.d(TAG, "ResponseFail = " + call);

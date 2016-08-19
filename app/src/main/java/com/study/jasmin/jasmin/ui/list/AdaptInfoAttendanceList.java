@@ -9,12 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Attendance;
 import com.study.jasmin.jasmin.ui.activity.GroupManageAttendanceActivity;
 import com.study.jasmin.jasmin.ui.item.ListViewAssignment;
 
 import java.util.ArrayList;
 
-public class AdaptInfoAttendanceList extends ArrayAdapter<ListInfoAttendance> implements View.OnClickListener{
+public class AdaptInfoAttendanceList extends ArrayAdapter<Attendance> implements View.OnClickListener{
 
     private ListBtnClickListener listBtnClickListener;
     private int resourceId;
@@ -27,7 +28,7 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<ListInfoAttendance> im
         void onListBtnClick(int position);
     }
 
-    public AdaptInfoAttendanceList(Context context, int resource, ArrayList<ListInfoAttendance> objects, ListBtnClickListener clickListener) {
+    public AdaptInfoAttendanceList(Context context, int resource, ArrayList<Attendance> objects, ListBtnClickListener clickListener) {
         super(context, resource, objects);
 
         this.resourceId = resource;
@@ -66,9 +67,9 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<ListInfoAttendance> im
     }
 
     public void initView(int position){
-        ListInfoAttendance list = (ListInfoAttendance)getItem(position);
-        tvDate.setText(list.getDate());
-        tvStatus.setText(list.getStatus());
+        Attendance list = (Attendance)getItem(position);
+        tvDate.setText(list.getAttendance_date());
+        tvStatus.setText(list.getAttendance_date());//상태로 변경~필요~
         btnEdit.setTag(position);
         btnEdit.setOnClickListener(this);
     }

@@ -8,10 +8,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Attendance;
 import com.study.jasmin.jasmin.ui.dialog.AttendanceCheckDialog;
-import com.study.jasmin.jasmin.ui.dialog.MemberListDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;
-import com.study.jasmin.jasmin.ui.list.ListInfoAttendance;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,6 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
 
     @Override
     public void onListBtnClick(int position) {
-        //리스트의 버튼 클릭 시 실행되는 함수
         Toast.makeText(this, Integer.toString(position+1) + "번 아이템 클릭", Toast.LENGTH_SHORT).show();
     }
 
@@ -60,16 +58,15 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
     }
 
 
-    public ArrayList<ListInfoAttendance> getItemsFromDB() {
+    public ArrayList<Attendance> getItemsFromDB() {
 
-        ArrayList<ListInfoAttendance> list  = new ArrayList<ListInfoAttendance>();
-        ListInfoAttendance item ;
+        ArrayList<Attendance> list  = new ArrayList<Attendance>();
+        Attendance item ;
 
         //item 입력
         for(int i=0; i<20; i++){
-            item = new ListInfoAttendance();
-            item.setDate("yy-mm-dd");
-            item.setStatus("0/0/0");
+            //public Attendance(int attendance_no, String attendance_date, boolean attendance_state) {
+            item = new Attendance(0,"yy-mm-dd",true);
             list.add(item);
         }
         return list ;
