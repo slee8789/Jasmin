@@ -19,7 +19,7 @@
             android:layout_height="60dp"
             android:background="@drawable/round_gray"
             android:hint="@string/login_email"
-            android:text="slee8789@naver.com"
+            android:text="bs"
             android:paddingLeft="30dp" />
 
         <EditText
@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/round_gray"
             android:inputType="textPassword"
-            android:text="1234"
+            android:text="111"
             android:hint="@string/login_password"
             android:paddingLeft="30dp" />
 

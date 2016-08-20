@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Study;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupList> {
 
-    private List<Study> itemList;
+    private ArrayList<Object> itemList;
     private Context context;
 
-    public AdaptInfoGroupList(Context context, List<Study> itemList) {
+    public AdaptInfoGroupList(Context context, ArrayList<Object> itemList) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -31,7 +31,7 @@ public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupLis
 
     @Override
     public void onBindViewHolder(HolderInfoGroupList holder, int position) {
-        holder.groupName.setText(itemList.get(position).getStudy_name());
+        holder.groupName.setText(((Study)itemList.get(position)).getStudy_name());
 //        holder.groupPhoto.setImageResource(itemList.get(position).getPhoto());
     }
 

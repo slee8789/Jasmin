@@ -18,6 +18,7 @@ import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.activity.GroupReplyActivity;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoNoticeList;
 import com.study.jasmin.jasmin.ui.list.ListInfoNotice;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
 import java.util.ArrayList;
 
@@ -79,6 +80,8 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_group_notice, container, false);
         Log.d(TAG, "GroupNoticeFragment onCreateView");
+
+        Log.d(TAG, JasminPreference.getInstance(getContext()).getListValue("studyList").toString());
 
         findViews(rootView);
         initViews();

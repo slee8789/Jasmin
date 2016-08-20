@@ -9,23 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.entity.QnA;
-import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.ui.fragment.ChattingFragment;
 import com.study.jasmin.jasmin.ui.fragment.HomeFragment;
 import com.study.jasmin.jasmin.ui.fragment.MyPageFragment;
 import com.study.jasmin.jasmin.ui.fragment.ServiceFragment;
 import com.study.jasmin.jasmin.ui.fragment.SettingFragment;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-
-    private Study[] studies;
-    private QnA[] qnas;
-    private ArrayList<Study> studyList;
-    private ArrayList<QnA> qnaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

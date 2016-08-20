@@ -61,7 +61,12 @@ public class RestClient{
         @FormUrlEncoded
         @POST("api/login")
         Call<JsonObject> Login(@Field("email") String email,
-                                  @Field("password") String password
+                               @Field("password") String password
+        );
+
+        @FormUrlEncoded
+        @POST("api/gotoStudy")
+        Call<JsonObject> gotoStudy(@Field("studyNo") int studyNo
         );
 
 

@@ -16,22 +16,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.ui.activity.GroupAddActivity;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoGroupList;
+import com.study.jasmin.jasmin.util.JasminPreference;
 import com.study.jasmin.jasmin.util.JasminProtocol;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "HomeFragment";
     private Button btnMakeStudy;
     private RecyclerView rView;
     private AdaptInfoGroupList rcAdapter;
-    private List<Study> groupItems;
     private BroadcastReceiver broadcastReceiver = null;
-    private ArrayList<Study> studyList;
+    private ArrayList<Object> studyList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,8 +72,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG,"onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        studyList = (ArrayList<Study>) getArguments().get("studies");
-//        Log.d(TAG,"studyList : " + studyList.toString());
+        studyList = JasminPreference.getInstance(getContext()).getListValue("studyList");
+        Log.d(TAG,"studyList.size : " + studyList.size());
         findViews(rootView);
         initViews();
         return rootView;
@@ -90,17 +88,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initViews() {
         registerReceiver();
         btnMakeStudy.setOnClickListener(this);
-//        List<Study> rowListItem = getGroupItemList();
-//        rView.setHasFixedSize(true);
-//        rView.setLayoutManager(lLayout);
-//        rcAdapter = new AdaptInfoGroupList(getContext(), rowListItem);
-//        rView.setAdapter(rcAdapter);
-//        rView.refreshDrawableState();
-    }
-
-    private List<Study> getGroupItemList(){
-//        groupItems = new ArrayList<Study>();
-        return studyList;
+        rView.setHasFixedSize(true);
+        rView.setLayoutManager(lLayout);
+        Log.d(TAG,"studyList : " + studyList.toString());
+        rcAdapter = new AdaptInfoGroupList(getContext(), studyList);
+        Log.d(TAG,"studyList2 : " + studyList.toString());
+        rView.setAdapter(rcAdapter);
+        Log.d(TAG,"studyList3 : " + studyList.toString());
+        rView.refreshDrawableState();
+        Log.d(TAG,"studyList4 : " + studyList.toString());
     }
 
     private GridLayoutManager lLayout;
