@@ -1,26 +1,66 @@
 package com.study.jasmin.jasmin.entity;
 
 
-public class Attendance {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Attendance implements Parcelable{
     int attendance_no;
     int user_no;
     int study_no;
     String attendance_date;
-    boolean attendance_state;
+    int attendance_state;
+    String user_name;
 
-    public Attendance(int attendance_no, String attendance_date, boolean attendance_state) {
+
+    public Attendance(int attendance_no, String attendance_date, int attendance_state) {
         this.attendance_no = attendance_no;
         this.attendance_date = attendance_date;
         this.attendance_state = attendance_state;
+        this.user_name="유인나";
     }
 
-    public Attendance(int attendance_no, int user_no, int study_no, String attendance_date, boolean attendance_state) {
+    public Attendance(int attendance_no, int user_no, int study_no, String attendance_date, int attendance_state) {
 
         this.attendance_no = attendance_no;
         this.user_no = user_no;
         this.study_no = study_no;
         this.attendance_date = attendance_date;
         this.attendance_state = attendance_state;
+        this.user_name="유인나";
+    }
+
+    protected Attendance(Parcel in) {
+        attendance_no = in.readInt();
+        user_no = in.readInt();
+        study_no = in.readInt();
+        attendance_date = in.readString();
+        attendance_state = in.readInt();
+        user_name = in.readString();
+    }
+
+    public static final Creator<Attendance> CREATOR = new Creator<Attendance>() {
+        @Override
+        public Attendance createFromParcel(Parcel in) {
+            return new Attendance(in);
+        }
+
+        @Override
+        public Attendance[] newArray(int size) {
+            return new Attendance[size];
+        }
+    };
+
+    public int getAttendance_state() {
+        return attendance_state;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public int getAttendance_no() {
@@ -55,11 +95,7 @@ public class Attendance {
         this.attendance_date = attendance_date;
     }
 
-    public boolean isAttendance_state() {
-        return attendance_state;
-    }
-
-    public void setAttendance_state(boolean attendance_state) {
+    public void setAttendance_state(int attendance_state) {
         this.attendance_state = attendance_state;
     }
 
@@ -72,5 +108,20 @@ public class Attendance {
                 ", attendance_date='" + attendance_date + '\'' +
                 ", attendance_state=" + attendance_state +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(attendance_no);
+        dest.writeInt(user_no);
+        dest.writeInt(study_no);
+        dest.writeString(attendance_date);
+        dest.writeInt(attendance_state);
+        dest.writeString(user_name);
     }
 }

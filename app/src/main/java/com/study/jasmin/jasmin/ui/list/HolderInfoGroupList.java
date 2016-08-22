@@ -2,6 +2,7 @@ package com.study.jasmin.jasmin.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -28,12 +29,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View.OnClickListener, Callback{
-
+    public static final String TAG = "HolderInfoGroupList";
     public TextView groupName;
     public ImageView groupPhoto;
     private Context context;
     private ArrayList<Object> studyList;
     private ProgressDialog Progress;
+    //swan add
+    private int selStudyNo;
 
     public HolderInfoGroupList(View itemView) {
         super(itemView);
@@ -51,7 +54,9 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
         Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
         Progress.show();
         RestClient.RestService service = RestClient.getClient();
-        Log.d("test","studyNo :  " + ((Study)studyList.get(getAdapterPosition())).getStudy_no());
+        //swan add
+        selStudyNo = ((Study)studyList.get(getAdapterPosition())).getStudy_no();
+        Log.d("test","studyNo :  " + Integer.toString(selStudyNo));
         Call<JsonObject> call = service.gotoStudy(((Study)studyList.get(getAdapterPosition())).getStudy_no());
         call.enqueue(this);
     }
@@ -68,6 +73,13 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
 
             JasminPreference.getInstance(context).putJson("studyList",studyObj.toString());
             JasminPreference.getInstance(context).putJson("memberList",memberObj.toString());
+
+            //swan add
+            if(studyObj != null) {
+                JasminPreference.getInstance(context).putSelStudyNo(selStudyNo);
+            }else{
+                Log.d(TAG,"studyObj is empty!!!");
+            }
 
 //            Log.d("test",((Study)studyList.get(0)).getStudy_useDeposit()+"testtest");
 //            Log.d("test",((Study)studyList.get(1)).getStudy_useDeposit()+"testtest");

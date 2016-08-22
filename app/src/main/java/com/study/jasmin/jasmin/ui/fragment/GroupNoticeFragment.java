@@ -81,7 +81,7 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
         View rootView = inflater.inflate(R.layout.fragment_group_notice, container, false);
         Log.d(TAG, "GroupNoticeFragment onCreateView");
 
-        Log.d(TAG, JasminPreference.getInstance(getContext()).getListValue("studyList").toString());
+        //Log.d(TAG, JasminPreference.getInstance(getContext()).getListValue("studyList").toString());
 
         findViews(rootView);
         initViews();

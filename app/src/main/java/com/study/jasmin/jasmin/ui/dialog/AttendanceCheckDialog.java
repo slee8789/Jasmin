@@ -9,28 +9,40 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Attendance;
+import com.study.jasmin.jasmin.entity.Member;
+import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceCheckList;
 import com.study.jasmin.jasmin.ui.list.ListInfoAttendanceCheck;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by swan on 2016-08-03.
  */
-public class AttendanceCheckDialog extends Dialog{
+public class AttendanceCheckDialog extends Dialog implements View.OnClickListener, RadioGroup.OnCheckedChangeListener{
 
     private final String TAG = "AttendanceCheckDialog";
     private View.OnClickListener buttonOkListener;
-    private View.OnClickListener buttonCancelListener;
     private Button btnOk;
-    private Button btnCancel;
     private ListView listView;
     private AdaptInfoAttendanceCheckList adapter;
+    private ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
+    private AdaptInfoAttendanceCheckList.RadioGroupClickListener rgListener;
+    private TextView tvDate;
 
-    public AttendanceCheckDialog(Context context) {
+    public AttendanceCheckDialog(Context context, ArrayList<Attendance> attendanceList) {
         super(context);
+        this.attendanceList = attendanceList;
     }
 
     @Override
@@ -45,43 +57,52 @@ public class AttendanceCheckDialog extends Dialog{
 
         findViews();
         initViews();
-
-    }
-
-    public void setOkOnClickListener(View.OnClickListener listener) {
-        buttonOkListener = listener;
-    }
-
-    public void setCancelOnClickListener(View.OnClickListener listener) {
-        buttonCancelListener = listener;
     }
 
     public void findViews() {
         listView = (ListView) findViewById(R.id.lv_attendance_check);
         btnOk = (Button) findViewById(R.id.btn_ok);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
+        tvDate = (TextView)findViewById(R.id.tv_date);
     }
 
     public void initViews() {
-        adapter = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, getItemsFromDB(), true);
+        setAttendanceList();
+        adapter = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, attendanceList,rgListener);
         listView.setAdapter(adapter);
-        btnOk.setOnClickListener(buttonOkListener);
-        btnCancel.setOnClickListener(buttonCancelListener);
+
+        btnOk.setOnClickListener(this);
+        tvDate.setText(attendanceList.get(0).getAttendance_date());
     }
 
-    public ArrayList<ListInfoAttendanceCheck> getItemsFromDB() {
-
-        ArrayList<ListInfoAttendanceCheck> list = new ArrayList<ListInfoAttendanceCheck>();
-        ListInfoAttendanceCheck item;
-        String[] names = {"김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나"};
-
-        for (String s : names) {
-            item = new ListInfoAttendanceCheck();
-            item.setName(s);
-            list.add(item);
+    public void setAttendanceList(){
+        if(attendanceList == null){
+            JasminPreference pref = JasminPreference.getInstance(getContext());
+            ArrayList<Object> memberList = pref.getListValue("memberList");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+            Date currentTime = new Date ( );
+            String mTime = df.format ( currentTime );
+            attendanceList= new ArrayList<Attendance>();
+           // attendanceList.add(new Attendance(0,1,1,"2015-20-10",1));
+            for(int i=0; i<memberList.size(); i++) {
+                Member mem = (Member)memberList.get(i);
+                Attendance tempAtt = new Attendance(0,mem.getUser_no(), mem.getStudy_no(), mTime,1);
+                attendanceList.add(tempAtt);
+            }
         }
-
-        return list;
+        return ;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_ok:
+                this.dismiss();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        Log.d(TAG, "다이얼로그 onCheckedChanged()");
+    }
 }

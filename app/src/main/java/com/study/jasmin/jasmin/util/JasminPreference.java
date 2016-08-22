@@ -32,6 +32,7 @@ public class JasminPreference {
     private Study[] studies;
     private Member[] members;
 
+    private int selStudyNo;
 
     static Context mContext;
 
@@ -154,9 +155,7 @@ public class JasminPreference {
     }
 
     public ArrayList<Object> getListValue(String key) {
-        String strJson          = getValue(key,"");
         list.clear();
-        if(strJson =="")  return null;
 
         switch (key) {
             case "userInfo":
@@ -164,7 +163,6 @@ public class JasminPreference {
                 break;
 
             case "studyList":
-
                 Collections.addAll(list, studies);
                 Log.d("test","list size : " + list.size());
                 break;
@@ -180,6 +178,14 @@ public class JasminPreference {
         return list;
     }
 
+    public void putSelStudyNo(int studyNo){
+        this.selStudyNo = studyNo;
+        return ;
+    }
+
+    public int getSelStudyNo(){
+        return this.selStudyNo;
+    }
 }
 
 

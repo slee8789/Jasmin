@@ -1,6 +1,7 @@
 package com.study.jasmin.jasmin.ui.activity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
@@ -25,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -161,34 +164,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onResponse(Call call, Response response) {
         Log.d(TAG, "Retro Status Code = " + response.code());
         try {
-            String strTest = response.body().toString();
+            if( response.body() != null ||  response.body()!="") {
 
-            JSONObject jsObject = new JSONObject(strTest);
-            JSONArray userObj = jsObject.getJSONArray("userInfo");
-            JSONArray studyObj = jsObject.getJSONArray("studyList");
-            JSONArray qnaObj = jsObject.getJSONArray("qnaList");
+                String strTest = response.body().toString();
 
-            mPref.putJson("qnaList",qnaObj.toString());
-            mPref.putJson("userInfo",userObj.toString());
-            mPref.putJson("studyList",studyObj.toString());
+                JSONObject jsObject = new JSONObject(strTest);
+                JSONArray userObj = jsObject.getJSONArray("userInfo");
+                JSONArray studyObj = jsObject.getJSONArray("studyList");
+                JSONArray qnaObj = jsObject.getJSONArray("qnaList");
 
-            //AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
-            if(cbAuto.isChecked()) {
-                String mail = etEmail.getText().toString();
-                String pw = etPassword.getText().toString();
-                mPref.put("autoLoginId", mail);
-                mPref.put("autoLoginPw", pw);
+                mPref.putJson("qnaList", qnaObj.toString());
+                mPref.putJson("userInfo", userObj.toString());
+                mPref.putJson("studyList", studyObj.toString());
+
+                ArrayList<Object> studyLIst = mPref.getListValue("studyList");
+                ArrayList<Object> userInfo = mPref.getListValue("userInfo");
+                ArrayList<Object> qnaList = mPref.getListValue("qnaList");
+
+                //AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
+                if (cbAuto.isChecked()) {
+                    String mail = etEmail.getText().toString();
+                    String pw = etPassword.getText().toString();
+                    mPref.put("autoLoginId", mail);
+                    mPref.put("autoLoginPw", pw);
+                }
+
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                LoginProgress.cancel();
+                LoginProgress.dismiss();
+                finish();
+            }else {
+                Log.d(TAG, "response.body() is empty.");
             }
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            LoginProgress.cancel();
-            LoginProgress.dismiss();
-            finish();
         } catch (JSONException e) {
             Log.d(TAG, "e : " + e);
         }
-
     }
 
     public boolean loginValidity() {

@@ -2,6 +2,7 @@ package com.study.jasmin.jasmin.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ExpandableListView;
 
 import com.study.jasmin.jasmin.R;
@@ -24,6 +25,10 @@ public class ServiceHelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_help);
         mPref = JasminPreference.getInstance(this);
         qnaList= mPref.getListValue("qnaList");
+        if(qnaList == null) {
+            Log.d(TAG,"qnaList is empty!!!");
+            return;
+        }
 
         elvHelp = (ExpandableListView) this.findViewById(R.id.elv_help);
         elvHelp.setAdapter(new BaseExpandableAdapter(this, getArrayGroup(), getArrayChild()));

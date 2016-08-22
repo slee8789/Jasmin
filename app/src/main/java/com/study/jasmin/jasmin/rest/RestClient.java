@@ -92,7 +92,10 @@ public class RestClient{
                                           @Field("homeworkMoney") int homeworkMoney
         );
 
-
+        @FormUrlEncoded
+        @POST("api/attendanceList")
+        Call<JsonObject> goAttendance(@Field("studyNo") int studyNo
+        );
     }
 
 }

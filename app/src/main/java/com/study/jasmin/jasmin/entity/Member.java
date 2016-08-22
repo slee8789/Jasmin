@@ -11,6 +11,7 @@ public class Member implements Serializable {
     private int user_no;
     private int user_grade;
     private int user_deposit;
+    //private String user_name;
 
     public Member(int study_no, int user_no, int user_grade, int user_deposit) {
         this.study_no = study_no;

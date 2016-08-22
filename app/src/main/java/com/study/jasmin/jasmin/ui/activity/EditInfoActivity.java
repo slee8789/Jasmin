@@ -52,7 +52,7 @@ public class EditInfoActivity  extends AppCompatActivity implements View.OnClick
     }
 
     public void getPref(){
-        JasminPreference pref =new JasminPreference(this);
+        JasminPreference pref = JasminPreference.getInstance(this);
         userInfo = (User)(pref.getObjectValue("userInfo"));
     }
     public void findViews(){
