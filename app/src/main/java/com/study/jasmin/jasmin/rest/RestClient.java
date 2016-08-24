@@ -96,6 +96,11 @@ public class RestClient{
         @POST("api/attendanceList")
         Call<JsonObject> goAttendance(@Field("studyNo") int studyNo
         );
+
+        @FormUrlEncoded
+        @POST("api/alarmList")
+        Call<JsonObject> goAlarmList(@Field("studyNo") int studyNo
+        );
     }
 
 }

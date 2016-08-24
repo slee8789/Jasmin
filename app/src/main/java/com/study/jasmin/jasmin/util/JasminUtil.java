@@ -3,6 +3,10 @@ package com.study.jasmin.jasmin.util;
 import android.content.Context;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by leesc on 2016-07-25.
  */
@@ -48,6 +52,13 @@ public class JasminUtil {
     public static String dateYYYY_MM_DD (int year, int month, int day) {  // yyyy-mm-dd
         String formattedDate = String.format("%d-%02d-%02d",year,month+1,day);
         return formattedDate;
+    }
+
+    public static String getTodayYYYY_MM_DD(){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        Date currentTime = new Date ( );
+        String strToday = df.format ( currentTime );
+        return strToday;
     }
 
 

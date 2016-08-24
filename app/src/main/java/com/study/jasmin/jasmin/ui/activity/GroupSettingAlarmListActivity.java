@@ -2,9 +2,12 @@ package com.study.jasmin.jasmin.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Alarm;
 import com.study.jasmin.jasmin.ui.item.ListViewAlarmAdapter;
 import com.study.jasmin.jasmin.ui.item.ListViewAlarmItem;
 import com.study.jasmin.jasmin.ui.item.ListViewAssignment;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
 public class GroupSettingAlarmListActivity extends AppCompatActivity implements ListViewAlarmAdapter.ListBtnClickListener, View.OnClickListener{
     Button      btnAdd;
     ListView    listview;
+    ArrayList<Alarm> alarmList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +41,18 @@ public class GroupSettingAlarmListActivity extends AppCompatActivity implements 
     public void findView(){
         listview = (ListView) findViewById(R.id.lv_alarm);
         btnAdd = (Button) findViewById(R.id.btn_add);
+        alarmList = getIntent().getParcelableArrayListExtra("alarmList");
     }
 
     public void initView(){
-        listview.setAdapter(new ListViewAlarmAdapter(this, R.layout.listview_group_setting_alarm, loadItemsFromDB(), this));
+        listview.setAdapter(new ListViewAlarmAdapter(this, R.layout.listview_group_setting_alarm, alarmList, this));
         btnAdd.setOnClickListener(this);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getApplicationContext(), GroupSettingAlarmAddActivity.class));
+                Intent intent =new Intent(getApplicationContext(), GroupSettingAlarmAddActivity.class);
+                intent.putExtra("alarmInfo",(Alarm)parent.getItemAtPosition(position));
+                startActivity(intent);
             }
         });
     }
@@ -65,25 +73,6 @@ public class GroupSettingAlarmListActivity extends AppCompatActivity implements 
                 startActivity(new Intent(this, GroupSettingAlarmAddActivity.class));
                 break;
         }
-    }
-
-    public ArrayList<ListViewAlarmItem> loadItemsFromDB( ) {
-
-        ListViewAlarmItem item ;
-        ArrayList<ListViewAlarmItem> list =  new ArrayList<ListViewAlarmItem>() ;
-        boolean[] arrDay = {true, false, true, false, false, false, false};
-
-        //item 입력
-        for(int i=0; i<5; i++){
-            item = new ListViewAlarmItem();
-            item.setStrTime("11:00");
-            item.setArrDay(arrDay);
-            item.setSetting(true);
-            item.setbRepeat(true);
-            item.setContext("정보가 입력 되었을까");
-            list.add(item);
-        }
-        return list ;
     }
 }
 

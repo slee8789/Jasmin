@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
     private int resourceId;
     private TextView tvDate;
     private TextView tvStatus;
+    private ImageView ivDelete;
     private ArrayList<AttendanceTitle> titleList;
 
     public interface  ListBtnClickListener{
@@ -71,6 +73,7 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
     public void findView(View rootView) {
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         tvStatus = (TextView) rootView.findViewById(R.id.tv_status);
+        ivDelete = (ImageView) rootView.findViewById(R.id.iv_delete);
         //btnEdit = (Button) rootView.findViewById(R.id.btn_edit);
     }
 
@@ -78,6 +81,7 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
         AttendanceTitle list = (AttendanceTitle)getItem(position);
         tvDate.setText(list.getDate());
         tvStatus.setText(list.getStatus());
+
        // btnEdit.setTag(position);
         //btnEdit.setOnClickListener(this);
     }

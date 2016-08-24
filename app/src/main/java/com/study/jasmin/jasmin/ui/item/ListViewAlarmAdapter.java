@@ -11,10 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Alarm;
 
 import java.util.ArrayList;
 
-public class ListViewAlarmAdapter  extends ArrayAdapter<ListViewAlarmItem> implements View.OnClickListener{
+public class ListViewAlarmAdapter  extends ArrayAdapter<Alarm> implements View.OnClickListener{
 
     private TextView tvTime;
     private TextView tvRepeat;
@@ -30,11 +31,10 @@ public class ListViewAlarmAdapter  extends ArrayAdapter<ListViewAlarmItem> imple
         void onListBtnClick(int position, ImageView iv, boolean bSet);
     }
 
-    public ListViewAlarmAdapter(Context context, int resource, ArrayList<ListViewAlarmItem> listItem, ListBtnClickListener clickListener) {
+    public ListViewAlarmAdapter(Context context, int resource, ArrayList<Alarm> listItem, ListBtnClickListener clickListener) {
         super(context, resource, listItem);
         this.resourceId = resource;
         this.listBtnClickListener = clickListener;
-
     }
 
     @Override
@@ -80,15 +80,17 @@ public class ListViewAlarmAdapter  extends ArrayAdapter<ListViewAlarmItem> imple
     }
 
     public void initView(int position){
-        ListViewAlarmItem list = (ListViewAlarmItem)getItem(position);
+        Alarm list = getItem(position);
+        list.init();
 
         String strDays[] = {"월","화","수","목","금","토","일"};
-        boolean bDays[] = list.getArrDay();
+        boolean bDays[] = list.getArrDates();
 
-        tvTime.setText(list.getTime());
-        tvRepeat.setText(list.getRepeat()?"반복":"");
-        tvContext.setText(list.getContext());
-        bSetting = list.getSetting();
+        tvTime.setText(list.getTimeHHMM());
+        tvRepeat.setText(list.getAlarmRepeat()?"반복":"");
+        tvContext.setText(list.getAlarmContent());
+        bSetting = true;
+        //bSetting = list.getAlarm(); //DB에 추가 필요!!!
         ivSetting.setImageDrawable(bSetting?(ContextCompat.getDrawable(getContext(), R.drawable.ic_alarm_black_24dp))
                                             : (ContextCompat.getDrawable(getContext(), R.drawable.ic_alarm_off_black_24dp)));
         ivSetting.setTag(position);
@@ -96,7 +98,7 @@ public class ListViewAlarmAdapter  extends ArrayAdapter<ListViewAlarmItem> imple
 
         for(int i =0; i<7; i++){
             tvDays[i].setText(strDays[i]);
-            tvDays[i].setTextColor(bDays[i]?Color.BLACK:Color.BLUE);
+            tvDays[i].setTextColor(bDays[i]?Color.BLUE:Color.BLACK);
         }
 
     }
@@ -105,6 +107,7 @@ public class ListViewAlarmAdapter  extends ArrayAdapter<ListViewAlarmItem> imple
         if (this.listBtnClickListener != null) {
             bSetting = !bSetting;
             this.listBtnClickListener.onListBtnClick((int)v.getTag(),(ImageView)v, bSetting) ;
+            //getItem((int)v.getTag()).changeAlarmState();
         }
      //   Toast.makeText(this.getContext(), "어뎁터 아이템 클릭 테스트", Toast.LENGTH_SHORT).show();
     }

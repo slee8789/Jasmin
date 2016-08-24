@@ -37,6 +37,9 @@ public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupLis
 
     @Override
     public int getItemCount() {
+        if(this.itemList == null){
+            return 0;
+        }
         return this.itemList.size();
     }
 }

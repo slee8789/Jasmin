@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import com.study.jasmin.jasmin.util.JasminUtil;
 
 /**
  * Created by swan on 2016-08-03.
@@ -36,13 +37,15 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
     private Button btnOk;
     private ListView listView;
     private AdaptInfoAttendanceCheckList adapter;
-    private ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
+    private ArrayList<Attendance> attendanceList;
     private AdaptInfoAttendanceCheckList.RadioGroupClickListener rgListener;
     private TextView tvDate;
+    private JasminUtil jUtil;
 
     public AttendanceCheckDialog(Context context, ArrayList<Attendance> attendanceList) {
         super(context);
         this.attendanceList = attendanceList;
+        if(attendanceList == null ) this.attendanceList = getBasicAttendanceList();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
         setContentView(R.layout.dialog_attendance_check);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         this.setCanceledOnTouchOutside(false);        // 다이알로그 바깥영역 터치시, 다이알로그 닫히지 않기
-        this.setCancelable(true);                  // 백키로 다이알로그 닫기
+        this.setCancelable(true);                   // 백키로 다이알로그 닫기
 
         findViews();
         initViews();
@@ -66,30 +69,21 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
     }
 
     public void initViews() {
-        setAttendanceList();
         adapter = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, attendanceList,rgListener);
         listView.setAdapter(adapter);
-
         btnOk.setOnClickListener(this);
         tvDate.setText(attendanceList.get(0).getAttendance_date());
     }
 
-    public void setAttendanceList(){
-        if(attendanceList == null){
-            JasminPreference pref = JasminPreference.getInstance(getContext());
-            ArrayList<Object> memberList = pref.getListValue("memberList");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-            Date currentTime = new Date ( );
-            String mTime = df.format ( currentTime );
-            attendanceList= new ArrayList<Attendance>();
-           // attendanceList.add(new Attendance(0,1,1,"2015-20-10",1));
-            for(int i=0; i<memberList.size(); i++) {
-                Member mem = (Member)memberList.get(i);
-                Attendance tempAtt = new Attendance(0,mem.getUser_no(), mem.getStudy_no(), mTime,1);
-                attendanceList.add(tempAtt);
-            }
+    public  ArrayList<Attendance>  getBasicAttendanceList(){
+        ArrayList<Attendance> tempList = new ArrayList<Attendance>();
+        JasminPreference pref = JasminPreference.getInstance(getContext());
+        ArrayList<Object> memberList = pref.getListValue("memberList");
+        for(int i=0; i<memberList.size(); i++) {
+            Member mem = (Member)memberList.get(i);
+            tempList.add(new Attendance(0,mem.getUser_no(), mem.getUser_name(), mem.getStudy_no(), jUtil.getTodayYYYY_MM_DD(),1));
         }
-        return ;
+        return tempList;
     }
 
     @Override

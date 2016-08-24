@@ -20,14 +20,14 @@ public class Attendance implements Parcelable{
         this.user_name="유인나";
     }
 
-    public Attendance(int attendance_no, int user_no, int study_no, String attendance_date, int attendance_state) {
+    public Attendance(int attendance_no, int user_no, String user_name, int study_no, String attendance_date, int attendance_state) {
 
         this.attendance_no = attendance_no;
         this.user_no = user_no;
         this.study_no = study_no;
         this.attendance_date = attendance_date;
         this.attendance_state = attendance_state;
-        this.user_name="유인나";
+        this.user_name=user_name;
     }
 
     protected Attendance(Parcel in) {

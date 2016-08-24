@@ -44,7 +44,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
     private LinearLayout btnMoneybook;
     private ProgressDialog connectProgress;
     public JasminPreference mPref;
-    public  int mClickedId;
+    public  int mClickId;
 
 
     public GroupManageFragment() {
@@ -79,14 +79,12 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        mClickId =v.getId();
+        switch (mClickId) {
             case R.id.btn_attendance:
-                mClickedId = R.id.btn_attendance;
                 goAttendance();
                 break;
-
             case R.id.btn_assignment:
-                mClickedId = R.id.btn_assignment;
 //                startActivity(new Intent(getActivity(), GroupManageAssignmentActivity.class));
                 connectProgress.show();
                 RestClient.RestService service = RestClient.getClient();
@@ -95,12 +93,10 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.btn_receivables:
-                mClickedId = R.id.btn_receivables;
                 startActivity(new Intent(getActivity(), GroupManageReceivablesActivity.class));
                 break;
 
             case R.id.btn_moneybook:
-                mClickedId = R.id.btn_moneybook;
                 startActivity(new Intent(getActivity(), GroupManageMoneybookActivity.class));
                 break;
         }
@@ -119,7 +115,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
             if(result == null){
                 return;
             }
-            switch (mClickedId){
+            switch (mClickId){
                 case R.id.btn_attendance:
                     JSONArray attendObj = jsObject.getJSONArray("result");
                     Attendance[] attendanceArr = gson.fromJson(attendObj.toString(), Attendance[].class);

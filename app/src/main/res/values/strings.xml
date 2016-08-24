@@ -166,6 +166,10 @@
 
     <string name="list_empty">현재 과제가 없습니다.</string>
 
+
+    <!--Alarm-->
+    <string name="alarm_add_btn_update">수정하기</string>
+    <string name="alarm_add_btn_new">추가하기</string>
     <!-- ///////////////////////////////////test/////////////////////////////////////-->
 
     <string name="connecting">연결중 입니다...</string>

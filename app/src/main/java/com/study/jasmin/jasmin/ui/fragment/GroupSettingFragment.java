@@ -1,39 +1,64 @@
 package com.study.jasmin.jasmin.ui.fragment;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Alarm;
+import com.study.jasmin.jasmin.entity.Member;
+import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.activity.GroupSettingAlarmListActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingAssignmentActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingGroupInfoActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingGroupPenaltyActivity;
 import com.study.jasmin.jasmin.ui.dialog.MemberListDialog;
+import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
+import com.study.jasmin.jasmin.util.JasminPreference;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GroupSettingFragment extends Fragment implements View.OnClickListener{
-
-    Button btnAlarm;
-    Button btnHomework;
-    Button btnGroupSetting;
-    Button btnPenaltySetting;
-    Button btnSubGrant;
-    Button btnGrant;
-    Button btnRemoveMember;
-    Button btnEndStudy;
-    Button btnSecedeGroup;
+public class GroupSettingFragment extends Fragment implements View.OnClickListener, Callback {
+    public static final String TAG = "GroupSettingFragment";
+    Button btnAlarm,
+            btnHomework,
+            btnGroupSetting,
+            btnPenaltySetting,
+            btnSubGrant,btnGrant,
+            btnRemoveMember,
+            btnEndStudy,
+            btnSecedeGroup;
     MemberListDialog memberlistDialog;
+    private ProgressDialog connectProgress;
+    public JasminPreference mPref;
+    private int mClickId;
 
     public GroupSettingFragment() {
         // Required empty public constructor
@@ -45,17 +70,21 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
         View rootView = inflater.inflate(R.layout.fragment_group_setting, container, false);
 
         setBtnListner(rootView);
-
+        mPref = JasminPreference.getInstance(getActivity());
+        connectProgress = new ProgressDialog(getContext());
         return rootView;
     }
 
     @Override
     public void onClick(View v) {
+        mClickId=v.getId();
+        Call<JsonObject> call =null;
+        RestClient.RestService service = RestClient.getClient();
 
-        switch (v.getId()) {
+        switch (mClickId) {
             case R.id.btn_alarm:
-                //Toast.makeText(getActivity(), "btn_alarm", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), GroupSettingAlarmListActivity.class));
+                connectProgress.show();
+                call = service.goAlarmList(mPref.getSelStudyNo());
                 break;
             case R.id.btn_homework:
                 startActivity(new Intent(getActivity(), SettingAssignmentActivity.class));
@@ -89,6 +118,8 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
             default:
                 break;
         }
+
+        if(call != null)        call.enqueue(this);//onResponse() 실행
     }
 
     public void setBtnListner(View rootView){
@@ -107,13 +138,53 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
         return;
     }
 
+
     // return ; 멤버 리스트를 String 배열로 반환
     // Custom Dialog 생성시 필요
     public String[] getMemberArray(int id){
-        String[] array ={"전소미","주결경","임나영","강미나","김소혜","최유정"};
+        ArrayList<Object> members = mPref.getListValue("memberList");
+        String[] array = null;
+        if(members != null){
+            array = new String[members.size()];
+            for(int i=0; i<members.size(); i++){
+                Member mem = (Member)members.get(i);
+                array[i] = mem.getUser_name();
+            }
+        }
         return array;
     }
 
+    @Override
+    public void onResponse(Call call, Response response) {
+        Log.d(TAG,"Retro Status Code = " + response.code());
+        Intent intent;
+        Gson gson = new GsonBuilder().create();
+        try {
+            JSONObject jsObject = new JSONObject(gson.toJson(response.body()));
+            switch (mClickId){
+                case R.id.btn_alarm:
+                    JSONArray attendObj = jsObject.getJSONArray("alarmList");
+                    Alarm[] alarmArr = gson.fromJson(attendObj.toString(), Alarm[].class);
+                    ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+                    Collections.addAll(alarmList, alarmArr);
+                    intent = new Intent(getActivity(),GroupSettingAlarmListActivity.class);
+                    intent.putParcelableArrayListExtra("alarmList", alarmList);
+                    if(intent != null) startActivity(intent);
+                    break;
+            }
+        }catch (JSONException e) {
+            Log.d(TAG,"e : " + e);
+            e.printStackTrace();
+        }
+        connectProgress.cancel();
+        connectProgress.dismiss();
+
+    }
+
+    @Override
+    public void onFailure(Call call, Throwable t) {
+
+    }
 }
 
 

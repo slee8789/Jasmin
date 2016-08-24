@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="날짜/시간"
+                android:text="시간"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
@@ -30,20 +30,13 @@
                 android:id="@+id/tv_today"
                 android:text=""/>
         </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-                <TimePicker
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/tp_time"
-                    android:timePickerMode="spinner"
-                    android:layout_gravity="center"
-                    />
-        </LinearLayout>
+        <TimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tp_time"
+            android:timePickerMode="spinner"
+            android:layout_gravity="center"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,18 +84,17 @@
                 android:id="@+id/btn_day_sun"
                 android:layout_weight="1"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
+    <!--e0824_2-->
         <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="매주반복"
                 android:textSize="15dp"
                 android:id="@+id/cb_repeat"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 />
-        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,13 +107,17 @@
             android:layout_height="50dp"
             android:id="@+id/et_content"
             android:hint="알람 내용을 입력하주세요"/>
-
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/btn_add"
-            android:gravity="center"
-            android:text="추가"/>
-
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_add"
+                android:gravity="center"
+                android:text="추가"
+                android:layout_alignParentEnd="true"
+                />
+        </RelativeLayout>
 </LinearLayout>

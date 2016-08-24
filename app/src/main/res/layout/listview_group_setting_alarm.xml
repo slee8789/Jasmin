@@ -116,8 +116,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:id="@+id/tv_context"
             android:text="알람 정보 텍스트 출력"
             android:gravity="left"/>
