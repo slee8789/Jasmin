@@ -17,7 +17,6 @@ import com.study.jasmin.jasmin.R;
  * Created by leesc on 2015-09-08.
  */
 public class TwoButtonDialog extends Dialog {
-
     private final String TAG = "TwoButtonDialog";
     private View.OnClickListener buttonOkListener;
     private View.OnClickListener buttonCancelListener;
@@ -28,7 +27,6 @@ public class TwoButtonDialog extends Dialog {
 
     public TwoButtonDialog(Context context) {
         super(context);
-
     }
 
     @Override
@@ -38,7 +36,7 @@ public class TwoButtonDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_twobutton);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        title = (TextView) findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.twobutton_title);
         comment = (TextView) findViewById(R.id.comment);
         ok = (Button)findViewById(R.id.ok_twobutton);
         cancel = (Button)findViewById(R.id.cancel_twobutton);
@@ -49,11 +47,51 @@ public class TwoButtonDialog extends Dialog {
     public void setOkOnClickListener(View.OnClickListener listener) {
         buttonOkListener = listener;
     }
+
     public void setCancelOnClickListener(View.OnClickListener listener) { buttonCancelListener = listener;    }
-    public void setTitle(String title) {
-        this.title.setText(title);
+
+    public void setComment(int commentId) {
+        this.comment.setText(commentId);
+    }
+
+    public void setTitle(int titleId) {
+        this.title.setText(titleId);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.dismiss();
+    }
+
+    public void showTwoButtonDialog(int titleId, int commentId){
+        this.show();
+        this.setTitle(titleId);
+        this.setComment(commentId);
+    }
+
+    public void showTwoButtonDialog(String strTitle, String strComment){
+        this.show();
+        this.title.setText(strTitle);
+        this.comment.setText(strComment);
+    }
+
+    public void showTwoButtonDialog(int titleId,  String strComment){
+        this.show();
+        this.setTitle(titleId);
+        this.setComment(strComment);
+    }
+
+
+    public void closeTwoButtonDialog(){
+        this.dismiss();
+        this.cancel();
     }
     public void setComment(String comment) {
         this.comment.setText(comment);
+    }
+
+    public void setTitle(String title) {
+        this.title.setText(title);
     }
 }

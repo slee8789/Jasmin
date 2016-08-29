@@ -72,7 +72,6 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
             JasminPreference.getInstance(context).putJson("studyList",studyObj.toString());
             JasminPreference.getInstance(context).putJson("memberList",memberObj.toString());
 
-            //swan add
             if(studyObj != null) {
                 JasminPreference.getInstance(context).putSelStudyNo(selStudyNo);
             }else{
@@ -82,8 +81,8 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
             Intent intent = new Intent(context, GroupMainActivity.class);
             context.startActivity(intent);
 
-//            Progress.cancel();
-//            Progress.dismiss();
+            Progress.cancel();
+            Progress.dismiss();
 
         } catch (JSONException e) {
             Log.d("test", "e : " + e);

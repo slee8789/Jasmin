@@ -57,6 +57,29 @@
                     android:text="@string/manage_assignment"
                     android:textSize="15sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_money_ect"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_bora2"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_priority_high_black_24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/manage_money_ect"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

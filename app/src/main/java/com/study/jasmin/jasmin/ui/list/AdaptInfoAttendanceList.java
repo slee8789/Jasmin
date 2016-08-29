@@ -1,5 +1,6 @@
 package com.study.jasmin.jasmin.ui.list;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,29 +21,27 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
+public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle> implements View.OnClickListener{
     private int resourceId;
     private TextView tvDate;
     private TextView tvStatus;
     private ImageView ivDelete;
     private ArrayList<AttendanceTitle> titleList;
+    private ListImgClickListener listImageClickListener;
 
-    public interface  ListBtnClickListener{
+    public interface  ListImgClickListener{
         void onListBtnClick(int position);
     }
 
-    public AdaptInfoAttendanceList(Context context, int resource, ArrayList<AttendanceTitle> objects,ListBtnClickListener clickListener) {
-
+    public AdaptInfoAttendanceList(Context context, int resource, ArrayList<AttendanceTitle> objects,ListImgClickListener listImageClickListener) {
         super(context, resource, objects);
-
         this.titleList = objects;
         this.resourceId = resource;
-        //this.listBtnClickListener = clickListener;
+        this.listImageClickListener = listImageClickListener;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position ;
         final Context context = parent.getContext();
 
         if (convertView == null) {
@@ -50,12 +49,8 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
             convertView = inflater.inflate(this.resourceId, parent, false);
         }
 
-
         findView(convertView);
         initView(position);
-
-        ArrayList<Attendance> arrTest = getItem(position).getAttendanceList();
-        convertView.setTag(arrTest);
 
         return convertView;
     }
@@ -74,15 +69,23 @@ public class AdaptInfoAttendanceList extends ArrayAdapter<AttendanceTitle>{
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         tvStatus = (TextView) rootView.findViewById(R.id.tv_status);
         ivDelete = (ImageView) rootView.findViewById(R.id.iv_delete);
-        //btnEdit = (Button) rootView.findViewById(R.id.btn_edit);
     }
 
     public void initView(int position){
         AttendanceTitle list = (AttendanceTitle)getItem(position);
         tvDate.setText(list.getDate());
         tvStatus.setText(list.getStatus());
+        ivDelete.setTag(position);
+        ivDelete.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.ic_delete_black_24dp_1));
+        ivDelete.setOnClickListener(this);
+    }
 
-       // btnEdit.setTag(position);
-        //btnEdit.setOnClickListener(this);
+    @Override
+    public void onClick(View v) {
+        Log.d("aa",">>>>>>>>>>>>>>>>>test");
+        if (this.listImageClickListener != null) {
+            Log.d("aa",">>>>>>>>>>test");
+            this.listImageClickListener.onListBtnClick((int)v.getTag()) ;
+        }
     }
 }

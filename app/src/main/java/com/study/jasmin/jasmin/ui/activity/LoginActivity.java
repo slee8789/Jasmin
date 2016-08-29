@@ -168,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 String strTest = response.body().toString();
 
+
                 JSONObject jsObject = new JSONObject(strTest);
                 JSONArray userObj = jsObject.getJSONArray("userInfo");
                 JSONArray studyObj = jsObject.getJSONArray("studyList");
@@ -181,12 +182,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 ArrayList<Object> userInfo = mPref.getListValue("userInfo");
                 ArrayList<Object> qnaList = mPref.getListValue("qnaList");
 
-                //AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
+
+                //오토 로그인 정보 저장 in user phone
+                // AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
                 if (cbAuto.isChecked()) {
-                    String mail = etEmail.getText().toString();
-                    String pw = etPassword.getText().toString();
-                    mPref.put("autoLoginId", mail);
-                    mPref.put("autoLoginPw", pw);
+                    mPref.put("autoLoginId", etEmail.getText().toString());
+                    mPref.put("autoLoginPw", etPassword.getText().toString());
                 }
 
                 Intent intent = new Intent(this, MainActivity.class);

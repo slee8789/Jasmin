@@ -35,14 +35,14 @@
             android:text="스터디 디파짓, 벌금 설정"
             />
         <Button
-            android:id="@+id/btn_subgrant"
+            android:id="@+id/btn_grade_share"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="관리자 권한 공유"
             />
         <Button
-            android:id="@+id/btn_grant"
+            android:id="@+id/btn_grade_delegate"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
             />
 
         <Button
-            android:id="@+id/btn_remove_member"
+            android:id="@+id/btn_member_remove"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

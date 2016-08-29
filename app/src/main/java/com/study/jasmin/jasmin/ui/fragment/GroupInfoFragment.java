@@ -64,7 +64,6 @@ public class GroupInfoFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.btn_info_study:
                 startActivity(new Intent(getActivity(),GroupStudyInfoActivity.class));
                 break;

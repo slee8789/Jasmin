@@ -9,25 +9,29 @@ public class Attendance implements Parcelable{
     int user_no;
     int study_no;
     String attendance_date;
-    int attendance_state;
+    String attendance_state;
+    String attendance_state_new;
     String user_name;
+    int penaltyMoney; //생성자에서 하드로 1000으로 입력
 
 
-    public Attendance(int attendance_no, String attendance_date, int attendance_state) {
+    public Attendance(int attendance_no, String attendance_date, String attendance_state) {
         this.attendance_no = attendance_no;
         this.attendance_date = attendance_date;
         this.attendance_state = attendance_state;
         this.user_name="유인나";
+        this.penaltyMoney = 1000;
     }
 
-    public Attendance(int attendance_no, int user_no, String user_name, int study_no, String attendance_date, int attendance_state) {
-
+    public Attendance(int attendance_no, int user_no, String user_name, int study_no, String attendance_date, String attendance_state, String attendance_state_new) {
         this.attendance_no = attendance_no;
         this.user_no = user_no;
         this.study_no = study_no;
         this.attendance_date = attendance_date;
         this.attendance_state = attendance_state;
+        this.attendance_state_new = attendance_state_new;
         this.user_name=user_name;
+        this.penaltyMoney = 1000;
     }
 
     protected Attendance(Parcel in) {
@@ -35,7 +39,7 @@ public class Attendance implements Parcelable{
         user_no = in.readInt();
         study_no = in.readInt();
         attendance_date = in.readString();
-        attendance_state = in.readInt();
+        attendance_state = in.readString();
         user_name = in.readString();
     }
 
@@ -51,7 +55,7 @@ public class Attendance implements Parcelable{
         }
     };
 
-    public int getAttendance_state() {
+    public String getAttendance_state() {
         return attendance_state;
     }
 
@@ -95,7 +99,7 @@ public class Attendance implements Parcelable{
         this.attendance_date = attendance_date;
     }
 
-    public void setAttendance_state(int attendance_state) {
+    public void setAttendance_state(String attendance_state) {
         this.attendance_state = attendance_state;
     }
 
@@ -106,8 +110,29 @@ public class Attendance implements Parcelable{
                 ", user_no=" + user_no +
                 ", study_no=" + study_no +
                 ", attendance_date='" + attendance_date + '\'' +
-                ", attendance_state=" + attendance_state +
+                ", attendance_state='" + attendance_state_new + '\'' +
+                ", attendance_state_old='" + attendance_state + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", penaltyMoney=" + penaltyMoney +
                 '}';
+    }
+
+    public String getJsonInsert(){
+        return "{\"user_no\":" + user_no +
+                ",\"study_no\":" + study_no +
+                ",\"attendance_state\":\"" +  attendance_state_new + "\"" +
+                ",\"penalty_money\":" + penaltyMoney  +
+                "}";
+    }
+
+    public String getJsonUpdate(){
+        return "{\"attendance_no\":" + attendance_no +
+                "{\"user_no\":" + user_no +
+                "{\"study_no\":" + study_no +
+                ",\"attendance_old_state\":\"" +  attendance_state + "\"" +
+                ",\"attendance_state\":\"" +  attendance_state_new + "\"" +
+                ",\"penalty_money\":" + penaltyMoney  +
+                "}";
     }
 
     @Override
@@ -121,7 +146,11 @@ public class Attendance implements Parcelable{
         dest.writeInt(user_no);
         dest.writeInt(study_no);
         dest.writeString(attendance_date);
-        dest.writeInt(attendance_state);
+        dest.writeString(attendance_state);
         dest.writeString(user_name);
+    }
+
+    public void setAttendanceStateNew(String attendance_state_new) {
+        this.attendance_state_new = attendance_state_new;
     }
 }

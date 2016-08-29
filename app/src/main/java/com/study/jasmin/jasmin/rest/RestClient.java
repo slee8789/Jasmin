@@ -152,8 +152,68 @@ public class RestClient{
         );
 
         @FormUrlEncoded
+        @POST("api/attendanceInsert")
+        Call<JsonObject> insertAttendance(@Field("attendanceList") String attendanceList
+        );
+
+        @FormUrlEncoded
+        @POST("api/attendanceUpdate")
+        Call<JsonObject> updateAttendance(@Field("attendanceList") String attendanceList
+        );
+
+
+        @FormUrlEncoded
+        @POST("api/attendanceDelete")
+        Call<JsonObject> deleteAttendance(@Field("attendenceNo") String attendenceNo
+        );
+
+
+        @FormUrlEncoded
         @POST("api/alarmList")
         Call<JsonObject> goAlarmList(@Field("studyNo") int studyNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/alarmInsert")
+        Call<JsonObject> addAlarm(@Field("studyNo") int studyNo,
+                                  @Field("alarmDate") int alarmDate,
+                                  @Field("alarmTime") int alarmTime,
+                                  @Field("alarmRepeat") int alarmRepeat,
+                                  @Field("alarmContent") String alarmContent
+        );
+
+        @FormUrlEncoded
+        @POST("api/alarmUpdate")
+        Call<JsonObject> updateAlarm(@Field("alarmNo") int alarmNo,
+                                     @Field("alarmDate") int alarmDate,
+                                     @Field("alarmTime") int alarmTime,
+                                     @Field("alarmRepeat") int alarmRepeat,
+                                     @Field("alarmContent") String alarmContent
+        );
+
+        @FormUrlEncoded
+        @POST("api/alarmDelete")
+        Call<JsonObject> deleteAlarm(@Field("alarmNo") int alarmNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/managerShare")
+        Call<JsonObject> gradeShare(@Field("studyNo") int studyNo,
+                                    @Field("userNo") int userNo
+        );
+
+
+        @FormUrlEncoded
+        @POST("/api/managerDelegate")
+        Call<JsonObject> gradeDelegate(@Field("studyNo") int studyNo,
+                                       @Field("userNo") int userNo
+        );
+
+
+        @FormUrlEncoded
+        @POST("/api/removeUser")
+        Call<JsonObject> removeMember(@Field("studyNo") int studyNo,
+                                       @Field("userNo") int userNo
         );
     }
 

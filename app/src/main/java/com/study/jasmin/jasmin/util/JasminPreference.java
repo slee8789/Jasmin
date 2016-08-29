@@ -193,7 +193,6 @@ public class JasminPreference {
 
     public void putSelStudyNo(int studyNo){
         this.selStudyNo = studyNo;
-        return ;
     }
 
     public int getSelStudyNo(){

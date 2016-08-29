@@ -36,10 +36,8 @@ public class GroupManageReceivablesActivity extends AppCompatActivity implements
     }
 
     public void initViews(){
-
         adapt = new AdaptInfoReceivablesList(this, R.layout.list_receivables_info, getItemFromDB(),this);
         list.setAdapter(adapt);
-
     }
 
     public ArrayList<ListInfoReceivables> getItemFromDB(){
@@ -72,21 +70,18 @@ public class GroupManageReceivablesActivity extends AppCompatActivity implements
         dialog.setCancelOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                dialog.closeTwoButtonDialog();
             }
         });
         dialog.setOkOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                deleteReceivable(listInfo);
+                dialog.closeTwoButtonDialog();
             }
         });
-        dialog.show();
-        dialog.setComment(comment);
-    }
-
-    public void deleteReceivable(ListInfoReceivables listInfo){
+        dialog.showTwoButtonDialog("미수금",comment);
 
     }
+
 }
 

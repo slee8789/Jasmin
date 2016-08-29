@@ -11,22 +11,32 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Attendance;
 import com.study.jasmin.jasmin.entity.AttendanceTitle;
+import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.AttendanceCheckDialog;
+import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;
+import com.study.jasmin.jasmin.ui.list.ListInfoReceivables;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GroupManageAttendanceActivity extends AppCompatActivity implements AdaptInfoAttendanceList.ListBtnClickListener, View.OnClickListener, ListView.OnItemClickListener{
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class GroupManageAttendanceActivity extends AppCompatActivity implements AdaptInfoAttendanceList.ListImgClickListener, View.OnClickListener,
+                                                                                     ListView.OnItemClickListener, Callback{
     public static final String TAG = "GMAttendanceActivity";
     Button                  btnAdd;
     ListView                listview;
     AdaptInfoAttendanceList adapter;
     AttendanceCheckDialog   dialog;
+    TwoButtonDialog         deleteDialog ;
     ArrayList<Attendance> attendanceList;
     ArrayList<AttendanceTitle> titleList;
 
@@ -45,12 +55,13 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
                  dialog = new AttendanceCheckDialog(this,null);
                  dialog.show();
                  break;
+             case R.id.ok_twobutton:
+                 deleteDialog.closeTwoButtonDialog();
+                 break;
+             case R.id.cancel_twobutton:
+                 deleteDialog.closeTwoButtonDialog();
+                 break;
          }
-    }
-
-    @Override
-    public void onListBtnClick(int position) {
-        Toast.makeText(this, Integer.toString(position+1) + "번 아이템 클릭", Toast.LENGTH_SHORT).show();
     }
 
     public void findViews(){
@@ -63,33 +74,28 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         titleList = getTitleList();
         adapter = new AdaptInfoAttendanceList(this, R.layout.list_management_attandance, titleList, this);
         listview.setAdapter(adapter);
+
         listview.setOnItemClickListener(this);
         btnAdd.setOnClickListener(this);
     }
 
     public ArrayList<AttendanceTitle> getTitleList() {
-
-        if(attendanceList == null) return null;
         ArrayList<AttendanceTitle> titleList = new ArrayList<AttendanceTitle>();
-        AttendanceTitle tempTitle;
-        String strDate;
-        int  nStatus;
         boolean bfindDate;
 
-        //attendanceList에서 attendanceTitleList 뽑아내기
+        if(attendanceList == null) return null;
+
         for(int i=0; i<attendanceList.size(); i++ ) {
-            bfindDate = false;
-            tempTitle = new AttendanceTitle();
-            strDate = (attendanceList.get(i)).getAttendance_date();
-            nStatus = (attendanceList.get(i)).getAttendance_state();
+            bfindDate          = false;
+            String attDate     = attendanceList.get(i).getAttendance_date();
+            String attStatus   = attendanceList.get(i).getAttendance_state();
 
             //1. title에 date가 있을 경우
             if(titleList != null) {
                 for (int j = 0; j < titleList.size(); j++) {
-                    if (strDate.equals(titleList.get(j).getDate())) {
-                        tempTitle = setTitleCount(nStatus, titleList.get(j));
-                        tempTitle.addAttendanceList(attendanceList.get(i));
-                        titleList.set(j, tempTitle);
+                    if (attDate.equals(titleList.get(j).getDate())){
+                        titleList.get(j).setTitleCount(attStatus);
+                        titleList.get(j).addAttendanceList(attendanceList.get(i));
                         bfindDate = true;
                         break;
                     }
@@ -97,8 +103,9 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
             }
             //2,title에 date가 없을 경우
             if(!bfindDate){
-                tempTitle.setDate(strDate);
-                tempTitle = setTitleCount(nStatus,tempTitle);
+                AttendanceTitle tempTitle = new AttendanceTitle();
+                tempTitle.setDate(attDate);
+                tempTitle.setTitleCount(attStatus);
                 tempTitle.addAttendanceList(attendanceList.get(i));
                 titleList.add(tempTitle);
             }
@@ -106,28 +113,41 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         return titleList;
     }
 
-    public AttendanceTitle setTitleCount(int status, AttendanceTitle title){
-        switch (status){
-            case 1:
-                title.countAttendType1();
-                break;
-            case 2:
-                title.countAttendType2();
-                break;
-            case 3:
-                title.countAttendType3();
-                break;
-        }
-        return title;
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         AttendanceTitle test = (AttendanceTitle)parent.getItemAtPosition(position);
-        ArrayList<Attendance> at = test.getAttendanceList();
-        dialog = new AttendanceCheckDialog(this,at);
+        ArrayList<Attendance> list = test.getAttendanceList();
+        dialog = new AttendanceCheckDialog(this,list);
         dialog.show();
     }
+
+    @Override
+    public void onListBtnClick(int position) {
+        deleteDialog = new TwoButtonDialog(this);
+        deleteDialog.setOkOnClickListener(this);
+        deleteDialog.setCancelOnClickListener(this);
+        deleteDialog.showTwoButtonDialog("출석 삭제","항목을 정말 삭제하시겠습니까?");
+
+        /*
+        RestClient.RestService service = RestClient.getClient();
+        String str = "";
+        Call<JsonObject> call = service.deleteAttendance(str);
+        call.enqueue(this);
+
+        Toast.makeText(this, Integer.toString(position+1) + "번 아이템 클릭", Toast.LENGTH_SHORT).show();
+        */
+    }
+
+    @Override
+    public void onResponse(Call call, Response response) {
+
+    }
+
+    @Override
+    public void onFailure(Call call, Throwable t) {
+
+    }
 }
+
 

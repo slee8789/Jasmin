@@ -104,6 +104,7 @@
     <string name="manage_moneybook">머니북</string>
     <string name="manage_do_attendance">출석체크하기</string>
     <string name="manage_do_assignment">과제체크하기</string>
+    <string name="manage_money_ect">기타입/출금</string>
 
     <!-- attendance_check -->
     <string name="attendance_title">출석체크</string>
@@ -112,6 +113,8 @@
     <string name="attendance_min">분</string>
     <string name="attendance_ok">확인</string>
     <string name="attendance_cancel">취소</string>
+    <string name="attendance_delete_title">출석</string>
+    <string name="attendance_delete_comment">출석 정보를 삭제하시겠습니까?</string>
 
     <!-- assignment_check -->
     <string name="assignment_title">과제체크</string>
@@ -170,9 +173,16 @@
 
     <string name="internal_storage">internal_storage</string>
 
+
     <!--Alarm-->
-    <string name="alarm_add_btn_update">수정하기</string>
+    <string name="alarm_add_btn_update">수정완료</string>
     <string name="alarm_add_btn_new">추가하기</string>
+    <string name="alarm_add_vali_dialog_title">알림 입력 오류</string>
+    <string name="alarm_add_vali_dialog_comment">내용을 입력해주세요.</string>
+    <string name="alarm_add_success_dialog_title">성공</string>
+    <string name="alarm_add_success__dialog_comment">성공했어요</string>
+
+
     <!-- ///////////////////////////////////test/////////////////////////////////////-->
 
     <string name="connecting">연결중 입니다...</string>

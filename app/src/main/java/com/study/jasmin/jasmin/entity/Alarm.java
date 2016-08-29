@@ -18,7 +18,17 @@ public class Alarm implements Parcelable {
     int alarm_repeat;
     int alarm_date=0;
     String alarm_content;
-    boolean[] alarm_dates;// 0~6 : mon~sun / True(1) False(0)
+    boolean[] alarm_dates_arr;// 0~6 : mon~sun / True(1) False(0)
+
+    public Alarm(){
+        this.alarm_no = 0;
+        this.study_no = 0;
+        this.alarm_time = 0;
+        this.alarm_repeat = 0;
+        this.alarm_content = "";
+        this.alarm_date = 0;
+        init();
+    }
 
     public Alarm(int alarm_no, int study_no, int alarm_time, int alarm_repeat, int alarm_date, String alarm_content) {
         this.alarm_no = alarm_no;
@@ -29,33 +39,6 @@ public class Alarm implements Parcelable {
         this.alarm_date = alarm_date;
     }
 
-    public void init(){
-        this.alarm_minute = alarm_time%100;
-        this.alarm_hour = alarm_time/100;
-        setArrDates();
-    }
-
-    public void setArrDates(){
-        alarm_dates = new boolean[]{false,false,false,false,false,false,false};
-        int date = this.alarm_date;
-        int jari = alarm_dates.length -1 ;
-
-        while(date>0 &&jari>=0) {
-            alarm_dates[jari] = (date%10 == 1)? true : false; //날짜의 일의 자리의 수가 1이면 true
-            date = date / 10;//입력된 숫자를 10으로 나눠서 num변수에 담음.
-            jari--; //반복될때마다 자리수가 증가됨, 배열에는 6이 일요일이기 때문에 마지막 자리수인 일요일부터 월요일 순으로 값을 넣음.
-        }
-    }
-
-    public String getTimeHHMM(){
-        String strHour = Integer.toString(alarm_hour);
-        String strMin =Integer.toString(alarm_minute);
-        if(alarm_minute == 0) strMin = "00";
-        else if(alarm_minute < 10) strMin = "0"+strMin;
-
-        return strHour +":"+ strMin;
-    }
-
     protected Alarm(Parcel in) {
         alarm_no = in.readInt();
         study_no = in.readInt();
@@ -64,7 +47,7 @@ public class Alarm implements Parcelable {
         alarm_minute = in.readInt();
         alarm_repeat = in.readInt();
         alarm_date = in.readInt();
-        alarm_dates = in.createBooleanArray();
+        alarm_dates_arr = in.createBooleanArray();
         alarm_content = in.readString();
     }
 
@@ -80,8 +63,69 @@ public class Alarm implements Parcelable {
         }
     };
 
+    //custom methods
+    //1,init
+    public void init(){
+        this.alarm_minute = alarm_time%100;
+        this.alarm_hour = alarm_time/100;
+        setDateIntToArr();
+    }
+
+    //2. alarm_date(int) to alarm_dates(Array)
+    public void setDateArrToInt(){
+        boolean[] dates = alarm_dates_arr;
+        int nDate = 0;
+        for(int i=0; i<dates.length; i++){
+            if(dates[i]){
+                nDate++;
+            }
+            nDate = nDate * 10;
+        }
+        alarm_date = nDate;
+        return ;
+    }
+
+    //3.alarm_date(int) to alarm_dates(Array)
+    public void setDateIntToArr(){
+        alarm_dates_arr = new boolean[]{false,false,false,false,false,false,false};
+        int date = this.alarm_date;
+        int jari = alarm_dates_arr.length -1 ;
+
+        while(date>0 &&jari>=0) {
+            alarm_dates_arr[jari] = (date%10 == 1)? true : false; //날짜의 일의 자리의 수가 1이면 true
+            date = date / 10;//입력된 숫자를 10으로 나눠서 num변수에 담음.
+            jari--; //반복될때마다 자리수가 증가됨, 배열에는 6이 일요일이기 때문에 마지막 자리수인 일요일부터 월요일 순으로 값을 넣음.
+        }
+    }
+
+    //4.getTime(HH:MM(String))
+    public String getTimeHHMM(){
+        String strHour = Integer.toString(alarm_hour);
+        String strMin =Integer.toString(alarm_minute);
+        if(alarm_minute == 0) strMin = "00";
+        else if(alarm_minute < 10) strMin = "0"+strMin;
+
+        return strHour +":"+ strMin;
+    }
+
+//normal getter() and setter()
+    public int getAlarmDateInt(){
+        return alarm_date;
+    }
+
+    public void setAlarmDateInt(int nDate){
+        this.alarm_date = nDate;
+        setDateIntToArr();
+    }
+
+
+    public boolean[] getAlarmDateArr(){
+        return alarm_dates_arr;
+    }
+
+
     public boolean[] getArrDates(){
-        return this.alarm_dates;
+        return this.alarm_dates_arr;
     }
 
     public int getAlarmNo() {
@@ -126,8 +170,8 @@ public class Alarm implements Parcelable {
         return alarm_content;
     }
 
-    public void setAlarmCountent(String alarm_countent) {
-        this.alarm_content = alarm_countent;
+    public void setAlarmContent(String alarm_content) {
+        this.alarm_content = alarm_content;
     }
 
     public int getAlarmHour(){
@@ -135,10 +179,6 @@ public class Alarm implements Parcelable {
     }
     public int getAlarmMinute(){
         return alarm_minute;
-    }
-
-    public void changeAlarmState(){
-        //20160824-3. 개인의 알람 상태 가져와서 바꿔야함
     }
 
     @Override
@@ -155,7 +195,7 @@ public class Alarm implements Parcelable {
         dest.writeInt(alarm_minute);
         dest.writeInt(alarm_repeat);
         dest.writeInt(alarm_date);
-        dest.writeBooleanArray(alarm_dates);
+        dest.writeBooleanArray(alarm_dates_arr);
         dest.writeString(alarm_content);
     }
 
@@ -169,7 +209,7 @@ public class Alarm implements Parcelable {
                 ", alarm_minute=" + alarm_minute +
                 ", alarm_repeat=" + alarm_repeat +
                 ", alarm_date=" + alarm_date +
-                ", alarm_dates=" + Arrays.toString(alarm_dates) +
+                ", alarm_dates_arr=" + Arrays.toString(alarm_dates_arr) +
                 ", alarm_content='" + alarm_content + '\'' +
                 '}';
     }

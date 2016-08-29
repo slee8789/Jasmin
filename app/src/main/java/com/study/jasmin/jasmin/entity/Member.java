@@ -12,13 +12,15 @@ public class Member implements Serializable {
     private int user_grade;
     private int user_deposit;
     private String user_name;
+    private String user_email;
 
-    public Member(int study_no, int user_no, int user_grade, int user_deposit, String user_name) {
+    public Member(int study_no, int user_no, int user_grade, int user_deposit, String user_name, String user_email) {
         this.study_no = study_no;
         this.user_no = user_no;
         this.user_grade = user_grade;
         this.user_deposit = user_deposit;
         this.user_name = user_name;
+        this.user_email = user_email;
     }
 
     public int getStudy_no() {
@@ -61,6 +63,14 @@ public class Member implements Serializable {
         this.user_name = user_name;
     }
 
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -69,6 +79,7 @@ public class Member implements Serializable {
                 ", user_grade=" + user_grade +
                 ", user_deposit=" + user_deposit +
                 ", user_name='" + user_name + '\'' +
+                ", user_email='" + user_email + '\'' +
                 '}';
     }
 }

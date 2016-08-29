@@ -19,6 +19,7 @@ import com.study.jasmin.jasmin.entity.QnA;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.activity.GroupManageAssignmentActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageAttendanceActivity;
+import com.study.jasmin.jasmin.ui.activity.GroupManageMoneyEctActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageMoneybookActivity;
 import com.study.jasmin.jasmin.ui.activity.GroupManageReceivablesActivity;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
@@ -42,6 +43,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
     private LinearLayout btnAssignment;
     private LinearLayout btnReceivables;
     private LinearLayout btnMoneybook;
+    private LinearLayout btnMoneyEct;
     private ProgressDialog connectProgress;
     public JasminPreference mPref;
     public  int mClickId;
@@ -65,6 +67,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
         btnAssignment = (LinearLayout)rootView.findViewById(R.id.btn_assignment);
         btnReceivables = (LinearLayout)rootView.findViewById(R.id.btn_receivables);
         btnMoneybook = (LinearLayout)rootView.findViewById(R.id.btn_moneybook);
+        btnMoneyEct = (LinearLayout)rootView.findViewById(R.id.btn_money_ect);
 
     }
 
@@ -73,6 +76,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
         btnAssignment.setOnClickListener(this);
         btnReceivables.setOnClickListener(this);
         btnMoneybook.setOnClickListener(this);
+        btnMoneyEct.setOnClickListener(this);
         connectProgress = new ProgressDialog(getContext());
         mPref = JasminPreference.getInstance(getActivity());
     }
@@ -85,11 +89,12 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                 goAttendance();
                 break;
             case R.id.btn_assignment:
-//                startActivity(new Intent(getActivity(), GroupManageAssignmentActivity.class));
-                connectProgress.show();
+                startActivity(new Intent(getActivity(), GroupManageAssignmentActivity.class));
+                /*connectProgress.show();
                 RestClient.RestService service = RestClient.getClient();
                 Call<JsonObject> call = service.getAssignmentListByStudyNo(2); //test
                 call.enqueue(this);
+                */
                 break;
 
             case R.id.btn_receivables:
@@ -98,6 +103,9 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
 
             case R.id.btn_moneybook:
                 startActivity(new Intent(getActivity(), GroupManageMoneybookActivity.class));
+                break;
+            case R.id.btn_money_ect:
+                startActivity(new Intent(getActivity(), GroupManageMoneyEctActivity.class));
                 break;
         }
     }
@@ -123,6 +131,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                     Collections.addAll(attendanceList, attendanceArr);
                     intent = new Intent(getActivity(),GroupManageAttendanceActivity.class);
                     intent.putParcelableArrayListExtra("attendanceList", attendanceList);
+                    startActivity(intent);
                     break;
                 case R.id.btn_assignment:
 //                    Assignment[] assignments = gson.fromJson(result.toString(), Assignment[].class);
@@ -137,9 +146,6 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                 case R.id.btn_moneybook:
                     break;
             }
-
-
-
             connectProgress.cancel();
             connectProgress.dismiss();
 
@@ -147,7 +153,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
             Log.d(TAG,"e : " + e);
         }
 
-        if(intent != null) startActivity(intent);
+//        if(intent != null)
     }
 
     public void goAttendance(){

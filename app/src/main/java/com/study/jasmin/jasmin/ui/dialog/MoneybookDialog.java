@@ -76,8 +76,8 @@ public class MoneybookDialog extends Dialog implements View.OnClickListener{
                 break;
             case R.id.btn_select_member:
                 String[] names = {"김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나"};
-                MemberListDialog dialog  = new MemberListDialog(v.getContext(),"멤버리스트",names);
-                dialog.show();
+                //MemberListDialog dialog  = new MemberListDialog(v.getContext(),"멤버리스트",names);
+                //dialog.show();
                 break;
         }
     }

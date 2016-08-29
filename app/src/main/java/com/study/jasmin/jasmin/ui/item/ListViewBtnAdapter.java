@@ -16,18 +16,16 @@ import java.util.ArrayList;
 
 public class ListViewBtnAdapter extends ArrayAdapter implements View.OnClickListener{
 
+    int resourceId;
+    private ListBtnClickListener listBtnClickListener;
+
     //버튼 클릭 이벤트를 위한 Listener 인터페이스 정의
     public interface  ListBtnClickListener{
         void onListBtnClick(int position);
     }
 
-    int resourceId;
-    private ListBtnClickListener listBtnClickListener;
-
-
     public ListViewBtnAdapter(Context context, int resource, ArrayList<ListViewAssignment> list, ListBtnClickListener clickListener) {
         super(context, resource, list);
-
         this.resourceId = resource;
         this.listBtnClickListener = clickListener;
     }
@@ -61,11 +59,11 @@ public class ListViewBtnAdapter extends ArrayAdapter implements View.OnClickList
         btnDelete.setTag(position);
         btnDelete.setOnClickListener(this);
 
-
         return convertView;
     }
 
     // button1이 눌려졌을 때 실행되는 onClick함수.
+    @Override
     public void onClick(View v) {
         // ListBtnClickListener(SettingAssignmentActivity)의 onListBtnClick() 함수 호출.
         if (this.listBtnClickListener != null) {

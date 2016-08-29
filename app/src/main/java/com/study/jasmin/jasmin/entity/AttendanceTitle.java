@@ -92,6 +92,19 @@ public class AttendanceTitle {
         return Integer.toString(attendType1) +" / "+ Integer.toString(attendType2) +" / "+Integer.toString(attendType3);
     }
 
-
+    public void setTitleCount(String status){
+        switch (status){
+            case "출석":
+                countAttendType1();
+                break;
+            case "지각":
+                countAttendType2();
+                break;
+            case "결석":
+                countAttendType3();
+                break;
+        }
+        return;
+    }
 
 }

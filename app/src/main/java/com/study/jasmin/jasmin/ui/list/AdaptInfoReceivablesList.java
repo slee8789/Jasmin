@@ -40,7 +40,6 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View view = convertView;
 
         if (view == null) {
@@ -74,7 +73,6 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
     public void onClick(View v) {
         if (this.listBtnClickListener != null) {
             this.listBtnClickListener.onListBtnClick((ListInfoReceivables)v.getTag()) ;
-
         }
 
     }

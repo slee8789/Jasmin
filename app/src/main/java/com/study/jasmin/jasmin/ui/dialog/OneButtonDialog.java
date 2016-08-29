@@ -47,7 +47,7 @@ public class OneButtonDialog extends Dialog {
     }
 
     public void setComment(int commentId) {
-        this.comment.setText(getContext().getResources().getString(commentId));
+        this.comment.setText(commentId);
     }
 
     public void setTitle(int titleId) {
@@ -59,4 +59,5 @@ public class OneButtonDialog extends Dialog {
         super.onBackPressed();
         this.dismiss();
     }
+
 }

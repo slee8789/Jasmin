@@ -26,7 +26,9 @@ import com.study.jasmin.jasmin.ui.activity.SettingAssignmentActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingGroupInfoActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingGroupPenaltyActivity;
 import com.study.jasmin.jasmin.ui.dialog.MemberListDialog;
+import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
+import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 import org.json.JSONArray;
@@ -56,6 +58,7 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
             btnEndStudy,
             btnSecedeGroup;
     MemberListDialog memberlistDialog;
+    TwoButtonDialog twoButtonDialog;
     private ProgressDialog connectProgress;
     public JasminPreference mPref;
     private int mClickId;
@@ -95,25 +98,25 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
             case R.id.btn_penalty_setting:
                 startActivity(new Intent(getActivity(), SettingGroupPenaltyActivity.class));
                 break;
-            case R.id.btn_subgrant:
-                memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 공유",getMemberArray(R.id.btn_subgrant));
+            case R.id.btn_grade_share:
+                memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 공유",1);
                 memberlistDialog.show();
                 break;
-            case R.id.btn_grant:
-                memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 위임",getMemberArray(R.id.btn_grant));
+            case R.id.btn_grade_delegate:
+                memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 위임",2);
                 memberlistDialog.show();
                 break;
-            case R.id.btn_remove_member:
-                memberlistDialog = new MemberListDialog(getActivity(),"멤버 강제 탈퇴",getMemberArray(R.id.btn_remove_member));
+            case R.id.btn_member_remove:
+                memberlistDialog = new MemberListDialog(getActivity(),"멤버 강제 탈퇴",3);
                 memberlistDialog.show();
                 break;
             case R.id.btn_end_study:
-                //swan "Need One Button Dialog"
-                //startActivity(new Intent(this, SettingAssignmentAddActivity.class));
+                twoButtonDialog = new TwoButtonDialog(getActivity());
+                twoButtonDialog.showTwoButtonDialog("스터디 종료","스터디를 종료하시겠습니까?");
                 break;
             case R.id.btn_secede_group:
-                //swan : 원버튼 다이얼로그 필요
-                //startActivity(new Intent(this, SettingAssignmentAddActivity.class));
+                twoButtonDialog = new TwoButtonDialog(getActivity());
+                twoButtonDialog.showTwoButtonDialog("스터디 탈퇴","스터디를 탈퇴하시겠습니까?");
                 break;
             default:
                 break;
@@ -127,8 +130,8 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                 btnPenaltySetting, btnSubGrant, btnGrant,
                 btnRemoveMember, btnEndStudy, btnSecedeGroup};
         int[] arrBtnId = {R.id.btn_alarm, R.id.btn_homework, R.id.btn_group_setting,
-                R.id.btn_penalty_setting, R.id.btn_subgrant, R.id.btn_grant,
-                R.id.btn_remove_member, R.id.btn_end_study, R.id.btn_secede_group};
+                R.id.btn_penalty_setting, R.id.btn_grade_share, R.id.btn_grade_delegate,
+                R.id.btn_member_remove, R.id.btn_end_study, R.id.btn_secede_group};
 
         for(int i=0; i<9; i++){
             arrBtn[i] = (Button)rootView.findViewById(arrBtnId[i]);
@@ -169,6 +172,8 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                     Collections.addAll(alarmList, alarmArr);
                     intent = new Intent(getActivity(),GroupSettingAlarmListActivity.class);
                     intent.putParcelableArrayListExtra("alarmList", alarmList);
+                    //(e160827)
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     if(intent != null) startActivity(intent);
                     break;
             }
