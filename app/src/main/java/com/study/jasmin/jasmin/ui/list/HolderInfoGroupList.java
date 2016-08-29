@@ -2,13 +2,11 @@ package com.study.jasmin.jasmin.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
@@ -43,7 +41,7 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
         itemView.getClass();
         itemView.setOnClickListener(this);
         context = itemView.getContext();
-        Progress = new ProgressDialog(context);
+        Progress = ProgressDialog.getInstance(context);
         groupName = (TextView)itemView.findViewById(R.id.group_name);
         groupPhoto = (ImageView)itemView.findViewById(R.id.group_photo);
         studyList = JasminPreference.getInstance(context).getListValue("studyList");
@@ -51,7 +49,7 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
         Progress.show();
         RestClient.RestService service = RestClient.getClient();
         //swan add
@@ -81,13 +79,11 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
                 Log.d(TAG,"studyObj is empty!!!");
             }
 
-//            Log.d("test",((Study)studyList.get(0)).getStudy_useDeposit()+"testtest");
-//            Log.d("test",((Study)studyList.get(1)).getStudy_useDeposit()+"testtest");
             Intent intent = new Intent(context, GroupMainActivity.class);
             context.startActivity(intent);
 
-            Progress.cancel();
-            Progress.dismiss();
+//            Progress.cancel();
+//            Progress.dismiss();
 
         } catch (JSONException e) {
             Log.d("test", "e : " + e);

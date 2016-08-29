@@ -1,6 +1,7 @@
 package com.study.jasmin.jasmin.ui.list;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Post;
 
 import java.util.ArrayList;
 
-public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements View.OnClickListener {
+public class AdaptInfoNoticeList extends ArrayAdapter<Object>  {
     public static final String TAG = "AdaptInfoNoticeList";
-    private ArrayList<ListInfoNotice> arraySelectInfo;
+    private ArrayList<Object> arraySelectInfo;
     private Context context;
     private onButtonClickListener adptCallback = null;
-    private ListInfoNotice listInfo = null;
-
+    private Post listInfo = null;
     public interface onButtonClickListener {
-        void onFavoriteState(ImageView v, boolean favorite);
-        void onAddReply();
+        void onFavoriteState(int position, ImageView v, boolean favorite);
+
+        void onAddReply(int position);
 
     }
 
@@ -30,7 +32,7 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
         adptCallback = callback;
     }
 
-    public AdaptInfoNoticeList(Context context, int resource, ArrayList<ListInfoNotice> objects) {
+    public AdaptInfoNoticeList(Context context, int resource, ArrayList<Object> objects) {
         super(context, resource, objects);
         this.arraySelectInfo = objects;
         this.context = context;
@@ -42,17 +44,17 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
         this.context = context;
     }
 
-    public ArrayList<ListInfoNotice> getArraySelectInfo() {
+    public ArrayList<Object> getArraySelectInfo() {
         return arraySelectInfo;
     }
 
-    public void setArraySelectInfo(ArrayList<ListInfoNotice> arraySelectInfo) {
+    public void setArraySelectInfo(ArrayList<Object> arraySelectInfo) {
         this.arraySelectInfo = arraySelectInfo;
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View view = convertView;
 
@@ -61,47 +63,48 @@ public class AdaptInfoNoticeList extends ArrayAdapter<ListInfoNotice> implements
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_notice_info, null);
         }
-        listInfo = arraySelectInfo.get(position);
 
+
+
+        listInfo = (Post) arraySelectInfo.get(position);
+        Log.d(TAG, "listInfo : " + listInfo.toString());
         if (listInfo != null) {
 //            TextView no = (TextView) view.findViewById(R.id.notice_no);
             TextView title = (TextView) view.findViewById(R.id.notice_title);
             TextView views = (TextView) view.findViewById(R.id.notice_views_count);
-//            View content = (View) view.findViewById(R.id.notice_content);
+            TextView content = (TextView) view.findViewById(R.id.notice_content);
             TextView date = (TextView) view.findViewById(R.id.notice_date);
             TextView writer = (TextView) view.findViewById(R.id.notice_writer);
             LinearLayout replyTxt = (LinearLayout) view.findViewById(R.id.notice_reply);
-            replyTxt.setOnClickListener(this);
+            replyTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adptCallback.onAddReply(position);
+                }
+            });
             TextView reply = (TextView) view.findViewById(R.id.notice_reply_count);
             ImageView favorite = (ImageView) view.findViewById(R.id.notice_favorite);
-            favorite.setOnClickListener(this);
+            favorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listInfo.isFavorite() == false) {
+                        listInfo.setFavorite(true);
+                    } else listInfo.setFavorite(false);
+                    adptCallback.onFavoriteState(position, (ImageView) v, listInfo.isFavorite());
+                }
+            });
 
 //            no.setText(listInfo.getNo());
-            title.setText(listInfo.getTitle());
-            views.setText(listInfo.getViews());
-//            Todo: 컨텐츠 이미지포함 뷰 고려
-            date.setText(listInfo.getDate());
-            writer.setText(listInfo.getWriter());
-            reply.setText(listInfo.getReply());
+            title.setText(listInfo.getPost_title());
+            views.setText(Integer.toString(listInfo.getHits()));
+            content.setText(listInfo.getPost_content());
+            date.setText(listInfo.getPost_date());
+            writer.setText(listInfo.getUser_name());
+            reply.setText(Integer.toString(listInfo.getComment_count()));
 
         }
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.notice_reply:
-                adptCallback.onAddReply();
-                break;
-
-            case R.id.notice_favorite:
-                if(listInfo.getFavorite() == false) {
-                    listInfo.setFavorite(true);
-                } else listInfo.setFavorite(false);
-                adptCallback.onFavoriteState((ImageView)v, listInfo.getFavorite());
-                break;
-        }
-    }
 
 }

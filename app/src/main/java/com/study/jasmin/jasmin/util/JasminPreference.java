@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.study.jasmin.jasmin.entity.Comment;
 import com.study.jasmin.jasmin.entity.Member;
+import com.study.jasmin.jasmin.entity.Post;
 import com.study.jasmin.jasmin.entity.QnA;
 import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.entity.User;
@@ -27,10 +29,12 @@ public class JasminPreference {
     private Object obj                  = new Object();
     private ArrayList <Object> list     = new ArrayList<Object>();
 
-    private User[] users;
-    private QnA[] qnas;
-    private Study[] studies;
-    private Member[] members;
+    private User[]      users;
+    private QnA[]       qnas;
+    private Study[]     studies;
+    private Member[]    members;
+    private Post[]      posts;
+    private Comment[]   comments;
 
     private int selStudyNo;
 
@@ -67,10 +71,6 @@ public class JasminPreference {
     }
 
     public void putJson(String key, String value) {
-//        SharedPreferences pref = mContext.getSharedPreferences(PREF_NAME, Activity.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = pref.edit();
-//        editor.putString(key, value);
-//        editor.commit();
 
         switch (key){
             case "qnaList":
@@ -87,6 +87,14 @@ public class JasminPreference {
 
             case "memberList":
                 members = gson.fromJson(value, Member[].class);
+                break;
+
+            case "postList":
+                posts = gson.fromJson(value, Post[].class);
+                break;
+
+            case "commentList":
+                comments = gson.fromJson(value, Comment[].class);
                 break;
 
             case "groupInfo":
@@ -140,9 +148,6 @@ public class JasminPreference {
     }
 
     public Object getObjectValue(String key){
-        String strJson              = getValue(key,"");
-
-        if(strJson =="")  return null;
 
         switch (key){
             case "userInfo":
@@ -171,6 +176,14 @@ public class JasminPreference {
                 Collections.addAll(list, members);
                 break;
 
+            case "postList":
+                Collections.addAll(list, posts);
+                break;
+
+            case "commentList":
+                Collections.addAll(list, comments);
+                break;
+
             case "qnaList":
                 Collections.addAll(list, qnas);
                 break;
@@ -186,6 +199,10 @@ public class JasminPreference {
     public int getSelStudyNo(){
         return this.selStudyNo;
     }
+
+
+
+
 }
 
 

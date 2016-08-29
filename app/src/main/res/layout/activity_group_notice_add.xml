@@ -14,22 +14,28 @@
             android:id="@+id/add_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:padding="10dp"
-            android:paddingLeft="20dp"
             android:layout_centerVertical="true"
             android:hint="@string/notice_title"
-            android:textSize="30sp" />
+            android:padding="10dp"
+            android:paddingLeft="20dp" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/add_file"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/add_top_layout"
+        android:text="첨부파일 테스트"/>
 
     <EditText
         android:id="@+id/add_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/add_top_layout"
+        android:layout_below="@id/add_file"
         android:background="@color/colorBackground3"
-        android:padding="10dp"
         android:gravity="top"
-        android:hint="@string/reply_content" />
+        android:hint="@string/reply_content"
+        android:padding="10dp" />
 
 </RelativeLayout>

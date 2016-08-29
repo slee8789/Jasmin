@@ -9,34 +9,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Comment;
+import com.study.jasmin.jasmin.entity.User;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
 import java.util.ArrayList;
 
-public class AdaptInfoReplyList extends ArrayAdapter<ListInfoReply> implements View.OnClickListener{
-    private ArrayList<ListInfoReply> arraySelectInfo;
+public class AdaptInfoReplyList extends ArrayAdapter<Object> {
+    private ArrayList<Object> arraySelectInfo;
     private Context context;
     private onButtonClickListener adptCallback = null;
 
     public interface onButtonClickListener {
-        void onBtnModify();
-        void onBtnDelete();
+        void onBtnModify(int position);
+        void onBtnDelete(int position);
     }
 
     public void setOnButtonClickListener(onButtonClickListener callback) {
         adptCallback = callback;
     }
 
-    public AdaptInfoReplyList(Context context, int resource, ArrayList<ListInfoReply> objects) {
+    public AdaptInfoReplyList(Context context, int resource, ArrayList<Object> objects) {
         super(context, resource, objects);
         this.arraySelectInfo = objects;
         this.context = context;
     }
 
-    public ArrayList<ListInfoReply> getArraySelectInfo() {
+    public ArrayList<Object> getArraySelectInfo() {
         return arraySelectInfo;
     }
 
-    public void setArraySelectInfo(ArrayList<ListInfoReply> arraySelectInfo) {
+    public void setArraySelectInfo(ArrayList<Object> arraySelectInfo) {
         this.arraySelectInfo = arraySelectInfo;
     }
 
@@ -44,40 +47,51 @@ public class AdaptInfoReplyList extends ArrayAdapter<ListInfoReply> implements V
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View view = convertView;
-
+        final int pos = position;
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_reply_info, null);
         }
-        final ListInfoReply listInfo = arraySelectInfo.get(position);
+        final Comment listInfo = (Comment)arraySelectInfo.get(position);
+        int userNo = ((User) JasminPreference.getInstance(getContext()).getObjectValue("userInfo")).getUser_no();
 
         if (listInfo != null) {
             TextView id = (TextView) view.findViewById(R.id.reply_id);
+            TextView time = (TextView) view.findViewById(R.id.reply_time);
             TextView content = (TextView) view.findViewById(R.id.reply_content);
+
             ImageView modify = (ImageView) view.findViewById(R.id.reply_modify);
             ImageView delete = (ImageView) view.findViewById(R.id.reply_delete);
 
-            id.setText(listInfo.getId());
-            content.setText(listInfo.getContent());
-            modify.setOnClickListener(this);
-            delete.setOnClickListener(this);
+            if(userNo == listInfo.getUser_no()) {
+                modify.setVisibility(View.VISIBLE);
+                delete.setVisibility(View.VISIBLE);
+
+            } else {
+                modify.setVisibility(View.INVISIBLE);
+                delete.setVisibility(View.INVISIBLE);
+            }
+
+            id.setText(listInfo.getUser_name());
+            time.setText(listInfo.getComment_date());
+            content.setText(listInfo.getComment_content());
+            modify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adptCallback.onBtnModify(pos);
+                }
+            });
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adptCallback.onBtnDelete(pos);
+                }
+            });
         }
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.reply_modify:
-                adptCallback.onBtnModify();
-                break;
-
-            case R.id.reply_delete:
-                adptCallback.onBtnDelete();
-                break;
-        }
-    }
 
 
 

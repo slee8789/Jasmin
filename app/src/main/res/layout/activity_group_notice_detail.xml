@@ -48,7 +48,7 @@
             android:layout_marginLeft="10dp"
             android:layout_alignBaseline="@id/detail_date"
             android:layout_toRightOf="@id/detail_date"
-            android:text="@string/notice_date"
+            android:text="@string/notice_views"
             android:textSize="15sp"
             android:textColor="@color/colorBlack"/>
 

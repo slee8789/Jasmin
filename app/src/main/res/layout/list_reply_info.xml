@@ -10,24 +10,24 @@
         android:paddingLeft="20dp">
 
         <TextView
-        android:id="@+id/reply_id"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="홍길동"
+            android:id="@+id/reply_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="홍길동"
             android:textColor="@color/colorBlack"
-        />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/reply_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@id/reply_id"
             android:gravity="center"
             android:paddingLeft="20dp"
-            android:layout_toRightOf="@id/reply_id"
             android:text="16.07.30"
             android:textColor="@color/colorBlack"
-            />
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/reply_modify"
@@ -35,33 +35,35 @@
             android:layout_height="25dp"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/reply_delete"
-            android:src="@drawable/ic_create_black_24dp"/>
+            android:src="@drawable/ic_create_black_24dp"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/reply_delete"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_delete_forever_black_24dp"/>
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_delete_forever_black_24dp"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:background="#FF909090"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="#FF909090" />
+        android:paddingRight="10dp" />
 
 
     <TextView
         android:id="@+id/reply_content"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
         android:text="@string/reply_content"
-        android:textColor="@color/colorBlack"
-        android:paddingLeft="20dp"
-        android:gravity="center_vertical"/>
+        android:textColor="@color/colorBlack" />
 
 </LinearLayout>

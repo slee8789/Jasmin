@@ -16,11 +16,23 @@ import com.study.jasmin.jasmin.R;
 public class ProgressDialog extends Dialog {
 
     private final String TAG = "ProgressDialog";
+    private static ProgressDialog instance;
     private TextView progress_msg;
 
     public ProgressDialog(Context context) {
         super(context);
 
+    }
+
+    public static ProgressDialog getInstance(Context context) {
+        if (instance == null) {
+            synchronized (ProgressDialog.class) {
+                if (instance == null) {
+                    instance = new ProgressDialog(context);
+                }
+            }
+        }
+        return instance;
     }
 
     @Override

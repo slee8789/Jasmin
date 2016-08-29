@@ -11,54 +11,62 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Post;
+import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.ui.fragment.GroupInfoFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupManageFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupNoticeFragment;
 import com.study.jasmin.jasmin.ui.fragment.GroupSettingFragment;
+import com.study.jasmin.jasmin.util.JasminPreference;
 import com.study.jasmin.jasmin.util.JasminProtocol;
 
-public class GroupMainActivity extends AppCompatActivity implements GroupNoticeFragment.OnFragmentSelectedListener {
+public class GroupMainActivity extends AppCompatActivity implements GroupNoticeFragment.OnFragmentSelectedListener, OnClickListener {
 
     public static final String TAG = "GroupMainActivity";
-    private ImageView coverImg;
-    private Fragment[] arrFragments;
+    private ImageView   coverImg;
+    private Fragment[]  arrFragments;
+    private TabLayout   tabLayout;
+    private ViewPager   viewPager;
+    private MyPagerAdapter adapter;
+    private ProgressDialog Progress;
+    private JasminPreference mPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_main);
+        init();
+        findViews();
+        initViews();
+    }
 
-        coverImg = (ImageView) findViewById(R.id.cover);
-        coverImg.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                final Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, JasminProtocol.REQUEST_CODE_IMAGE);
-            }
-        });
-
-        //Fragment
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_tabs);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.vp_pager);
-
+    private void init() {
+        Progress = ProgressDialog.getInstance(getApplicationContext());
+        mPref = JasminPreference.getInstance(getApplicationContext());
         arrFragments = new Fragment[4];
         arrFragments[0] = new GroupNoticeFragment();
         arrFragments[1] = new GroupManageFragment();
         arrFragments[2] = new GroupInfoFragment();
         arrFragments[3] = new GroupSettingFragment();
+        adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);
 
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);
+    }
+
+    private void findViews() {
+        coverImg = (ImageView) findViewById(R.id.cover);
+        tabLayout = (TabLayout) findViewById(R.id.tl_tabs);
+        viewPager = (ViewPager) findViewById(R.id.vp_pager);
+    }
+
+    private void initViews() {
+        coverImg.setOnClickListener(this);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         setupTabLayout(tabLayout);
-
-
     }
 
     @Override
@@ -82,11 +90,6 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
         switch (v.getId()) {
             case R.id.notice_group_write:
                 Log.d(TAG,"onFragmentSelectd v clicked");
-//                GroupNoticeAddFragment groupNoticeAddFragment = new GroupNoticeAddFragment();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frag_container,groupNoticeAddFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
                 startActivity(new Intent(this, GroupNoticeAddActivity.class));
 
             break;
@@ -95,13 +98,25 @@ public class GroupMainActivity extends AppCompatActivity implements GroupNoticeF
     @Override
     public void onFragmentSelected(int position) {
         Log.d(TAG,"onFragmentSelectd p clicked position : " + position);
+
         Intent intent = new Intent(this, GroupNoticeDetailActivity.class);
-//        intent.putExtra("title","");
-//        intent.putExtra("writer","");
-//        intent.putExtra("date","");
-//        intent.putExtra("views","");
-//        intent.putExtra("content","");
+        intent.putExtra("post",(Post)(mPref.getListValue("postList")).get(position));
         startActivity(intent);
+
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.cover:
+                final Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, JasminProtocol.REQUEST_CODE_IMAGE);
+                break;
+        }
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

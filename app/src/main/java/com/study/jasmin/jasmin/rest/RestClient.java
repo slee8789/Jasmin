@@ -2,13 +2,15 @@ package com.study.jasmin.jasmin.rest;
 
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-
+import retrofit2.http.Part;
 
 
 public class RestClient{
@@ -69,6 +71,58 @@ public class RestClient{
         Call<JsonObject> gotoStudy(@Field("studyNo") int studyNo
         );
 
+        @FormUrlEncoded
+        @POST("api/postList")
+        Call<JsonObject> postList(@Field("studyNo") int studyNo
+        );
+//Part("description")
+        @Multipart
+        @POST("api/postInsert")
+        Call<JsonObject> postInsert(@Part("userNo") int userNo,
+                                    @Part("studyNo") int studyNo,
+                                    @Part("postTitle") String postTitle,
+                                    @Part("postContent") String postContent,
+                                    @Part("postType") int postType,
+                                    @Part MultipartBody.Part postFile
+        );
+
+        @FormUrlEncoded
+        @POST("api/postUpdate")
+        Call<JsonObject> postUpdate (@Field("postNo") int postNo,
+                                     @Field("postTitle") String postTitle,
+                                     @Field("postContent") String postContent,
+                                     @Field("postType") int postType,
+                                     @Field("postFile") String postFile
+        );
+
+        @FormUrlEncoded
+        @POST("api/postDelete")
+        Call<JsonObject> postDelete(@Field("postNo") int postNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/commentList")
+        Call<JsonObject> commentList(@Field("postNo") int postNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/commentInsert")
+        Call<JsonObject> commentInsert(@Field("userNo") int userNo,
+                                       @Field("postNo") int postNo,
+                                       @Field("commentContent") String commentContent
+
+        );
+
+        @FormUrlEncoded
+        @POST("api/commentUpdate")
+        Call<JsonObject> commentUpdate(@Field("commentNo") int commentNo,
+                                       @Field("commentContent") String commentContent
+        );
+
+        @FormUrlEncoded
+        @POST("api/commentDelete")
+        Call<JsonObject> commentDelete(@Field("commentNo") int commentNo
+        );
 
         @FormUrlEncoded
         @POST("m/homework/insert")

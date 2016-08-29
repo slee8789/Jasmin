@@ -86,7 +86,7 @@
         </LinearLayout>
     <!--e0824_2-->
         <CheckBox
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="매주반복"
                 android:textSize="15dp"
@@ -94,7 +94,7 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                />
+            android:checked="false" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -2,6 +2,8 @@ package com.study.jasmin.jasmin.util;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +14,7 @@ import java.util.Locale;
  */
 public class JasminUtil {
     public static final String TAG = "JasminUtil";
-
+    public static InputMethodManager keyboardManager;
     /*public int getColor(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= Build.VERSION_CODES.M) {
@@ -59,6 +61,15 @@ public class JasminUtil {
         Date currentTime = new Date ( );
         String strToday = df.format ( currentTime );
         return strToday;
+    }
+
+    public static void hideSoftKeyboard(Context context, EditText editText) {
+
+        keyboardManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(editText != null) {
+            Log.i(TAG, "hideSoftKeyboard");
+            keyboardManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        }
     }
 
 

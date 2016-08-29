@@ -44,7 +44,7 @@
 
     </RelativeLayout>
 
-    <View
+    <TextView
         android:id="@+id/notice_content"
         android:layout_width="match_parent"
         android:layout_height="120dp"

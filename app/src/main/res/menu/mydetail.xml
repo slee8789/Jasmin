@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/btn_modify"
+        android:title="@string/menu_modify"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btn_delete"
+        android:title="@string/menu_delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btn_reply"
+        android:title="@string/menu_reply"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btn_favorite"
+        android:title="@string/menu_favorite"
+        app:showAsAction="ifRoom" />
+</menu>

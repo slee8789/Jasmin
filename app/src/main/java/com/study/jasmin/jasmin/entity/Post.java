@@ -3,66 +3,125 @@ package com.study.jasmin.jasmin.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Arrays;
-
 public class Post implements Parcelable {
-    int alarm_no;
-    int study_no;
-    int alarm_time;
-    int alarm_hour;
-    int alarm_minute;
-    int alarm_repeat;
-    int alarm_date=0;
-    String alarm_content;
-    boolean[] alarm_dates;// 0~6 : mon~sun / True(1) False(0)
+    int     post_no;             // 0. No.
+    String  post_title;          // 1. 제목
+    int     hits;                // 2. 조회수
+    String  post_content;        // 3. 내용
+    String  post_date;           // 4. 작성일
+    String  user_name;         // 5. 작성자
+    int     comment_count;       // 6. 댓글수
+    String  post_file;           // 7. 파일
+    int     post_type;           // 8. 게시글 타입
+    boolean favorite;            // 9. 즐겨찾기
 
-    public Post(int alarm_no, int study_no, int alarm_time, int alarm_repeat, int alarm_date, String alarm_content) {
-        this.alarm_no = alarm_no;
-        this.study_no = study_no;
-        this.alarm_time = alarm_time;
-        this.alarm_repeat = alarm_repeat;
-        this.alarm_content = alarm_content;
-        this.alarm_date = alarm_date;
+    public Post() {
     }
 
-    public void init(){
-        this.alarm_minute = alarm_time%100;
-        this.alarm_hour = alarm_time/100;
-        setArrDates();
+    public Post(int post_no,
+                String post_title,
+                int hits,
+                String post_content,
+                String post_date,
+                String user_name,
+                int comment_count,
+                String post_file,
+                int post_type,
+                boolean favorite
+    ) {
+        this.post_no = post_no;
+        this.post_title = post_title;
+        this.hits = hits;
+        this.post_content = post_content;
+        this.post_date = post_date;
+        this.user_name = user_name;
+        this.comment_count = comment_count;
+        this.post_file = post_file;
+        this.post_type = post_type;
+        this.favorite = favorite;
     }
 
-    public void setArrDates(){
-        alarm_dates = new boolean[]{false,false,false,false,false,false,false};
-        int date = this.alarm_date;
-        int jari = alarm_dates.length -1 ;
-
-        while(date>0 &&jari>=0) {
-            alarm_dates[jari] = (date%10 == 1)? true : false; //날짜의 일의 자리의 수가 1이면 true
-            date = date / 10;//입력된 숫자를 10으로 나눠서 num변수에 담음.
-            jari--; //반복될때마다 자리수가 증가됨, 배열에는 6이 일요일이기 때문에 마지막 자리수인 일요일부터 월요일 순으로 값을 넣음.
-        }
+    public String getUser_name() {
+        return user_name;
     }
 
-    public String getTimeHHMM(){
-        String strHour = Integer.toString(alarm_hour);
-        String strMin =Integer.toString(alarm_minute);
-        if(alarm_minute == 0) strMin = "00";
-        else if(alarm_minute < 10) strMin = "0"+strMin;
-
-        return strHour +":"+ strMin;
+    public void setUser_name(String post_writer) {
+        this.user_name = user_name;
     }
 
-    protected Post(Parcel in) {
-        alarm_no = in.readInt();
-        study_no = in.readInt();
-        alarm_time = in.readInt();
-        alarm_hour = in.readInt();
-        alarm_minute = in.readInt();
-        alarm_repeat = in.readInt();
-        alarm_date = in.readInt();
-        alarm_dates = in.createBooleanArray();
-        alarm_content = in.readString();
+    public int getComment_count() {
+        return comment_count;
     }
+
+    public void setComment_count(int comment_count) {
+        this.comment_count = comment_count;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public int getPost_no() {
+        return post_no;
+    }
+
+    public void setPost_no(int post_no) {
+        this.post_no = post_no;
+    }
+
+    public String getPost_title() {
+        return post_title;
+    }
+
+    public void setPost_title(String post_title) {
+        this.post_title = post_title;
+    }
+
+    public String getPost_date() {
+        return post_date;
+    }
+
+    public void setPost_date(String post_date) {
+        this.post_date = post_date;
+    }
+
+    public String getPost_content() {
+        return post_content;
+    }
+
+    public void setPost_content(String post_content) {
+        this.post_content = post_content;
+    }
+
+    public String getPost_file() {
+        return post_file;
+    }
+
+    public void setPost_file(String post_file) {
+        this.post_file = post_file;
+    }
+
+    public int getPost_type() {
+        return post_type;
+    }
+
+    public void setPost_type(int post_type) {
+        this.post_type = post_type;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
+
 
     public static final Creator<Post> CREATOR = new Creator<Post>() {
         @Override
@@ -76,67 +135,6 @@ public class Post implements Parcelable {
         }
     };
 
-    public boolean[] getArrDates(){
-        return this.alarm_dates;
-    }
-
-    public int getAlarmNo() {
-        return alarm_no;
-    }
-
-    public void setAlarmNo(int alarm_no) {
-        this.alarm_no = alarm_no;
-    }
-
-    public int getStudyNo() {
-        return study_no;
-    }
-
-    public void setStudyNo(int study_no) {
-        this.study_no = study_no;
-    }
-
-    public int getAlarmTime() {
-        return alarm_time;
-    }
-
-    public void setAlarmTime(int alarm_time) {
-        this.alarm_time = alarm_time;
-        this.alarm_minute =alarm_time%100;
-        this.alarm_hour = alarm_time - this.alarm_minute;
-    }
-
-    public boolean getAlarmRepeat() {
-
-        if(alarm_repeat==1){
-            return true;
-        }
-        return false;
-    }
-
-    public void setAlarmRepeat(int alarm_repeat) {
-        this.alarm_repeat = alarm_repeat;
-    }
-
-    public String getAlarmContent() {
-        return alarm_content;
-    }
-
-    public void setAlarmCountent(String alarm_countent) {
-        this.alarm_content = alarm_countent;
-    }
-
-    public int getAlarmHour(){
-        return  alarm_hour;
-    }
-    public int getAlarmMinute(){
-        return alarm_minute;
-    }
-
-    public void changeAlarmState(){
-        //20160824-3. 개인의 알람 상태 가져와서 바꿔야함
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -144,29 +142,43 @@ public class Post implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(alarm_no);
-        dest.writeInt(study_no);
-        dest.writeInt(alarm_time);
-        dest.writeInt(alarm_hour);
-        dest.writeInt(alarm_minute);
-        dest.writeInt(alarm_repeat);
-        dest.writeInt(alarm_date);
-        dest.writeBooleanArray(alarm_dates);
-        dest.writeString(alarm_content);
+        dest.writeInt(post_no);
+        dest.writeString(post_title);
+        dest.writeInt(hits);
+        dest.writeString(post_content);
+        dest.writeString(post_date);
+        dest.writeString(user_name);
+        dest.writeInt(comment_count);
+        dest.writeString(post_file);
+        dest.writeInt(post_type);
+
+    }
+
+    protected Post(Parcel in) {
+        post_no = in.readInt();
+        post_title = in.readString();
+        hits = in.readInt();
+        post_content = in.readString();
+        post_date = in.readString();
+        user_name = in.readString();
+        comment_count = in.readInt();
+        post_file = in.readString();
+        post_type = in.readInt();
     }
 
     @Override
     public String toString() {
-        return "Alarm{" +
-                "alarm_no=" + alarm_no +
-                ", study_no=" + study_no +
-                ", alarm_time=" + alarm_time +
-                ", alarm_hour=" + alarm_hour +
-                ", alarm_minute=" + alarm_minute +
-                ", alarm_repeat=" + alarm_repeat +
-                ", alarm_date=" + alarm_date +
-                ", alarm_dates=" + Arrays.toString(alarm_dates) +
-                ", alarm_content='" + alarm_content + '\'' +
+        return "Post{" +
+                "post_no=" + post_no +
+                ", post_title='" + post_title + '\'' +
+                ", hits=" + hits +
+                ", post_content='" + post_content + '\'' +
+                ", post_date='" + post_date + '\'' +
+                ", post_writer='" + user_name + '\'' +
+                ", comment_count=" + comment_count +
+                ", post_file='" + post_file + '\'' +
+                ", post_type=" + post_type +
+                ", favorite=" + favorite +
                 '}';
     }
 }

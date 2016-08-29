@@ -95,6 +95,8 @@
     <string name="reply_enroll_msg">댓글을 남겨보세요.</string>
     <string name="reply_enroll">등록</string>
 
+    <string name="reply_update_title">댓글 수정</string>
+
     <!-- list_management -->
     <string name="manage_attendance">출결</string>
     <string name="manage_assignment">과제</string>
@@ -166,6 +168,7 @@
 
     <string name="list_empty">현재 과제가 없습니다.</string>
 
+    <string name="internal_storage">internal_storage</string>
 
     <!--Alarm-->
     <string name="alarm_add_btn_update">수정하기</string>

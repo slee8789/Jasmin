@@ -1,26 +1,18 @@
 package com.study.jasmin.jasmin.ui.activity;
 
-import android.annotation.TargetApi;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TimePicker;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Alarm;
-import com.study.jasmin.jasmin.ui.item.ListViewAlarmAdapter;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -67,8 +59,15 @@ public class GroupSettingAlarmAddActivity extends AppCompatActivity implements V
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
             //(e0824_1)
-            //  tpTime.setHour(hour);
-            //   tpTime.setMinute(minute);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                tpTime.setCurrentHour(hour);
+                tpTime.setCurrentMinute(minute);
+            } else {
+                tpTime.setHour(hour);
+                tpTime.setMinute(minute);
+            }
+
+
 
         }else {
             bNew = false;
