@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Attendance;
@@ -21,8 +23,13 @@ import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;
 import com.study.jasmin.jasmin.ui.list.ListInfoReceivables;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
+import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -39,6 +46,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
     TwoButtonDialog         deleteDialog ;
     ArrayList<Attendance> attendanceList;
     ArrayList<AttendanceTitle> titleList;
+    int                         deletePos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
                  dialog.show();
                  break;
              case R.id.ok_twobutton:
+                 callDelete();
                  deleteDialog.closeTwoButtonDialog();
                  break;
              case R.id.cancel_twobutton:
@@ -113,7 +122,6 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         return titleList;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AttendanceTitle test = (AttendanceTitle)parent.getItemAtPosition(position);
@@ -124,6 +132,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
 
     @Override
     public void onListBtnClick(int position) {
+        setDeletePosition(position);
         deleteDialog = new TwoButtonDialog(this);
         deleteDialog.setOkOnClickListener(this);
         deleteDialog.setCancelOnClickListener(this);
@@ -139,9 +148,46 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         */
     }
 
+    public void setDeletePosition(int position){
+        deletePos = position;
+    }
+
+    public int getDeletePosition(){
+        return this.deletePos;
+    }
+
+    public void callDelete(){
+        ArrayList<Attendance> list  = ((AttendanceTitle)listview.getItemAtPosition(getDeletePosition())).getAttendanceList();
+        String strJson = "";
+        for(int i =0; i<list.size();i++) {
+            strJson = strJson + list.get(i).getJsonDelete()+ ",";
+        }
+        strJson = "[" + strJson.substring(0, strJson.length() - 1) + "]";
+
+        Log.d(TAG,">>>>>>delete return"+strJson);
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.deleteAttendance(strJson);
+        call.enqueue(this);
+    }
+
     @Override
     public void onResponse(Call call, Response response) {
+        Log.d(TAG, "Retro Status Code = " + response.code());
+        try {
+            String strToast;
+            String strTest = response.body().toString();
+            JSONObject jsObject = new JSONObject(strTest);
 
+            if(jsObject.getString("result").equals("1")){
+                strToast = "출석이 삭제되었습니다";
+            }else{
+                strToast = "실패했습니다.";
+            }
+            Toast.makeText(getApplicationContext(),strToast, Toast.LENGTH_LONG).show();
+
+        } catch (JSONException e) {
+            Log.d(TAG, "e : " + e);
+        }
     }
 
     @Override

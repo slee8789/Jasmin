@@ -56,11 +56,6 @@ public class RestClient{
                                         );
 
         @FormUrlEncoded
-        @POST("m/homework")
-        Call<JsonObject> getAssignmentListByStudyNo(@Field("studyNo") int studyNo);
-
-
-        @FormUrlEncoded
         @POST("api/login")
         Call<JsonObject> Login(@Field("email") String email,
                                @Field("password") String password
@@ -125,20 +120,25 @@ public class RestClient{
         );
 
         @FormUrlEncoded
-        @POST("m/homework/insert")
-        Call<JsonObject> addAssignment(@Field("studyNo") int studyNo,
+        @POST("api/homeworkList")
+        Call<JsonObject> assignmentList(@Field("studyNo") int studyNo);
+
+        @FormUrlEncoded
+        @POST("api/homeworkInsert")
+        Call<JsonObject> insertAssignment(@Field("studyNo") int studyNo,
                                        @Field("homeworkTitle") String homeworkTitle,
                                        @Field("homeworkContent") String homeworkContent,
                                        @Field("homeworkEnd") String homeworkEnd,
                                        @Field("homeworkMoney") int homeworkMoney
         );
 
+
         @FormUrlEncoded
-        @POST("m/homework/delete")
+        @POST("api/homeworkDelete")
         Call<JsonObject> deleteAssignment(@Field("homeworkNo") int homeworkNo);
 
         @FormUrlEncoded
-        @POST("m/homework/update")
+        @POST("api/homeworkUpdate")
         Call<JsonObject> updateAssignment(@Field("homeworkNo") int homeworkNo,
                                           @Field("homeworkTitle") String homeworkTitle,
                                           @Field("homeworkContent") String homeworkContent,
@@ -148,7 +148,7 @@ public class RestClient{
 
         @FormUrlEncoded
         @POST("api/attendanceList")
-        Call<JsonObject> goAttendance(@Field("studyNo") int studyNo
+        Call<JsonObject> attendanceList(@Field("studyNo") int studyNo
         );
 
         @FormUrlEncoded
@@ -164,7 +164,7 @@ public class RestClient{
 
         @FormUrlEncoded
         @POST("api/attendanceDelete")
-        Call<JsonObject> deleteAttendance(@Field("attendenceNo") String attendenceNo
+        Call<JsonObject> deleteAttendance(@Field("attendanceNoList") String attendanceNoList
         );
 
 

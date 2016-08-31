@@ -50,7 +50,6 @@ import retrofit2.Response;
 public class GroupSettingFragment extends Fragment implements View.OnClickListener, Callback {
     public static final String TAG = "GroupSettingFragment";
     Button btnAlarm,
-            btnHomework,
             btnGroupSetting,
             btnPenaltySetting,
             btnSubGrant,btnGrant,
@@ -89,9 +88,6 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                 connectProgress.show();
                 call = service.goAlarmList(mPref.getSelStudyNo());
                 break;
-            case R.id.btn_homework:
-                startActivity(new Intent(getActivity(), SettingAssignmentActivity.class));
-                break;
             case R.id.btn_group_setting:
                 startActivity(new Intent(getActivity(), SettingGroupInfoActivity.class));
                 break;
@@ -126,14 +122,14 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
     }
 
     public void setBtnListner(View rootView){
-        Button[] arrBtn = {btnAlarm, btnHomework, btnGroupSetting,
+        Button[] arrBtn = {btnAlarm, btnGroupSetting,
                 btnPenaltySetting, btnSubGrant, btnGrant,
                 btnRemoveMember, btnEndStudy, btnSecedeGroup};
-        int[] arrBtnId = {R.id.btn_alarm, R.id.btn_homework, R.id.btn_group_setting,
+        int[] arrBtnId = {R.id.btn_alarm, R.id.btn_group_setting,
                 R.id.btn_penalty_setting, R.id.btn_grade_share, R.id.btn_grade_delegate,
                 R.id.btn_member_remove, R.id.btn_end_study, R.id.btn_secede_group};
 
-        for(int i=0; i<9; i++){
+        for(int i=0; i<8; i++){
             arrBtn[i] = (Button)rootView.findViewById(arrBtnId[i]);
             arrBtn[i].setOnClickListener(this);
         }
@@ -172,8 +168,6 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                     Collections.addAll(alarmList, alarmArr);
                     intent = new Intent(getActivity(),GroupSettingAlarmListActivity.class);
                     intent.putParcelableArrayListExtra("alarmList", alarmList);
-                    //(e160827)
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     if(intent != null) startActivity(intent);
                     break;
             }

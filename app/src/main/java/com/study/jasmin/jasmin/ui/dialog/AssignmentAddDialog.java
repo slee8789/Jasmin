@@ -90,8 +90,8 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
                 Log.d(TAG,"click btn_ok");
                 String formattedDate = JasminUtil.dateYYYY_MM_DD(date.getYear(),date.getMonth(),date.getDayOfMonth());
                 RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.addAssignment(2,etTitle.getText().toString(),etContent.getText().toString(),formattedDate,0);
-                call.enqueue(this);
+                //Call<JsonObject> call = service.addAssignment(2,etTitle.getText().toString(),etContent.getText().toString(),formattedDate,0);
+                //scall.enqueue(this);
                 break;
 
             case R.id.btn_cancel:

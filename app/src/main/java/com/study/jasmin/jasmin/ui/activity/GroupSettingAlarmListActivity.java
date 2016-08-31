@@ -41,10 +41,8 @@ public class GroupSettingAlarmListActivity extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_setting_alarm_list);
-
         findView();
         initView();
-
     }
 
     public void findView() {
@@ -66,6 +64,7 @@ public class GroupSettingAlarmListActivity extends AppCompatActivity implements 
             }
         });
     }
+
 
     @Override
     public void onListBtnClick(int position, ImageView iv, boolean bSet) {

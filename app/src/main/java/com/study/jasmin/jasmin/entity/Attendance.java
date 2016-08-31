@@ -12,7 +12,7 @@ public class Attendance implements Parcelable{
     String attendance_state;
     String attendance_state_new;
     String user_name;
-    int penaltyMoney; //생성자에서 하드로 1000으로 입력
+    int penaltyMoney; //생성자에서 하드로 1000으로 입력 중
 
 
     public Attendance(int attendance_no, String attendance_date, String attendance_state) {
@@ -95,12 +95,21 @@ public class Attendance implements Parcelable{
         return attendance_date;
     }
 
+
     public void setAttendance_date(String attendance_date) {
         this.attendance_date = attendance_date;
     }
 
     public void setAttendance_state(String attendance_state) {
         this.attendance_state = attendance_state;
+    }
+
+    public int getPenaltyMoney() {
+        return penaltyMoney;
+    }
+
+    public void setPenaltyMoney(int penaltyMoney) {
+        this.penaltyMoney = penaltyMoney;
     }
 
     @Override
@@ -127,14 +136,27 @@ public class Attendance implements Parcelable{
 
     public String getJsonUpdate(){
         return "{\"attendance_no\":" + attendance_no +
-                "{\"user_no\":" + user_no +
-                "{\"study_no\":" + study_no +
+                ",\"user_no\":" + user_no +
+                ",\"study_no\":" + study_no +
                 ",\"attendance_old_state\":\"" +  attendance_state + "\"" +
                 ",\"attendance_state\":\"" +  attendance_state_new + "\"" +
                 ",\"penalty_money\":" + penaltyMoney  +
                 "}";
     }
 
+    public String getJsonDelete(){
+        return "{\"attendance_no\":" + attendance_no +"}";
+    }
+
+    public boolean checkUpdate(){
+        if(attendance_state_new == null) {
+            return false;
+        }else  if(attendance_state_new.equals(attendance_state)){
+            return false;
+        }else {
+            return true;
+        }
+    }
     @Override
     public int describeContents() {
         return 0;

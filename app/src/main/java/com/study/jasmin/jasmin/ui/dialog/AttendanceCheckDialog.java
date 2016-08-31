@@ -25,6 +25,7 @@ import com.study.jasmin.jasmin.entity.Attendance;
 import com.study.jasmin.jasmin.entity.Member;
 import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.rest.RestClient;
+import com.study.jasmin.jasmin.ui.activity.GroupManageAttendanceActivity;
 import com.study.jasmin.jasmin.ui.activity.MainActivity;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceCheckList;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAttendanceList;
@@ -35,6 +36,7 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import com.study.jasmin.jasmin.util.JasminUtil;
@@ -59,6 +61,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
     private ArrayList<Attendance> attendanceList;
     private TextView tvDate;
     private boolean bNew; //true : 새로추가 , false : 수정하기
+    private ProgressDialog progress;
     private int selId;
     JasminUtil jUtil;
 
@@ -83,6 +86,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         this.setCanceledOnTouchOutside(false);        // 다이알로그 바깥영역 터치시, 다이알로그 닫히지 않기
         this.setCancelable(true);                   // 백키로 다이알로그 닫기
+        progress = new ProgressDialog(getContext());
 
         findViews();
         initViews();
@@ -99,7 +103,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
         adapter  = new AdaptInfoAttendanceCheckList(this.getContext(), R.layout.list_attendance_check_info, attendanceList,this);
         listView.setAdapter(adapter);
         btnOk.setOnClickListener(this);
-        tvDate.setText(attendanceList.get(0).getAttendance_date());
+        tvDate.setText("날짜 : "+ attendanceList.get(0).getAttendance_date());
     }
 
     public  ArrayList<Attendance>  getBasicAttendanceList(){
@@ -120,14 +124,13 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
 
         switch (selId){
             case R.id.btn_ok:
-                this.dismiss();
-                //LoginProgress.show();
-                if(attendanceList == null){
-                    Log.d(TAG ,">>>>>>>>>>>>>>attendanceList is null!!! ");
-                    //[{"user_no":1,"study_no":1,"attendance_state":"출석","penalty_money":1000},{"user_no":2,"study_no":1,"attendance_state":"출석","penalty_money":1000},{"user_no":3,"study_no":1,"attendance_state":"출석","penalty_money":1000},{"user_no":4,"study_no":1,"attendance_state":"출석","penalty_money":1000},{"user_no":5,"study_no":1,"attendance_state":"출석","penalty_money":1000}]
+                String strJson = getJson();
+                if(attendanceList == null || strJson.equals("")){
+                    Log.d(TAG ,">>>>>>>>>>>>>>attendanceList is null or nothing changed!!! ");
                 }else{
+                    progress.show();
                     RestClient.RestService service = RestClient.getClient();
-                    Call<JsonObject> call = service.insertAttendance(getJson());
+                    Call<JsonObject> call = bNew ? service.insertAttendance(getJson()) : service.updateAttendance(getJson());
                     call.enqueue(this);
                 }
                 this.dismiss();
@@ -137,23 +140,21 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
 
     public String getJson(){
         String                strJson   =   "";
-        Log.d(TAG,"attendanceList 1."+ this.attendanceList.toString());
+
         if(bNew){
             for(int i=0; i<attendanceList.size(); i++){
                 strJson = strJson + ((Attendance)listView.getItemAtPosition(i)).getJsonInsert() + ",";
-                Log.d(TAG,"strJson "+ i + strJson);
             }
         }
         else{
             for(int i=0; i<attendanceList.size(); i++){
-                strJson = strJson + ((Attendance)listView.getItemAtPosition(i)).getJsonUpdate() + ",";
+                if(attendanceList.get(i).checkUpdate()) {
+                    attendanceList.get(i).setStudy_no(JasminPreference.getInstance(getContext()).getSelStudyNo());
+                    strJson = strJson + ((Attendance) listView.getItemAtPosition(i)).getJsonUpdate() + ",";
+                }
             }
         }
-
-        strJson ="["+ strJson.substring(0, strJson.length()-1)+"]";
-
-        Log.d(TAG,"attendance Insert/Update return : "+  strJson);
-
+        strJson = (strJson.length()>0)? "[" + strJson.substring(0, strJson.length() - 1) + "]":"";
         return strJson;
     }
 
@@ -165,17 +166,38 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
             String strTest = response.body().toString();
             JSONObject jsObject = new JSONObject(strTest);
 
-            if(jsObject.getString("result").equals("1") && selId == R.id.btn_ok){
-                strToast = (bNew)? "출석이 추가되었습니다.": "출석이 수정되었습니다.";
-            }else{
-                strToast = "실패했습니다.";
+            if(selId==0){
+                Gson gson = new GsonBuilder().create();
+                JSONArray attendObj = jsObject.getJSONArray("result");
+                Attendance[] attendanceArr = gson.fromJson(attendObj.toString(), Attendance[].class);
+                ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
+                Collections.addAll(attendanceList, attendanceArr);
+                Intent intent = new Intent(getContext(),GroupManageAttendanceActivity.class);
+                intent.putParcelableArrayListExtra("attendanceList", attendanceList);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //Log.d(TAG,">>>>>>>attendanceList"+attendanceList.toString());startA
+                this.dismiss();
+                this.cancel();
+                getContext().startActivity(intent);
+            }else {
+                if (jsObject.getString("result").equals("1") && selId == R.id.btn_ok) {
+                    strToast = (bNew) ? "출석이 추가되었습니다." : "출석이 수정되었습니다.";
+                    selId=0;
+                    goList();
+                }else{
+                    strToast = "실패했습니다.";
+                }
             }
-
             Toast.makeText(getContext(),strToast, Toast.LENGTH_LONG).show();
-
         } catch (JSONException e) {
             Log.d(TAG, "e : " + e);
         }
+    }
+
+    public void goList(){
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.attendanceList(JasminPreference.getInstance(getContext()).getSelStudyNo());
+        call.enqueue(this);
     }
 
     @Override
@@ -194,10 +216,12 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
         Log.d(TAG, ">>>>>>>>>>>>>>>>>> 다이얼로그에서 이벤트 들어옴 onRadioChange : "
                 + (listView.getItemAtPosition(position)).toString());
     }
-*/
+
+
 
         RadioButton selOption = (RadioButton)findViewById(checkedId);
         Spinner sp = (Spinner)findViewById((int)selOption.getTag());
+        Log.d(TAG, ">>>>>>>>>>>>>>>>>> SpinnerID"+Integer.toString(position)+" : "+Integer.toString(sp.getId()));
         switch (checkedId) {
             case R.id.rb_option1:
                 Log.d(TAG, ">>>>>>>>>>>>>>>>>> 1");
@@ -217,6 +241,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
 
         Log.d(TAG, ">>>>>>>>>>>>>>>>>> 다이얼로그에서 이벤트 들어옴 onRadioChange : "
                 + (listView.getItemAtPosition(position)).toString());
+*/
     }
 
 }

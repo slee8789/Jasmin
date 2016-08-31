@@ -1,5 +1,6 @@
 package com.study.jasmin.jasmin.ui.list;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,12 +79,9 @@ public class AdaptInfoAttendanceCheckList extends ArrayAdapter<Attendance> imple
             tvName.setText(list.getUser_name());
             spLateTime.setVisibility(View.INVISIBLE);
             spLateTime.setTag(position);
-            radioGroup.isClickable();
+            radioGroup.setClickable(true);
             radioGroup.setTag(position);
-            option1.isChecked();
-            option1.setTag(spLateTime.getId());
-            option2.setTag(spLateTime.getId());
-            option3.setTag(spLateTime.getId());
+            Log.d(TAG, "spinnerID"+ Integer.toString(position)+Integer.toString(spLateTime.getId()));
             setRadioGroup(list.getAttendance_state());
             radioGroup.setOnCheckedChangeListener(this);
         }
@@ -98,23 +97,55 @@ public class AdaptInfoAttendanceCheckList extends ArrayAdapter<Attendance> imple
     */
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+        //RadioButton selOption = (RadioButton)findViewById(checkedId);
+        //Spinner sp = (Spinner)findViewById((int)selOption.getTag());
+       // Log.d(TAG, ">>>>>>>>>>>>>>>>>> SpinnerID"+Integer.toString(position)+" : "+Integer.toString(sp.getId()));
+        switch (checkedId) {
+            case R.id.rb_option1:
+                getItem((int)group.getTag()).setAttendanceStateNew("출석");
+                getItem((int)group.getTag()).setPenaltyMoney(0);
+
+                //Log.d(TAG, ">>>>>>>>>>>>>>>>>> 1");
+                //((Attendance)listView.getItemAtPosition(position)).setAttendanceStateNew("출석");
+                break;
+            case  R.id.rb_option2:
+                getItem((int)group.getTag()).setAttendanceStateNew("지각");
+                getItem((int)group.getTag()).setPenaltyMoney(1000);
+                //Log.d(TAG, ">>>>>>>>>>>>>>>>>> 2");
+                //((Attendance)listView.getItemAtPosition(position)).setAttendanceStateNew("지각");
+               // this.spLateTime.setVisibility(View.VISIBLE);
+                break;
+            case  R.id.rb_option3:
+                getItem((int)group.getTag()).setAttendanceStateNew("결석");
+                getItem((int)group.getTag()).setPenaltyMoney(1500);
+                //Log.d(TAG, ">>>>>>>>>>>>>>>>>> 3");
+               // ((Attendance)listView.getItemAtPosition(position)).setAttendanceStateNew("결석");
+                //this.spLateTime.setVisibility(View.INVISIBLE);
+                break;
+        }
+
+
+
+        /*
         if (this.radioClickListener != null) {
             this.radioClickListener.onRadioChange(group, checkedId, (int)group.getTag());
         }
+        */
     }
 
     void setRadioGroup(String status){
         switch (status) {
             case "출석":
-                option1.isChecked();
+                radioGroup.check(option1.getId());
                 spLateTime.setVisibility(View.INVISIBLE);
                 break;
             case "지각":
-                option2.isChecked();
+                radioGroup.check(option2.getId());
                 spLateTime.setVisibility(View.VISIBLE);
                 break;
             case "결석":
-                option3.isChecked();
+                radioGroup.check(option3.getId());
                 spLateTime.setVisibility(View.INVISIBLE);
                 break;
         }

@@ -300,7 +300,7 @@ public class GroupSettingAlarmAddActivity extends AppCompatActivity implements V
 
             Collections.addAll(alarmList, alarmArr);
             intent.putParcelableArrayListExtra("alarmList", alarmList);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             if (intent != null) startActivity(intent);
 

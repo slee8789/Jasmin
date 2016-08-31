@@ -169,7 +169,7 @@
     <string name="menu_reply">댓글</string>
     <string name="menu_favorite">즐겨찾기</string>
 
-    <string name="list_empty">현재 과제가 없습니다.</string>
+    <string name="list_empty">데이터가 없습니다.</string>
 
     <string name="internal_storage">internal_storage</string>
 

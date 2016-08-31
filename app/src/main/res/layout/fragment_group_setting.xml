@@ -14,13 +14,6 @@
             android:layout_weight="1"
             android:text="알람 설정"/>
         <Button
-            android:id="@+id/btn_homework"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="과제 설정"
-            />
-        <Button
             android:id="@+id/btn_group_setting"
             android:layout_width="match_parent"
             android:layout_height="0dp"
