@@ -3,7 +3,6 @@ package com.study.jasmin.jasmin.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -147,13 +146,24 @@ public class JasminPreference {
 
     }
 
+    public void putJsonObject(String key, int index, String value) {
+        switch (key) {
+            case "studyInfo":
+                studies[index] = gson.fromJson(value, Study.class);
+                break;
+
+            case "studyList":
+                studies = gson.fromJson(value, Study[].class);
+                break;
+        }
+    }
     public Object getObjectValue(String key){
 
         switch (key){
             case "userInfo":
                 obj = users[0];
                 break;
-            case "groupInfo":
+            case "studyInfo":
                 break;
         }
         return obj;
@@ -169,7 +179,6 @@ public class JasminPreference {
 
             case "studyList":
                 Collections.addAll(list, studies);
-                Log.d("test","list size : " + list.size());
                 break;
 
             case "memberList":

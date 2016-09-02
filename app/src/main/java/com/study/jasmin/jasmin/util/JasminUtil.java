@@ -72,5 +72,22 @@ public class JasminUtil {
         }
     }
 
+    public static boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static byte[] intToBytes(int x, int n) {
+        byte[] bytes = new byte[n];
+        for (int i = 0; i < n; i++, x >>>= 8)
+            bytes[i] = (byte) (x & 0xFF);
+        return bytes;
+    }
+
+
 
 }

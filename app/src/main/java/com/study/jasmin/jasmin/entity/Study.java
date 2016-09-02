@@ -11,8 +11,8 @@ public class Study implements Serializable {
     private String study_name;
 
     private String study_des;
-    private int study_start_date;
-    private int study_end_date;
+    private String study_start_date;
+    private String study_end_date;
     private int study_useDeposit;
     private int study_basicDeposit;
     private int study_max_late;
@@ -28,8 +28,8 @@ public class Study implements Serializable {
     public Study(int study_no,
                  String study_name,
                  String study_des,
-                 int study_start_date,
-                 int study_end_date,
+                 String study_start_date,
+                 String study_end_date,
                  int study_useDeposit,
                  int study_basicDeposit,
                  int study_max_late,
@@ -74,19 +74,19 @@ public class Study implements Serializable {
         this.study_des = study_des;
     }
 
-    public int getStudy_start_date() {
+    public String getStudy_start_date() {
         return study_start_date;
     }
 
-    public void setStudy_start_date(int study_start_date) {
+    public void setStudy_start_date(String study_start_date) {
         this.study_start_date = study_start_date;
     }
 
-    public int getStudy_end_date() {
+    public String getStudy_end_date() {
         return study_end_date;
     }
 
-    public void setStudy_end_date(int study_end_date) {
+    public void setStudy_end_date(String study_end_date) {
         this.study_end_date = study_end_date;
     }
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Post;
+import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
 import com.study.jasmin.jasmin.util.JasminPreference;
@@ -78,8 +79,10 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+//        post.getUser_no();
+        int userNo = ((User) mPref.getObjectValue("userInfo")).getUser_no();
 
-        getMenuInflater().inflate(R.menu.detail, menu);
+        getMenuInflater().inflate((userNo == post.getUser_no()) ? R.menu.mydetail : R.menu.detail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

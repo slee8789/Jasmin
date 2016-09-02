@@ -1,7 +1,6 @@
 package com.study.jasmin.jasmin.ui.activity;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.FindPwDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
@@ -28,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +34,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Callback {
     public static final String TAG = "LoginActivity";
     private Button btnDoLogin;
+    private Button btnKakao;
     private EditText etEmail;
     private EditText etPassword;
     private CheckBox cbAuto;
@@ -62,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void findViews() {
         btnDoLogin = (Button) findViewById(R.id.btn_do_login);
+        btnKakao = (Button) findViewById(R.id.btn_kakao);
         etEmail = (EditText) findViewById(R.id.login_email);
         etPassword = (EditText) findViewById(R.id.login_password);
         cbAuto = (CheckBox) findViewById(R.id.login_auto);
@@ -71,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initViews() {
         LoginProgress = new ProgressDialog(this);
         btnDoLogin.setOnClickListener(this);
+        btnKakao.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
         cbAuto.setClickable(true);
         cbAuto.setOnClickListener(this);
@@ -121,6 +121,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     pw = etPassword.getText().toString();
                     doLogin(mail, pw);
                 }
+            case R.id.btn_kakao:
+                /*// 카톡 또는 카스가 존재하면 옵션을 보여주고, 존재하지 않으면 바로 직접 로그인창.
+                final List<AuthType> authTypes = getAuthTypes();
+                if(authTypes.size() == 1){
+                    Session.getCurrentSession().open(authTypes.get(0), (Activity) getContext());
+                } else {
+                    onClickLoginButton(authTypes);
+                }*/
                 break;
             case R.id.onebutton_ok:
                 oneButtonDialog.cancel();
@@ -170,6 +178,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 JSONObject jsObject = new JSONObject(strTest);
+                /*if(jsObject.getInt("result") == 0 ) {
+                    Log.d(TAG,"없음요");
+                    showOneButtonDialog(R.string.regist_dialog_title, R.string.regist_dialog_pw_disharmony);
+                    LoginProgress.cancel();
+                    LoginProgress.dismiss();
+                    return ;
+                }*/
                 JSONArray userObj = jsObject.getJSONArray("userInfo");
                 JSONArray studyObj = jsObject.getJSONArray("studyList");
                 JSONArray qnaObj = jsObject.getJSONArray("qnaList");

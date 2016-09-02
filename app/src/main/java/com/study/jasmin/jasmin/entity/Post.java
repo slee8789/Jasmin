@@ -9,7 +9,8 @@ public class Post implements Parcelable {
     int     hits;                // 2. 조회수
     String  post_content;        // 3. 내용
     String  post_date;           // 4. 작성일
-    String  user_name;         // 5. 작성자
+    int     user_no;             // 5. 작성자번호 (글 권환용)
+    String  user_name;           // 5. 작성자
     int     comment_count;       // 6. 댓글수
     String  post_file;           // 7. 파일
     int     post_type;           // 8. 게시글 타입
@@ -23,6 +24,7 @@ public class Post implements Parcelable {
                 int hits,
                 String post_content,
                 String post_date,
+                int     user_no,
                 String user_name,
                 int comment_count,
                 String post_file,
@@ -34,11 +36,20 @@ public class Post implements Parcelable {
         this.hits = hits;
         this.post_content = post_content;
         this.post_date = post_date;
+        this.user_no    = user_no;
         this.user_name = user_name;
         this.comment_count = comment_count;
         this.post_file = post_file;
         this.post_type = post_type;
         this.favorite = favorite;
+    }
+
+    public int getUser_no() {
+        return user_no;
+    }
+
+    public void setUser_no(int user_no) {
+        this.user_no = user_no;
     }
 
     public String getUser_name() {
@@ -147,6 +158,7 @@ public class Post implements Parcelable {
         dest.writeInt(hits);
         dest.writeString(post_content);
         dest.writeString(post_date);
+        dest.writeInt(user_no);
         dest.writeString(user_name);
         dest.writeInt(comment_count);
         dest.writeString(post_file);
@@ -160,6 +172,7 @@ public class Post implements Parcelable {
         hits = in.readInt();
         post_content = in.readString();
         post_date = in.readString();
+        user_no = in.readInt();
         user_name = in.readString();
         comment_count = in.readInt();
         post_file = in.readString();
@@ -174,7 +187,8 @@ public class Post implements Parcelable {
                 ", hits=" + hits +
                 ", post_content='" + post_content + '\'' +
                 ", post_date='" + post_date + '\'' +
-                ", post_writer='" + user_name + '\'' +
+                ", user_no=" + user_no +
+                ", user_name='" + user_name + '\'' +
                 ", comment_count=" + comment_count +
                 ", post_file='" + post_file + '\'' +
                 ", post_type=" + post_type +

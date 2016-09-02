@@ -12,22 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.User;
-import com.study.jasmin.jasmin.rest.RestClient;
+import com.study.jasmin.jasmin.http.JasminGetDataTask;
 import com.study.jasmin.jasmin.util.FileUtils;
 import com.study.jasmin.jasmin.util.JasminPreference;
 import com.study.jasmin.jasmin.util.JasminProtocol;
 
 import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GroupNoticeAddActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = "GNAA";
@@ -36,6 +28,7 @@ public class GroupNoticeAddActivity extends AppCompatActivity implements View.On
     private Button testButton;
     private JasminPreference mPref;
     private Uri test;
+    private JasminGetDataTask mTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +60,24 @@ public class GroupNoticeAddActivity extends AppCompatActivity implements View.On
     }
 
     private void uploadFile(Uri fileUri) {
-        File file = FileUtils.getFile(this, fileUri);
+        String file = FileUtils.getPath(this, fileUri);
+        File test = new File(file);
+        mTask = JasminGetDataTask.getInstance();
+        mTask.setUrl("postInsert");
+        mTask.setKeyParams("userNo","studyNo","postTitle","postContent","postType");
+        mTask.setValueParams(
+                Integer.toString((((User) mPref.getObjectValue("userInfo")).getUser_no())),
+                Integer.toString(mPref.getSelStudyNo()),
+                title.getText().toString(),
+                content.getText().toString(),
+                Integer.toString(1)
+                );
+        mTask.setKeyFileParams("postFile");
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        mTask.setValueFileParams(test);
+        mTask.setExecute();
+
+        /*RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
         String descriptionString = "hello, this is description speaking";
         RequestBody description =
@@ -89,14 +97,15 @@ public class GroupNoticeAddActivity extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<JsonObject> call,
                                    Response<JsonObject> response) {
-                Log.d("Upload", "success");
+                Log.d(TAG, "Retro Status Code = " + response.code());
+//                Log.d("Upload", "success");
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("Upload error:", t.getMessage());
             }
-        });
+        });*/
     }
 
 
@@ -106,7 +115,10 @@ public class GroupNoticeAddActivity extends AppCompatActivity implements View.On
             case R.id.btn_ok:
                 Log.d(TAG, "click btn_ok");
                 uploadFile(test);
-//                finish();
+                finish();
+
+
+
                 return true;
 
             default:
@@ -140,6 +152,8 @@ public class GroupNoticeAddActivity extends AppCompatActivity implements View.On
         switch(v.getId()) {
             case R.id.add_file:
                 openFolder();
+
+
                 break;
 
 

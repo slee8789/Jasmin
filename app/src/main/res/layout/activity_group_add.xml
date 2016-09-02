@@ -52,12 +52,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_background" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignBottom="@id/group_cover"
-                android:layout_alignRight="@id/group_cover"
-                android:src="@drawable/ic_photo_camera_black_24dp" />
+
         </RelativeLayout>
 
 
@@ -68,11 +63,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/round_green"
         android:text="@string/complete"
         android:textColor="@color/colorWhite"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 </RelativeLayout>

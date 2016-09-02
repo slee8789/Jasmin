@@ -13,7 +13,6 @@ import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.activity.GroupMainActivity;
-import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 import org.json.JSONArray;
@@ -32,46 +31,59 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
     public ImageView groupPhoto;
     private Context context;
     private ArrayList<Object> studyList;
-    private ProgressDialog Progress;
+    //    private ProgressDialog Progress;
     //swan add
     private int selStudyNo;
+    private static HolderInfoGroupList instance;
 
+    public static HolderInfoGroupList getInstance(View view) {
+        if (instance == null) {
+            synchronized (HolderInfoGroupList.class) {
+                if (instance == null) {
+                    instance = new HolderInfoGroupList(view);
+                }
+            }
+        }
+        return instance;
+    }
     public HolderInfoGroupList(View itemView) {
         super(itemView);
         itemView.getClass();
         itemView.setOnClickListener(this);
         context = itemView.getContext();
-        Progress = ProgressDialog.getInstance(context);
+//        Progress = ProgressDialog.getInstance(context);
         groupName = (TextView)itemView.findViewById(R.id.group_name);
         groupPhoto = (ImageView)itemView.findViewById(R.id.group_photo);
-        studyList = JasminPreference.getInstance(context).getListValue("studyList");
+
     }
 
     @Override
     public void onClick(View view) {
 //        Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-        Progress.show();
+//        Progress.show(); // BadTokenException 에러
         RestClient.RestService service = RestClient.getClient();
         //swan add
+        studyList = JasminPreference.getInstance(context).getListValue("studyList");
         selStudyNo = ((Study)studyList.get(getAdapterPosition())).getStudy_no();
-        Log.d("test","studyNo :  " + Integer.toString(selStudyNo));
+        Log.d(TAG,"studyNo :  " + Integer.toString(selStudyNo));
         Call<JsonObject> call = service.gotoStudy(((Study)studyList.get(getAdapterPosition())).getStudy_no());
         call.enqueue(this);
     }
 
     @Override
     public void onResponse(Call call, Response response) {
-        Log.d("test", "Retro Status Code = " + response.code());
+//        Log.d(TAG, "Retro Status Code = " + response.code());
         try {
             String strTest = response.body().toString();
 
             JSONObject jsObject = new JSONObject(strTest);
-            JSONArray studyObj = jsObject.getJSONArray("studyInfo");
+            JSONArray studyArr = jsObject.getJSONArray("studyInfo");
             JSONArray memberObj = jsObject.getJSONArray("memberList");
-
-            JasminPreference.getInstance(context).putJson("studyList",studyObj.toString());
+            JSONObject studyObj = studyArr.getJSONObject(0);
+            JasminPreference.getInstance(context).putJsonObject("studyInfo", getAdapterPosition(), studyObj.toString());
             JasminPreference.getInstance(context).putJson("memberList",memberObj.toString());
 
+            //swan add
             if(studyObj != null) {
                 JasminPreference.getInstance(context).putSelStudyNo(selStudyNo);
             }else{
@@ -81,16 +93,16 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
             Intent intent = new Intent(context, GroupMainActivity.class);
             context.startActivity(intent);
 
-            Progress.cancel();
-            Progress.dismiss();
+//            Progress.cancel();
+//            Progress.dismiss();
 
         } catch (JSONException e) {
-            Log.d("test", "e : " + e);
+            Log.d(TAG, "e : " + e);
         }
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
-        Log.d("test", "ResponseFail = " + call);
+        Log.d(TAG, "ResponseFail = " + call);
     }
 }
