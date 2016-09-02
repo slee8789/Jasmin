@@ -182,6 +182,8 @@
     <string name="alarm_add_success_dialog_title">성공</string>
     <string name="alarm_add_success__dialog_comment">성공했어요</string>
 
+    <string name="group_setting_secede_manager_fail_title">실패</string>
+    <string name="group_setting_secede_manager_fail">관리자 권한을 가진 유저는 스터디를 탈퇴 할 수 없습니다.</string>
 
     <!-- ///////////////////////////////////test/////////////////////////////////////-->
 

@@ -111,14 +111,14 @@ public class AdaptInfoAttendanceCheckList extends ArrayAdapter<Attendance> imple
                 break;
             case  R.id.rb_option2:
                 getItem((int)group.getTag()).setAttendanceStateNew("지각");
-                getItem((int)group.getTag()).setPenaltyMoney(1000);
+                getItem((int)group.getTag()).setPenaltyMoney(-1000);
                 //Log.d(TAG, ">>>>>>>>>>>>>>>>>> 2");
                 //((Attendance)listView.getItemAtPosition(position)).setAttendanceStateNew("지각");
                // this.spLateTime.setVisibility(View.VISIBLE);
                 break;
             case  R.id.rb_option3:
                 getItem((int)group.getTag()).setAttendanceStateNew("결석");
-                getItem((int)group.getTag()).setPenaltyMoney(1500);
+                getItem((int)group.getTag()).setPenaltyMoney(-1500);
                 //Log.d(TAG, ">>>>>>>>>>>>>>>>>> 3");
                // ((Attendance)listView.getItemAtPosition(position)).setAttendanceStateNew("결석");
                 //this.spLateTime.setVisibility(View.INVISIBLE);

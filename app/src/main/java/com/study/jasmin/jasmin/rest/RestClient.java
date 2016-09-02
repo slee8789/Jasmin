@@ -125,11 +125,12 @@ public class RestClient{
 
         @FormUrlEncoded
         @POST("api/homeworkInsert")
-        Call<JsonObject> insertAssignment(@Field("studyNo") int studyNo,
-                                       @Field("homeworkTitle") String homeworkTitle,
-                                       @Field("homeworkContent") String homeworkContent,
-                                       @Field("homeworkEnd") String homeworkEnd,
-                                       @Field("homeworkMoney") int homeworkMoney
+        Call<JsonObject> insertAssignment(@Field("studyNo")             int studyNo,
+                                           @Field("homeworkTitle")      String homeworkTitle,
+                                           @Field("homeworkContent")    String homeworkContent,
+                                           @Field("homeworkStart")      String homeworkStart,
+                                           @Field("homeworkEnd")        String homeworkEnd,
+                                           @Field("homeworkMoney")      int homeworkMoney
         );
 
 
@@ -169,6 +170,16 @@ public class RestClient{
 
 
         @FormUrlEncoded
+        @POST("api/getMoneybookList")
+        Call<JsonObject> moneybookList(@Field("studyNo") int studyNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/showPenaltyMoneyList")
+        Call<JsonObject> penaltyList(@Field("studyNo") int studyNo
+        );
+
+        @FormUrlEncoded
         @POST("api/alarmList")
         Call<JsonObject> goAlarmList(@Field("studyNo") int studyNo
         );
@@ -202,18 +213,46 @@ public class RestClient{
                                     @Field("userNo") int userNo
         );
 
+        @FormUrlEncoded
+        @POST("api/managerShareDelete")
+        Call<JsonObject> gradeDelete(@Field("studyNo") int studyNo,
+                                         @Field("userNo") int userNo
+        );
 
         @FormUrlEncoded
-        @POST("/api/managerDelegate")
+        @POST("api/managerDelegate")
         Call<JsonObject> gradeDelegate(@Field("studyNo") int studyNo,
                                        @Field("userNo") int userNo
         );
 
 
         @FormUrlEncoded
-        @POST("/api/removeUser")
+        @POST("api/removeUser")
         Call<JsonObject> removeMember(@Field("studyNo") int studyNo,
                                        @Field("userNo") int userNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/studyFeeSet")
+        Call<JsonObject> updateStudyFee(@Field("studyNo")            int studyNo,
+                                        @Field("studyUseDeposit")   int studyUseDeposit,
+                                        @Field("studyBasicDeposit")int studyBasicDeposit,
+                                        @Field("studyMaxLate")      int studyMaxLate,
+                                        @Field("studyLateUnit")     int studyLateUnit,
+                                        @Field("studyLateFee")      int studyLateFee,
+                                        @Field("studyAbsenceFee")   int studyAbsenceFee
+        );
+
+        @FormUrlEncoded
+        @POST("api/studyEnd")
+        Call<JsonObject> endStudy(@Field("studyNo")            int studyNo
+        );
+
+
+        @FormUrlEncoded
+        @POST("api/withdrawStudy")
+        Call<JsonObject> withdrawStudy(@Field("studyNo")            int studyNo,
+                                        @Field("userNo")             int userNo
         );
     }
 

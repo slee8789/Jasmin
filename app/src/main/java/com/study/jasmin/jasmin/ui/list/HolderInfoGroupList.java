@@ -62,7 +62,6 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
 //        Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 //        Progress.show(); // BadTokenException 에러
         RestClient.RestService service = RestClient.getClient();
-        //swan add
         studyList = JasminPreference.getInstance(context).getListValue("studyList");
         selStudyNo = ((Study)studyList.get(getAdapterPosition())).getStudy_no();
         Log.d(TAG,"studyNo :  " + Integer.toString(selStudyNo));

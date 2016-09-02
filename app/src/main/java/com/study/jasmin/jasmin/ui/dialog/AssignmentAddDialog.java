@@ -17,10 +17,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.rest.RestClient;
+import com.study.jasmin.jasmin.util.JasminPreference;
 import com.study.jasmin.jasmin.util.JasminUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +41,7 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
     private Button btnCancel;
     private EditText etTitle;
     private EditText etContent;
-    private DatePicker date;
+    private DatePicker datePicker;
 
     public AssignmentAddDialog(Context context) {
         super(context);
@@ -59,41 +62,38 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
 
     }
 
-//    public void setOkOnClickListener(View.OnClickListener listener) {
-//        buttonOkListener = listener;
-//    }
-
-//    public void setCancelOnClickListener(View.OnClickListener listener) {
-//        buttonCancelListener = listener;
-//    }
-
     public void findViews() {
         etTitle = (EditText) findViewById(R.id.et_title);
         etContent = (EditText) findViewById(R.id.et_msg);
         btnOk = (Button) findViewById(R.id.btn_ok);
         btnCancel = (Button) findViewById(R.id.btn_cancel);
-        date = (DatePicker) findViewById(R.id.datePicker);
-
+        datePicker = (DatePicker) findViewById(R.id.datePicker);
     }
 
     public void initViews() {
-//        btnOk.setOnClickListener(buttonOkListener);
-//        btnCancel.setOnClickListener(buttonCancelListener);
         btnOk.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_ok:
-                Log.d(TAG,"click btn_ok");
-                String formattedDate = JasminUtil.dateYYYY_MM_DD(date.getYear(),date.getMonth(),date.getDayOfMonth());
+                Log.d(TAG,"click btn_ok~");
+                String formattedDate = JasminUtil.dateYYYY_MM_DD(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
                 RestClient.RestService service = RestClient.getClient();
-                //Call<JsonObject> call = service.addAssignment(2,etTitle.getText().toString(),etContent.getText().toString(),formattedDate,0);
-                //scall.enqueue(this);
+                int studyNo =JasminPreference.getInstance(getContext()).getSelectedStudyNo();
+                /*
+                Call<JsonObject> call = service.insertAssignment(studyNo,
+                                                                etTitle.getText().toString(),
+                                                                etContent.getText().toString(),
+                                                                "20160910",
+                                                                "20160915",
+                                                                3000);
+                call.enqueue(this);
+                */
                 break;
-
             case R.id.btn_cancel:
                 Log.d(TAG,"btn_cancel btn_ok");
                 cancel();
@@ -113,9 +113,9 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
             if(result == 1) {
                 cancel();
                 dismiss();
-                //Todo: 추가를 했으니 조회도 다시하여 리스트에 갱신해야되는건지...아니면 그냥 리스트에 추가할지.
-            } else {
-                Toast.makeText(getContext(), "test : result 0", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"성공", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
             }
         }catch (JSONException e) {
             Log.d(TAG,"e : " + e);

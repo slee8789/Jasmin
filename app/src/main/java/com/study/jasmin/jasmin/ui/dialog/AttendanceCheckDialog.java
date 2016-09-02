@@ -128,6 +128,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
                 if(attendanceList == null || strJson.equals("")){
                     Log.d(TAG ,">>>>>>>>>>>>>>attendanceList is null or nothing changed!!! ");
                 }else{
+                    progress = new ProgressDialog(getContext());
                     progress.show();
                     RestClient.RestService service = RestClient.getClient();
                     Call<JsonObject> call = bNew ? service.insertAttendance(getJson()) : service.updateAttendance(getJson());
@@ -166,7 +167,7 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
             String strTest = response.body().toString();
             JSONObject jsObject = new JSONObject(strTest);
 
-            if(selId==0){
+            if(selId==0){ // 0 == attendanceList로 이동
                 Gson gson = new GsonBuilder().create();
                 JSONArray attendObj = jsObject.getJSONArray("result");
                 Attendance[] attendanceArr = gson.fromJson(attendObj.toString(), Attendance[].class);
@@ -204,7 +205,6 @@ public class AttendanceCheckDialog extends Dialog implements View.OnClickListene
     public void onFailure(Call call, Throwable t) {
         Log.d(TAG, "ResponseFail = " + call);
     }
-
 
     //라디오 버튼 클릭
     @Override

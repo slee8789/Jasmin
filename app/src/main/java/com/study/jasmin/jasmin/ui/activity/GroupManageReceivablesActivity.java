@@ -12,6 +12,7 @@ import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoReceivablesList;
 import com.study.jasmin.jasmin.ui.list.ListInfoReceivables;
+import com.study.jasmin.jasmin.util.JasminPreference;
 
 import java.util.ArrayList;
 
@@ -20,12 +21,13 @@ public class GroupManageReceivablesActivity extends AppCompatActivity implements
     ListView list;
     AdaptInfoReceivablesList adapt;
     TwoButtonDialog dialog;
-
+    JasminPreference mPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_manage_receivables);
+        mPref = JasminPreference.getInstance(this);
 
         findViews();
         initViews();
@@ -36,27 +38,14 @@ public class GroupManageReceivablesActivity extends AppCompatActivity implements
     }
 
     public void initViews(){
-        adapt = new AdaptInfoReceivablesList(this, R.layout.list_receivables_info, getItemFromDB(),this);
+        /*
+            adapt = new AdaptInfoMoneybookList(this, R.layout.list_moneybook_info,  );
+        list.setAdapter(adapt);
+         */
+        adapt = new AdaptInfoReceivablesList(this, R.layout.list_receivables_info, mPref.getListValue("penaltyList"),this);
         list.setAdapter(adapt);
     }
 
-    public ArrayList<ListInfoReceivables> getItemFromDB(){
-
-        String[] names = {"김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나",
-                         "김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나"};
-        ArrayList<ListInfoReceivables> list= new ArrayList<ListInfoReceivables>();;
-        ListInfoReceivables item;
-
-        for (String s : names) {
-            item = new ListInfoReceivables();
-            item.setName(s);
-            item.setDate("16/08/05");
-            item.setReason("지각");
-            item.setMoney("1000");
-            list.add(item);
-        }
-        return list;
-    }
 
     @Override
     public void onListBtnClick(ListInfoReceivables listInfoReceivables ) {

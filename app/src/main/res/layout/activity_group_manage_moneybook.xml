@@ -10,11 +10,6 @@
     tools:context="com.study.jasmin.jasmin.ui.activity.GroupManageMoneybookActivity"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_add"
-        android:text="입/출금 추가"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

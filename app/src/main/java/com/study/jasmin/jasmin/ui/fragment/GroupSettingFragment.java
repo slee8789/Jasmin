@@ -20,6 +20,8 @@ import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Alarm;
 import com.study.jasmin.jasmin.entity.Member;
+import com.study.jasmin.jasmin.entity.Study;
+import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.activity.GroupSettingAlarmListActivity;
 import com.study.jasmin.jasmin.ui.activity.SettingAssignmentActivity;
@@ -29,6 +31,7 @@ import com.study.jasmin.jasmin.ui.dialog.MemberListDialog;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
 import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.ui.dialog.TwoButtonDialog;
+import com.study.jasmin.jasmin.ui.item.ListViewAlarmAdapter;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
 import org.json.JSONArray;
@@ -52,7 +55,9 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
     Button btnAlarm,
             btnGroupSetting,
             btnPenaltySetting,
-            btnSubGrant,btnGrant,
+            btnSubGrant,
+            btnGrant,
+            btnSubGrantDelete,
             btnRemoveMember,
             btnEndStudy,
             btnSecedeGroup;
@@ -61,6 +66,7 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
     private ProgressDialog connectProgress;
     public JasminPreference mPref;
     private int mClickId;
+    private int dialogType;  //1 = btn_end_study , 2 = btn_secede_group
 
     public GroupSettingFragment() {
         // Required empty public constructor
@@ -71,7 +77,7 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_group_setting, container, false);
 
-        setBtnListner(rootView);
+        setBtnListener(rootView);
         mPref = JasminPreference.getInstance(getActivity());
         connectProgress = new ProgressDialog(getContext());
         return rootView;
@@ -98,6 +104,10 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                 memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 공유",1);
                 memberlistDialog.show();
                 break;
+            case R.id.btn_grade_share_delete:
+                memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 삭제",4);
+                memberlistDialog.show();
+                break;
             case R.id.btn_grade_delegate:
                 memberlistDialog = new MemberListDialog(getActivity(),"관리자 권한 위임",2);
                 memberlistDialog.show();
@@ -107,12 +117,25 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                 memberlistDialog.show();
                 break;
             case R.id.btn_end_study:
+                dialogType=1;
                 twoButtonDialog = new TwoButtonDialog(getActivity());
+                twoButtonDialog.setOkOnClickListener(this);
+                twoButtonDialog.setCancelOnClickListener(this);
                 twoButtonDialog.showTwoButtonDialog("스터디 종료","스터디를 종료하시겠습니까?");
                 break;
             case R.id.btn_secede_group:
+                dialogType=2;
                 twoButtonDialog = new TwoButtonDialog(getActivity());
+                twoButtonDialog.setOkOnClickListener(this);
+                twoButtonDialog.setCancelOnClickListener(this);
                 twoButtonDialog.showTwoButtonDialog("스터디 탈퇴","스터디를 탈퇴하시겠습니까?");
+                break;
+            case R.id.ok_twobutton:
+                if(dialogType==1)               callEndStudy();
+                else if(dialogType==2)         callWithdrawStudy();
+                break;
+            case R.id.cancel_twobutton:
+                twoButtonDialog.closeTwoButtonDialog();
                 break;
             default:
                 break;
@@ -121,22 +144,20 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
         if(call != null)        call.enqueue(this);//onResponse() 실행
     }
 
-    public void setBtnListner(View rootView){
+    public void setBtnListener(View rootView){
         Button[] arrBtn = {btnAlarm, btnGroupSetting,
-                btnPenaltySetting, btnSubGrant, btnGrant,
+                btnPenaltySetting, btnSubGrant, btnGrant, btnSubGrantDelete,
                 btnRemoveMember, btnEndStudy, btnSecedeGroup};
         int[] arrBtnId = {R.id.btn_alarm, R.id.btn_group_setting,
-                R.id.btn_penalty_setting, R.id.btn_grade_share, R.id.btn_grade_delegate,
+                R.id.btn_penalty_setting, R.id.btn_grade_share, R.id.btn_grade_delegate, R.id.btn_grade_share_delete,
                 R.id.btn_member_remove, R.id.btn_end_study, R.id.btn_secede_group};
 
-        for(int i=0; i<8; i++){
+        for(int i=0; i<arrBtn.length; i++){
             arrBtn[i] = (Button)rootView.findViewById(arrBtnId[i]);
             arrBtn[i].setOnClickListener(this);
         }
-
         return;
     }
-
 
     // return ; 멤버 리스트를 String 배열로 반환
     // Custom Dialog 생성시 필요
@@ -152,6 +173,39 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
         }
         return array;
     }
+
+    public void callWithdrawStudy(){
+        if(mPref.getUserGrade()==1){
+            twoButtonDialog.closeTwoButtonDialog();
+            final OneButtonDialog oneButtonDialog = new OneButtonDialog(getContext());
+            oneButtonDialog.setCancelable(false);
+            oneButtonDialog.setOkOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    oneButtonDialog.cancel();
+                    oneButtonDialog.dismiss();
+                }
+            });
+            oneButtonDialog.show();
+            oneButtonDialog.setTitle(R.string.group_setting_secede_manager_fail_title);
+            oneButtonDialog.setComment(R.string.group_setting_secede_manager_fail);
+        }else{
+            connectProgress.show();
+            RestClient.RestService service = RestClient.getClient();
+            Call<JsonObject> call = service.withdrawStudy(mPref.getUserNo(), mPref.getSelectedStudyNo());
+            call.enqueue(this);
+        }
+    }
+
+
+    public void callEndStudy(){
+        connectProgress.show();
+        User user = (User)mPref.getObjectValue("userInfo");
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.endStudy(mPref.getSelectedStudyNo());
+        call.enqueue(this);
+    }
+
 
     @Override
     public void onResponse(Call call, Response response) {
@@ -170,6 +224,20 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
                     intent.putParcelableArrayListExtra("alarmList", alarmList);
                     if(intent != null) startActivity(intent);
                     break;
+                case R.id.ok_twobutton:
+                    if(response.body().toString().equals("{\"result\":1}")) {
+                        Toast.makeText(getContext(), "성공했습니다", Toast.LENGTH_SHORT).show();
+                        if(dialogType==1){
+                            //스터디 종료 후 처리 필요
+                        }
+                        else if(dialogType==2){
+                            //스터디 탈퇴 후 처리 필요
+                        }
+                        dialogType=0;
+                        twoButtonDialog.closeTwoButtonDialog();
+                    }else{
+                        Toast.makeText(getContext(), "실패했습니다", Toast.LENGTH_SHORT).show();
+                    }
             }
         }catch (JSONException e) {
             Log.d(TAG,"e : " + e);
@@ -177,12 +245,10 @@ public class GroupSettingFragment extends Fragment implements View.OnClickListen
         }
         connectProgress.cancel();
         connectProgress.dismiss();
-
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
-
     }
 }
 

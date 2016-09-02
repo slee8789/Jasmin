@@ -10,23 +10,25 @@ import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.entity.Assignment;
+import com.study.jasmin.jasmin.entity.AssignmentTitle;
 import com.study.jasmin.jasmin.ui.dialog.AssignmentCheckDialog;
 
 import java.util.ArrayList;
 
-public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment>  {
-    private ArrayList<Assignment> arraySelectInfo;
+public class AdaptInfoAssignmentList extends ArrayAdapter<AssignmentTitle>  {
+    private ArrayList<AssignmentTitle> assignmentList;
     private Context context;
+    TextView title;
+    Button   btnAdd;
 
-    public AdaptInfoAssignmentList(Context context, int resource, ArrayList<Assignment> objects) {
+    public AdaptInfoAssignmentList(Context context, int resource, ArrayList<AssignmentTitle> objects) {
         super(context, resource, objects);
-        this.arraySelectInfo = objects;
+        this.assignmentList = objects;
         this.context = context;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View view = convertView;
 
         if (view == null) {
@@ -34,14 +36,25 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment>  {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_assignment_info, null);
         }
-        final Assignment listInfo = arraySelectInfo.get(position);
+
+        findViews(view);
+        initViews(position);
+
+        return view;
+    }
+
+    public void findViews(View view){
+        title = (TextView) view.findViewById(R.id.assignment_title);
+        btnAdd = (Button)view.findViewById(R.id.assignment_do_check);
+    }
+
+    public void initViews(int position){
+        AssignmentTitle listInfo = getItem(position);
 
         if (listInfo != null) {
-            TextView title = (TextView) view.findViewById(R.id.assignment_title);
             title.setText(listInfo.getHomework_title());
         }
-
-        Button btnDoCheck = (Button)view.findViewById(R.id.assignment_do_check);
+           /*
         btnDoCheck.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -51,7 +64,7 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<Assignment>  {
 
             }
         });
-        return view;
+        */
     }
 
 }

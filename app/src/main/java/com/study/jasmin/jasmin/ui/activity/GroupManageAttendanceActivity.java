@@ -164,7 +164,7 @@ public class GroupManageAttendanceActivity extends AppCompatActivity implements 
         }
         strJson = "[" + strJson.substring(0, strJson.length() - 1) + "]";
 
-        Log.d(TAG,">>>>>>delete return"+strJson);
+        //Log.d(TAG,">>>>>>delete return"+strJson);
         RestClient.RestService service = RestClient.getClient();
         Call<JsonObject> call = service.deleteAttendance(strJson);
         call.enqueue(this);

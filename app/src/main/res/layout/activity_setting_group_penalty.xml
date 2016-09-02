@@ -21,7 +21,7 @@
                 android:text="디파짓유무"
                 android:textSize="20dp"/>
             <RadioGroup
-                android:id="@+id/rg_doposit"
+                android:id="@+id/rg_deposit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -49,13 +49,15 @@
                 android:text="기본 디파짓"
                 android:textSize="20dp"/>
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:textAlignment="textEnd"
                 android:hint="원"
                 android:id="@+id/et_base_deposit"
                 android:inputType="number"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:minWidth="100dp"
+                />
         </TableRow>
         <TableRow>
             <TextView
@@ -67,7 +69,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:textAlignment="textEnd"
                 android:id="@+id/et_attendance_penalty"
                 android:hint="원"
                 android:inputType="number"
@@ -83,7 +85,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:textAlignment="textEnd"
                 android:id="@+id/et_lateness_penalty"
                 android:hint="원"
                 android:inputType="number"

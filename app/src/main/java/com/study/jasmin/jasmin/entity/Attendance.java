@@ -140,7 +140,7 @@ public class Attendance implements Parcelable{
                 ",\"study_no\":" + study_no +
                 ",\"attendance_old_state\":\"" +  attendance_state + "\"" +
                 ",\"attendance_state\":\"" +  attendance_state_new + "\"" +
-                ",\"penalty_money\":" + penaltyMoney  +
+                ",\"penalty_money\":" + penaltyMoney +
                 "}";
     }
 

@@ -44,17 +44,8 @@
         android:layout_height="50dp"
         android:layout_toRightOf="@+id/moneybook_reason"
         android:gravity="center"
-        android:text="4 / 6"
+        android:text="3000"
         android:textColor="@color/colorBlack"
         android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/moneybook_write"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:src="@drawable/ic_close_black_24dp" />
 
 </LinearLayout>

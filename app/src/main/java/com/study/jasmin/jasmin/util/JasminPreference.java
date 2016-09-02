@@ -3,22 +3,25 @@ package com.study.jasmin.jasmin.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.study.jasmin.jasmin.entity.Assignment;
 import com.study.jasmin.jasmin.entity.Comment;
 import com.study.jasmin.jasmin.entity.Member;
+import com.study.jasmin.jasmin.entity.MoneyBook;
+import com.study.jasmin.jasmin.entity.Penalty;
 import com.study.jasmin.jasmin.entity.Post;
 import com.study.jasmin.jasmin.entity.QnA;
 import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.entity.User;
+import com.study.jasmin.jasmin.ui.activity.GroupStudyInfoActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Created by swan on 2016-08-10.
- */
 public class JasminPreference {
     private final String PREF_NAME = "com.study.jasmin.jasmin";
     public final static String PREF_INTRO_USER_AGREEMENT = "PREF_USER_AGREEMENT";
@@ -28,12 +31,16 @@ public class JasminPreference {
     private Object obj                  = new Object();
     private ArrayList <Object> list     = new ArrayList<Object>();
 
-    private User[]      users;
-    private QnA[]       qnas;
-    private Study[]     studies;
-    private Member[]    members;
-    private Post[]      posts;
-    private Comment[]   comments;
+    private User[]          users;
+    private QnA[]           qnas;
+    private Study[]         studies;
+    private Member[]        members;
+    private Post[]          posts;
+    private Comment[]       comments;
+    private Study[]         studyInfo;
+    private Assignment[]    assignments;
+    private MoneyBook[]     moneybooks;
+    private Penalty[]       penalties; //"penaltyList"
 
     private int selStudyNo;
 
@@ -75,7 +82,6 @@ public class JasminPreference {
             case "qnaList":
                 qnas = gson.fromJson(value, QnA[].class);
                 break;
-
             case "userInfo":
                 users = gson.fromJson(value, User[].class);
                 break;
@@ -96,7 +102,20 @@ public class JasminPreference {
                 comments = gson.fromJson(value, Comment[].class);
                 break;
 
-            case "groupInfo":
+            case "studyInfo":
+                studyInfo = gson.fromJson(value, Study[].class);
+                break;
+
+            case "assignmentList":
+                assignments = gson.fromJson(value, Assignment[].class);
+                break;
+
+            case "moneybookList":
+                moneybooks = gson.fromJson(value, MoneyBook[].class);
+                break;
+
+            case "penaltyList":
+                penalties = gson.fromJson(value, Penalty[].class);
                 break;
         }
     }
@@ -161,9 +180,12 @@ public class JasminPreference {
 
         switch (key){
             case "userInfo":
-                obj = users[0];
+                if(users != null)
+                    obj = users[0];
                 break;
             case "studyInfo":
+                if(studyInfo != null)
+                    obj = studyInfo[0];
                 break;
         }
         return obj;
@@ -196,6 +218,18 @@ public class JasminPreference {
             case "qnaList":
                 Collections.addAll(list, qnas);
                 break;
+
+            case "assignmentList":
+                Collections.addAll(list, assignments);
+                break;
+
+            case "moneybookList":
+                Collections.addAll(list, moneybooks);
+                break;
+
+            case "penaltyList":
+                Collections.addAll(list,penalties);
+                break;
         }
         return list;
     }
@@ -208,9 +242,30 @@ public class JasminPreference {
         return this.selStudyNo;
     }
 
+    public void setMembers(Member[] arrMembers){
+        this.members = arrMembers;
+    }
+
+    public void setStudyInfo(Study[] arrStudy){this.studyInfo = arrStudy;}
+
+    public int getUserNo(){
+        return users[0].getUser_no();
+    }
+
+    public int getSelectedStudyNo(){
+        return studyInfo[0].getStudy_no();
+    }
 
 
-
+    //return value 0 is error
+    public int getUserGrade(){
+        for (Member m : members){
+            if(m.getUser_no() == getUserNo()){
+                return  m.getUser_grade();
+            }
+        }
+        return 0;
+    }
 }
 
 

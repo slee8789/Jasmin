@@ -35,6 +35,13 @@
             android:text="관리자 권한 공유"
             />
         <Button
+            android:id="@+id/btn_grade_share_delete"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="관리자 권한 삭제"
+            />
+        <Button
             android:id="@+id/btn_grade_delegate"
             android:layout_width="match_parent"
             android:layout_height="0dp"

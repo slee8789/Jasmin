@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,13 +37,16 @@ import retrofit2.Response;
 public class MemberListDialog extends Dialog implements View.OnClickListener, Callback{
     public static final String TAG = "GSetAlarmAddActivity";
     static private final int MEMBER_DIALOG_GRADE_SHARE = 1;
+    static private final int MEMBER_DIALOG_GRADE_SHARE_DELETE = 4;
     static private final int MEMBER_DIALOG_GRADE_DELEGATE = 2;
-    static private final int MEMBER_DIALOG_GRADE_REMOVE = 3;
+    static private final int MEMBER_DIALOG_MEMBER_REMOVE = 3;
+
     private TextView    title, infoNull;
     private Button      ok, cancel;
     private RadioGroup  radioGroup;
     private int         memberDialogType = 0;
-
+    private int         selUserNo = 0;
+    private JasminPreference    mPref;
 
     public MemberListDialog(Context context, String strTitle,int nMemberDialogType) {
         super(context);
@@ -52,6 +56,7 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
         this.setCanceledOnTouchOutside(false);		// 다이알로그 바깥영역 터치시, 다이알로그 닫히지 않기
         this.setCancelable(true);                  // 백키로 다이알로그 닫기
         this.memberDialogType = nMemberDialogType;
+        mPref = JasminPreference.getInstance(context);
 
         findView();
         initView(strTitle);
@@ -74,11 +79,8 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
     }
 
     public void initRadioGroup(Context context){
-        JasminPreference    jPref        = JasminPreference.getInstance(context);
-        //((e_20160827))
-        //int                 myNo        = ((User)jPref.getObjectValue("userInfo")).getUser_no();
-        int                 myNo        = 1;
-        ArrayList<Object>   members      = jPref.getListValue("memberList");
+        int                 myNo        = ((User)mPref.getObjectValue("userInfo")).getUser_no();
+        ArrayList<Object>   members      = mPref.getListValue("memberList");
         Member              member       = null;
 
         if(members.size() < 2) {
@@ -91,13 +93,16 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
             if (myNo != member.getUser_no()){
                 switch (memberDialogType){
                     case MEMBER_DIALOG_GRADE_SHARE:
-                        if(member.getUser_grade()==1)     addRadioButton(member,context);
+                        if(member.getUser_grade()==3)     addRadioButton(member,context);
                         break;
                     case MEMBER_DIALOG_GRADE_DELEGATE:
                         addRadioButton(member,context);
                         break;
-                    case MEMBER_DIALOG_GRADE_REMOVE:
+                    case MEMBER_DIALOG_MEMBER_REMOVE:
                         addRadioButton(member,context);
+                        break;
+                    case MEMBER_DIALOG_GRADE_SHARE_DELETE:
+                        if(member.getUser_grade()==2)       addRadioButton(member,context);
                         break;
                 }
             }
@@ -132,8 +137,8 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
                 break;
             case R.id.btn_ok:
                 int studyNo = JasminPreference.getInstance(getContext()).getSelStudyNo();
-                int userNo = (this.findViewById(radioGroup.getCheckedRadioButtonId())).getId();
-                goGrant(studyNo,userNo);
+                selUserNo = (this.findViewById(radioGroup.getCheckedRadioButtonId())).getId();
+                goGrant(studyNo,selUserNo);
                 break;
         }
     }
@@ -153,8 +158,12 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
                 call = service.gradeDelegate(studyNo, userNo);
                 call.enqueue(this);
                 break;
-            case MEMBER_DIALOG_GRADE_REMOVE:
+            case MEMBER_DIALOG_MEMBER_REMOVE:
                 call = service.removeMember(studyNo, userNo);
+                call.enqueue(this);
+                break;
+            case MEMBER_DIALOG_GRADE_SHARE_DELETE:
+                call = service.gradeDelete(studyNo,userNo);
                 call.enqueue(this);
                 break;
         }
@@ -164,10 +173,16 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
     public void onResponse(Call call, Response response) {
         Log.d(TAG, "Retro Status Code = " + response.code());
         try {
+            String strToast     = "";
             String strTest      = response.body().toString();
             JSONObject jsObject = new JSONObject(strTest);
-            String strToast     = (jsObject.getString("result").equals("1"))? "성공" : "실패";
-
+            if(jsObject.getString("result").equals("1")){
+                strToast     = "성공";
+                setMemberPref();
+                //e160831 성공 시 업데이트 된 멤버 리스트 받아오기
+            }else{
+                strToast     = "실패";
+            }
             Toast.makeText(getContext(),strToast, Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             Log.d(TAG, "e : " + e);
@@ -179,6 +194,35 @@ public class MemberListDialog extends Dialog implements View.OnClickListener, Ca
     public void onFailure(Call call, Throwable t) {
 
     }
+
+    //change MemberList in Preference
+    public void setMemberPref(){
+        ArrayList<Object>   members      = mPref.getListValue("memberList");
+
+        for(int i=0; i<members.size(); i++){
+            Member member = (Member)members.get(i);
+            if(member.getUser_no() == selUserNo){
+                switch (memberDialogType){
+                    case MEMBER_DIALOG_GRADE_SHARE:
+                        member.setUser_grade(2);
+                        break;
+                    case MEMBER_DIALOG_GRADE_DELEGATE:
+                        member.setUser_grade(1);
+                        break;
+                    case MEMBER_DIALOG_MEMBER_REMOVE:
+                        members.remove(member);
+                        break;
+                    case MEMBER_DIALOG_GRADE_SHARE_DELETE:
+                        member.setUser_grade(3);
+                        break;
+                }
+                Member arrMembers[] = new Member[members.size()];
+                mPref.setMembers(members.toArray(arrMembers));
+                return;
+            }//end if
+        }//end for
+    }
+
 }
 
 

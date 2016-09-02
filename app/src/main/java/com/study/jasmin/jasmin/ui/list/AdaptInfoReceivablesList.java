@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Penalty;
 
 import java.util.ArrayList;
 
-public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> implements View.OnClickListener{
-    private ArrayList<ListInfoReceivables> arraySelectInfo;
+public class AdaptInfoReceivablesList extends ArrayAdapter<Object> implements View.OnClickListener{
     private Context context;
     private ListBtnClickListener listBtnClickListener;
 
@@ -21,22 +21,12 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
         void onListBtnClick(ListInfoReceivables listInfoReceivables);
     }
 
-    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<ListInfoReceivables> objects,ListBtnClickListener clickListener) {
+    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<Object> objects,ListBtnClickListener clickListener) {
         super(context, resource, objects);
-        this.arraySelectInfo = objects;
         this.context = context;
         this.listBtnClickListener = clickListener ;
 
     }
-
-    public ArrayList<ListInfoReceivables> getArraySelectInfo() {
-        return arraySelectInfo;
-    }
-
-    public void setArraySelectInfo(ArrayList<ListInfoReceivables> arraySelectInfo) {
-        this.arraySelectInfo = arraySelectInfo;
-    }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -47,7 +37,8 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_receivables_info, null);
         }
-        final ListInfoReceivables listInfo = arraySelectInfo.get(position);
+
+        Penalty listInfo = (Penalty)getItem(position);
 
         if (listInfo != null) {
             TextView name = (TextView) view.findViewById(R.id.receivables_name);
@@ -56,15 +47,14 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<ListInfoReceivables> 
             TextView money = (TextView) view.findViewById(R.id.receivables_money);
             ImageView cancle = (ImageView)view.findViewById(R.id.receivables_cancel);
 
-            name.setText(listInfo.getName());
-            date.setText(listInfo.getDate());
-            reason.setText(listInfo.getReason());
-            money.setText(listInfo.getMoney());
+            name.setText(listInfo.getUser_name());
+            date.setText(listInfo.getPenalty_date());
+            reason.setText(listInfo.getPenalty_title());
+            money.setText(Integer.toString(-listInfo.getPenalty_money()));
 
             cancle.setTag(listInfo);
             cancle.setOnClickListener(this);
         }
-
 
         return view;
     }

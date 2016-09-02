@@ -52,7 +52,6 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
     public GroupManageFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_group_manage, container, false);
@@ -86,47 +85,41 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
         mClickId =v.getId();
         switch (mClickId) {
             case R.id.btn_attendance:
-                goAttendance();
+                callAttendance();
                 break;
             case R.id.btn_assignment:
-                startActivity(new Intent(getActivity(), GroupManageAssignmentActivity.class));
-                /*connectProgress.show();
-                RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.getAssignmentListByStudyNo(2); //test
-                call.enqueue(this);
-                */
+                callAssignment();
                 break;
-
             case R.id.btn_receivables:
-                startActivity(new Intent(getActivity(), GroupManageReceivablesActivity.class));
+                callPenalty();
                 break;
             case R.id.btn_moneybook:
-                startActivity(new Intent(getActivity(), GroupManageMoneybookActivity.class));
+                callMoneybook();
                 break;
             case R.id.btn_money_ect:
                 startActivity(new Intent(getActivity(), GroupManageMoneyEctActivity.class));
                 break;
         }
     }
-
-    int id;
-
     @Override
     public void onResponse(Call call, Response response) {
         Log.d(TAG,"Retro Status Code = " + response.code());
         Intent intent = new Intent();
         Gson gson = new GsonBuilder().create();
+        if(response.body()==null){
+            connectProgress.cancel();
+            connectProgress.dismiss();
+            Log.d(TAG,"response.body() is null");
+            return;
+        }
         try {
             JSONObject jsObject = new JSONObject(gson.toJson(response.body()));
-            JSONArray attendObj = jsObject.getJSONArray("result");
-
-            if(jsObject.get("result") == null){
-                return;
-            }else{
+            JSONArray resultObj;
 
             switch (mClickId){
                     case R.id.btn_attendance:
-                        Attendance[] attendanceArr = gson.fromJson(attendObj.toString(), Attendance[].class);
+                        resultObj = jsObject.getJSONArray("result");
+                        Attendance[] attendanceArr = gson.fromJson(resultObj.toString(), Attendance[].class);
                         ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
                         Collections.addAll(attendanceList, attendanceArr);
                         intent = new Intent(getActivity(),GroupManageAttendanceActivity.class);
@@ -135,21 +128,24 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                         startActivity(intent);
                         break;
                     case R.id.btn_assignment:
-    //                    Assignment[] assignments = gson.fromJson(result.toString(), Assignment[].class);
-    //            List<Assignment> list = Arrays.asList(assignments);
-    //            Log.d(TAG, "Retro json -> entity : " + list);
-    //                    intent = new Intent(getContext(), GroupManageAssignmentActivity.class);
-    //                    intent.putExtra("assignments", assignments);
-    //                   startActivity(intent);
+                        resultObj = jsObject.getJSONArray("result");
+                        mPref.putJson("assignmentList",resultObj.toString());
+                        startActivity(new Intent(getActivity(),GroupManageAssignmentActivity.class));
                         break;
                     case R.id.btn_receivables:
+                        resultObj = jsObject.getJSONArray("result");
+                        mPref.putJson("penaltyList",resultObj.toString());
+                        startActivity(new Intent(getActivity(),GroupManageReceivablesActivity.class));
                         break;
                     case R.id.btn_moneybook:
+                        resultObj = jsObject.getJSONArray("MoneybookList");
+                        mPref.putJson("moneybookList",resultObj.toString());
+                        intent = new Intent(getActivity(),GroupManageMoneybookActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.btn_money_ect:
                         break;
                 }
-            }
             connectProgress.cancel();
             connectProgress.dismiss();
 
@@ -160,20 +156,42 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
 //        if(intent != null)
     }
 
-    public void goAttendance(){
+    public void callAttendance(){
         connectProgress.show();
         RestClient.RestService service = RestClient.getClient();
         Call<JsonObject> call = service.attendanceList(mPref.getSelStudyNo());
         call.enqueue(this);
     }
 
-    public void goAssignment(){
+    public void callAssignment(){
         connectProgress.show();
         RestClient.RestService service = RestClient.getClient();
         Call<JsonObject> call = service.assignmentList(mPref.getSelStudyNo());
         call.enqueue(this);
     }
 
+
+    public void callMoneybook(){
+        connectProgress.show();
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.moneybookList(mPref.getSelStudyNo());
+        call.enqueue(this);
+    }
+
+    public void callPenalty(){
+        Log.d("","callPenalty()");
+        connectProgress.show();
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.penaltyList(mPref.getSelStudyNo());
+        call.enqueue(this);
+    }
+
+    public void call(){
+        connectProgress.show();
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.assignmentList(mPref.getSelStudyNo());
+        call.enqueue(this);
+    }
 
 
     //public void startManageActivity(String key, ArrayList<T> listInfo, Class<?> aclass)
