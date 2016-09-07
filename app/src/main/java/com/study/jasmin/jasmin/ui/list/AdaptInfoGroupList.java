@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupList> {
 
-    private ArrayList<Object> itemList;
+    private ArrayList<Object> studyList;
     private Context context;
 
-    public AdaptInfoGroupList(Context context, ArrayList<Object> itemList) {
-        this.itemList = itemList;
+    public AdaptInfoGroupList(Context context, ArrayList<Object> studyList) {
+        this.studyList = studyList;
         this.context = context;
     }
 
@@ -31,15 +31,17 @@ public class AdaptInfoGroupList  extends RecyclerView.Adapter<HolderInfoGroupLis
 
     @Override
     public void onBindViewHolder(HolderInfoGroupList holder, int position) {
-        holder.groupName.setText(((Study)itemList.get(position)).getStudy_name());
-//        holder.groupPhoto.setImageResource(itemList.get(position).getPhoto());
+        holder.groupName.setText(((Study)studyList.get(position)).getStudy_name());
+        holder.groupPhoto.loadUrl("http://54.201.72.195:8081/examples/"+
+                                 ((Study)studyList.get(position)).getStudy_no()+
+                                  "/cover.jpg");
     }
 
     @Override
     public int getItemCount() {
-        if(this.itemList == null){
+        if(this.studyList == null){
             return 0;
         }
-        return this.itemList.size();
+        return this.studyList.size();
     }
 }

@@ -3,8 +3,6 @@ package com.study.jasmin.jasmin.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +15,6 @@ import com.study.jasmin.jasmin.entity.Post;
 import com.study.jasmin.jasmin.entity.QnA;
 import com.study.jasmin.jasmin.entity.Study;
 import com.study.jasmin.jasmin.entity.User;
-import com.study.jasmin.jasmin.ui.activity.GroupStudyInfoActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -163,6 +160,18 @@ public class JasminPreference {
             return dftValue;
         }
 
+    }
+
+    public void putJsonObject(String key, String value) {
+        switch (key) {
+            case "studyInfo":
+                Study[] temp = new Study[studies.length + 1];
+                System.arraycopy(studies,0,temp,0,studies.length);
+                temp[temp.length-1] = gson.fromJson(value, Study.class);
+                studies = temp;
+                break;
+
+        }
     }
 
     public void putJsonObject(String key, int index, String value) {

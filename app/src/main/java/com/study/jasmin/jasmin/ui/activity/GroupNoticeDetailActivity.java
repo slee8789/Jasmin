@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -35,6 +37,9 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
     private Post post;
     private TwoButtonDialog twoButtonDialog;
     private JasminPreference mPref;
+    private RelativeLayout fileList;
+    private TextView fileName;
+    private Button fileDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +54,19 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
         mPref = JasminPreference.getInstance(this);
         post = getIntent().getParcelableExtra("post");
         twoButtonDialog = new TwoButtonDialog(this);
-
+        hitPlus();
     }
 
     private void findViews() {
+        fileList = (RelativeLayout) findViewById(R.id.file_list);
+        fileName = (TextView) findViewById(R.id.file_name);
+        fileDownload = (Button) findViewById(R.id.file_download);
         noticeTitle = (TextView) findViewById(R.id.detail_title);
         noticeWriter = (TextView) findViewById(R.id.detail_writer);
         noticeDate = (TextView) findViewById(R.id.detail_date);
         noticeViews = (TextView) findViewById(R.id.detail_views);
         noticeContent = (TextView) findViewById(R.id.detail_content);
+
     }
 
     private void initViews() {
@@ -66,6 +75,11 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
         noticeDate.setText(post.getPost_date());
         noticeViews.setText(Integer.toString(post.getHits()));
         noticeContent.setText(post.getPost_content());
+        if(!post.getPost_file().isEmpty())  {
+            fileList.setVisibility(View.VISIBLE);
+            fileName.setText(post.getPost_file());
+        }
+        fileDownload.setOnClickListener(this);
     }
 
     public void showTwoButtonDialog(int title, String comment) {
@@ -75,6 +89,22 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
         twoButtonDialog.show();
         twoButtonDialog.setTitle(title);
         twoButtonDialog.setComment(comment);
+    }
+
+    private void hitPlus() {
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.postSelect(post.getPost_no());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d(TAG, "Retro Status Code = " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -91,6 +121,9 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
         switch (item.getItemId()) {
             case R.id.btn_modify:
                 Log.d(TAG, "click btn_modify");
+                Intent intent = new Intent(getApplicationContext(), GroupNoticeUpdateActivity.class);
+                intent.putExtra("post",post);
+                startActivity(intent);
                 return true;
 
             case R.id.btn_delete:
@@ -155,6 +188,12 @@ public class GroupNoticeDetailActivity extends AppCompatActivity implements View
                 Log.d(TAG, "click cancel_twobutton");
                 twoButtonDialog.cancel();
                 twoButtonDialog.dismiss();
+                break;
+
+            case R.id.file_download:
+                Log.d(TAG, "click file_download");
+                //Todo: 서버에서 파일 삭제
+                fileList.setVisibility(View.GONE);
                 break;
         }
     }

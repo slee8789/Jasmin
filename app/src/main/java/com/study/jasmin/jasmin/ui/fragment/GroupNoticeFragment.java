@@ -51,10 +51,9 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_group_notice, container, false);
         Log.d(TAG, "GroupNoticeFragment onCreateView");
+
         findViews(rootView);
         initViews();
-
-
 
         return rootView;
     }
@@ -62,7 +61,14 @@ public class GroupNoticeFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG,"onResume");
         init();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
     }
 
     private void init() {

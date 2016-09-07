@@ -2,15 +2,12 @@ package com.study.jasmin.jasmin.rest;
 
 import com.google.gson.JsonObject;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 
 public class RestClient{
@@ -48,12 +45,23 @@ public class RestClient{
     public interface RestService {
 
         @FormUrlEncoded
-        @POST("api/regiRequest")
-        Call<JsonObject> registerResult(@Field("email") String mail,
-                                        @Field("pw") String pw,
+        @POST("api/registerUser")
+        Call<JsonObject> registerUser(@Field("email") String mail,
+                                        @Field("password") String pw,
                                         @Field("name") String name,
-                                        @Field("sex") String sex
+                                        @Field("sex") int sex
                                         );
+
+        @FormUrlEncoded
+        @POST("api/mailCheck")
+        Call<JsonObject> mailCheck(@Field("email") String email
+        );
+
+        @FormUrlEncoded
+        @POST("api/mailAuth")
+        Call<JsonObject> mailAuth(@Field("email") String email,
+                                   @Field("num") int num
+        );
 
         @FormUrlEncoded
         @POST("api/login")
@@ -66,12 +74,24 @@ public class RestClient{
         Call<JsonObject> gotoStudy(@Field("studyNo") int studyNo
         );
 
+
         @FormUrlEncoded
         @POST("api/postList")
         Call<JsonObject> postList(@Field("studyNo") int studyNo
         );
-//Part("description")
-        @Multipart
+
+        @FormUrlEncoded
+        @POST("api/postSelect")
+        Call<JsonObject> postSelect(@Field("postNo") int postNo
+        );
+
+        @FormUrlEncoded
+        @POST("api/join")
+        Call<JsonObject> join(@Field("userNo") int userNo,
+                              @Field("code") int code
+        );
+
+        /*@Multipart // Android Api로 구현
         @POST("api/postInsert")
         Call<JsonObject> postInsert(@Part("userNo") int userNo,
                                     @Part("studyNo") int studyNo,
@@ -79,16 +99,16 @@ public class RestClient{
                                     @Part("postContent") String postContent,
                                     @Part("postType") int postType,
                                     @Part MultipartBody.Part postFile
-        );
+        );*/
 
-        @FormUrlEncoded
+        /*@FormUrlEncoded // Android Api로 구현
         @POST("api/postUpdate")
         Call<JsonObject> postUpdate (@Field("postNo") int postNo,
                                      @Field("postTitle") String postTitle,
                                      @Field("postContent") String postContent,
                                      @Field("postType") int postType,
                                      @Field("postFile") String postFile
-        );
+        );*/
 
         @FormUrlEncoded
         @POST("api/postDelete")

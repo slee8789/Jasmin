@@ -10,19 +10,29 @@ import java.io.File;
 /**
  * Created by leesc on 2016-08-05.
  */
-public class JasminGetDataTask extends AsyncTask<String,Void,String> {
+public class JasminGetDataTask extends AsyncTask<String, Void, String> {
     public static final String TAG = "JasminGetDataTask";
 
     private String url;
     private String[] valueParams;
     private String[] keyParams;  // json key로 사용할 변수
-    private String[]  keyFileParams;
-    private File[]  valueFileParams;
+    private String[] keyFileParams;
+    private File[] valueFileParams;
     private static JasminGetDataTask instance;
     MPHttpRequester mphttpRequester;
 
     public JasminGetDataTask() {
 
+    }
+
+    public interface OnResponseListener {
+        void onResponse(String result);
+    }
+
+    private OnResponseListener adptCallback = null;
+
+    public void setOnResponseListener(OnResponseListener callback) {
+        adptCallback = callback;
     }
 
     public void setExecute() {
@@ -31,7 +41,9 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
         this.execute(keyParams);
     }
 
-    /** Returns singleton class instance */
+    /**
+     * Returns singleton class instance
+     */
     public static JasminGetDataTask getInstance() {
         if (instance == null) {
             synchronized (JasminGetDataTask.class) {
@@ -47,7 +59,7 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
         this.url = url;
     }
 
-    public void setValueParams(String ... params) {
+    public void setValueParams(String... params) {
         this.valueParams = params;
     }
 
@@ -59,7 +71,7 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
         this.valueFileParams = params;
     }
 
-    public void setKeyParams(String ... params) {
+    public void setKeyParams(String... params) {
         this.keyParams = params;
     }
 
@@ -76,23 +88,28 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... params) {
-//        Log.d(TAG,"key : " + keyParams[i] + ", value : " + valueParams[i]);
-//          mphttpRequester = new MPHttpRequester("http://54.201.72.195:8081/test/" + url);
         mphttpRequester = new MPHttpRequester("http://54.201.72.195:8081/test/api/" + url);
-        for( int i=0; i < params.length; i++ ) {
-            if(JasminUtil.isStringInt(valueParams[i])) {
-                mphttpRequester.addParameter(keyParams[i],Integer.parseInt(valueParams[i]));
+        for (int i = 0; i < params.length; i++) {
+            if (JasminUtil.isStringInt(valueParams[i])) {
+                mphttpRequester.addParameter(keyParams[i], Integer.parseInt(valueParams[i]));
             } else {
-                mphttpRequester.addParameter(keyParams[i],valueParams[i]);
+                mphttpRequester.addParameter(keyParams[i], valueParams[i]);
             }
         }
 
-        for( int i=0; i < keyFileParams.length; i++) {
-            mphttpRequester.addFile(keyFileParams[i],valueFileParams[i]);
+        if (valueFileParams != null) {
+
+            for (int i = 0; i < keyFileParams.length; i++) {
+                mphttpRequester.addFile(keyFileParams[i], valueFileParams[i]);
+            }
+        } else {
+            for (int i = 0; i < keyFileParams.length; i++) {
+                mphttpRequester.addFile(keyFileParams[i], null);
+            }
         }
 
         String result = mphttpRequester.sendMultipartPost();
-        Log.d(TAG,"sendMultipartPost result : " + result);
+        Log.d(TAG, "sendMultipartPost result : " + result);
         return result;
     }
 
@@ -102,9 +119,9 @@ public class JasminGetDataTask extends AsyncTask<String,Void,String> {
 
         try {
             Log.d(TAG, "Status Code = " + string);
-
+            adptCallback.onResponse(string);
         } catch (Exception e) {
-            Log.d(TAG,"e : " + e);
+            Log.d(TAG, "e : " + e);
         }
 
     }

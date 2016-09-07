@@ -21,7 +21,7 @@ public class AdaptInfoReplyList extends ArrayAdapter<Object> {
     private onButtonClickListener adptCallback = null;
 
     public interface onButtonClickListener {
-        void onBtnModify(int position);
+        void onBtnModify(int position, String content);
         void onBtnDelete(int position);
     }
 
@@ -59,7 +59,7 @@ public class AdaptInfoReplyList extends ArrayAdapter<Object> {
         if (listInfo != null) {
             TextView id = (TextView) view.findViewById(R.id.reply_id);
             TextView time = (TextView) view.findViewById(R.id.reply_time);
-            TextView content = (TextView) view.findViewById(R.id.reply_content);
+            final TextView content = (TextView) view.findViewById(R.id.reply_content);
 
             ImageView modify = (ImageView) view.findViewById(R.id.reply_modify);
             ImageView delete = (ImageView) view.findViewById(R.id.reply_delete);
@@ -79,7 +79,7 @@ public class AdaptInfoReplyList extends ArrayAdapter<Object> {
             modify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    adptCallback.onBtnModify(pos);
+                    adptCallback.onBtnModify(pos,content.getText().toString());
                 }
             });
             delete.setOnClickListener(new View.OnClickListener() {

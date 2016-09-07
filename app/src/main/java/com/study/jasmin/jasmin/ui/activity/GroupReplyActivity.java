@@ -79,6 +79,7 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
         replyTitle = (TextView) findViewById(R.id.reply_title);
         inputReply = (EditText) findViewById(R.id.reply_input);
         btnEnroll = (Button) findViewById(R.id.reply_enroll);
+//        replyList.findViewById(R.id.)
     }
 
     private void initViews() {
@@ -204,8 +205,10 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void updateContent(int position) {
+        JasminUtil.hideSoftKeyboard(getApplicationContext(), inputReply);
+        JasminUtil.hideSoftKeyboard(getApplicationContext(), commentUpdateDialog.getComment());
         RestClient.RestService service = RestClient.getClient();
-        Call<JsonObject> call = service.commentUpdate(((Comment) commentList.get(position)).getComment_no(),"");
+        Call<JsonObject> call = service.commentUpdate(((Comment) commentList.get(position)).getComment_no(),commentUpdateDialog.getComment().getText().toString());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -214,6 +217,7 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
                     String strResponse = response.body().toString();
                     JSONObject jsObject = new JSONObject(strResponse);
                     if (jsObject.getInt("result") == 1) {
+
                         RestClient.RestService service = RestClient.getClient();
                         call = service.commentList(post.getPost_no());
                         call.enqueue(new Callback<JsonObject>() {
@@ -229,6 +233,8 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
                                     if (jsObject.getJSONArray("result") != null) {
                                         commentList = mPref.getListValue("commentList");
                                         adaptListInfo.notifyDataSetChanged();
+                                        commentUpdateDialog.cancel();
+                                        commentUpdateDialog.dismiss();
 
                                     }
                                 } catch (JSONException e) {
@@ -255,10 +261,10 @@ public class GroupReplyActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onBtnModify(int position) {
+    public void onBtnModify(int position, String content) {
         selectedPosition = position;
         Log.d(TAG, "onBtnModify clicked : " + position);
-        showCommentUpdateDialog("댓글을 수정하세요.");
+        showCommentUpdateDialog(content);
 
     }
 

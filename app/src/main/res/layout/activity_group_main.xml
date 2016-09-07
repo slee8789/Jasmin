@@ -8,13 +8,21 @@
     android:background="@color/colorBackground2"
     tools:context="com.study.jasmin.jasmin.ui.activity.GroupMainActivity">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:src="@drawable/default_background"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"/>-->
+
+    <WebView
+        android:id="@+id/cover"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_tabs"

@@ -13,6 +13,8 @@
     <string name="regist_email">이메일 주소</string>
     <string name="regist_domail">도메인</string>
     <string name="regist_do_mail_auth">메일 인증 하기</string>
+    <string name="regist_msg_input_authcode">인증번호를 입력해주세요.</string>
+    <string name="regist_msg_not_auth">인증되지 않은 메일입니다.</string>
     <string name="regist_regist_password">비밀번호</string>
     <string name="regist_password_8to12">비밀번호 (8 ~ 12자)</string>
     <string name="regist_password_8to12_check">비밀번호 확인 (8 ~ 12자)</string>
@@ -52,6 +54,7 @@
 
     <!--Home -->
     <string name="make_study">스터디 만들기</string>
+    <string name="enroll_study">스터디 가입하기</string>
 
     <!-- add_group -->
     <string name="study_name">스터디 이름</string>
@@ -96,6 +99,9 @@
     <string name="reply_enroll">등록</string>
 
     <string name="reply_update_title">댓글 수정</string>
+
+    <string name="enroll_title">가입하기</string>
+    <string name="join_msg">코드를 입력하여 주세요.</string>
 
     <!-- list_management -->
     <string name="manage_attendance">출결</string>
@@ -164,6 +170,7 @@
     <string name="btn_cancel">취소</string>
 
     <string name="menu_ok">확인</string>
+    <string name="menu_file">파일</string>
     <string name="menu_modify">수정</string>
     <string name="menu_delete">삭제</string>
     <string name="menu_reply">댓글</string>

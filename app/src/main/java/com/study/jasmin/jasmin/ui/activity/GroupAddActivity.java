@@ -21,19 +21,24 @@ import com.study.jasmin.jasmin.entity.User;
 import com.study.jasmin.jasmin.http.JasminGetDataTask;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 
-public class GroupAddActivity extends AppCompatActivity implements View.OnClickListener{
+public class GroupAddActivity extends AppCompatActivity implements View.OnClickListener, JasminGetDataTask.OnResponseListener{
     private static final String TAG = "GroupAddActivity";
 
     private Button btn_complete;
     private EditText groupName;
     private EditText groupDescription;
     private ImageView groupCover;
-    private String      imgPath;
+    private File      image;
+    private String    imgPath;
     private JasminPreference mPref;
-    private JasminGetDataTask jasminGetDataTask;
+    private JasminGetDataTask mTask;
     private int userNo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,24 +68,30 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
         groupCover.setOnClickListener(this);
     }
 
+    private void uploadFile(File file) {
+        mTask = new JasminGetDataTask();
+        mTask.setOnResponseListener(this);
+        mTask.setUrl("addStudy");
+        mTask.setKeyParams("userNo","studyName","studyDes");
+        mTask.setValueParams(Integer.toString(userNo),groupName.getText().toString(),groupDescription.getText().toString());
+        mTask.setKeyFileParams("studyImage");
+        if(file == null) {
+            mTask.setValueFileParams(null);
+        }
+        else {
+            mTask.setValueFileParams(file);
+        }
+
+        mTask.setExecute();
+
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.btn_complete:
                 Log.d(TAG,"btn_complete clicked");
-//                Intent intent = new Intent(this,GroupInviteActivity.class);
-//                Log.d(TAG,"groupName : "+ groupName.getText());
-//                intent.putExtra("groupname",groupName.getText().toString());
-////  intent.putExtra("groupcover",groupCover.getI)
-//                startActivity(intent);
-
-                jasminGetDataTask = JasminGetDataTask.getInstance();
-                jasminGetDataTask.setUrl("addStudy");
-                jasminGetDataTask.setKeyParams("userNo","studyName","studyDes","studyImage");
-                jasminGetDataTask.setValueParams(Integer.toString(userNo),groupName.toString(),groupDescription.toString(),imgPath);
-                jasminGetDataTask.setExecute();
-
-//                finish();
+                uploadFile(image);
                 break;
 
             case R.id.group_cover:
@@ -93,8 +104,7 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //
-//        Toast.makeText(this, resultCode+"", Toast.LENGTH_SHORT).show();
+
         if (resultCode == RESULT_OK) {
             if (requestCode == 0) { //갤러리
                 if (data != null && data.getData() != null) {
@@ -104,7 +114,7 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
                         imgPath = cursor.getString(column_index);
                     }
                     cursor.close();
-                    File image = new File(imgPath);
+                    image = new File(imgPath);
                     if (image.exists()) {
                         int degree = 0;
                         ExifInterface exif = null;
@@ -163,5 +173,30 @@ public class GroupAddActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }
+    }
+
+    @Override
+    public void onResponse(String result) {
+        //Todo : 에러 및 Entity 저장 프로세스
+        Log.d(TAG,"onResponse result : " + result);
+        try {
+            JSONObject jsObject = new JSONObject(result);
+            JSONArray studyArr = jsObject.getJSONArray("studyInfo");
+            JSONArray memberObj = jsObject.getJSONArray("memberList");
+            JSONObject studyObj = studyArr.getJSONObject(0);
+            JasminPreference.getInstance(this).putJsonObject("studyInfo", studyObj.toString());
+            JasminPreference.getInstance(this).putJson("memberList",memberObj.toString());
+            JasminPreference.getInstance(this).putSelStudyNo(studyObj.getInt("study_no"));
+
+            mTask.cancel(true);
+            Intent intent = new Intent(this, GroupInviteActivity.class);
+            startActivity(intent);
+            finish();
+
+        } catch (JSONException e) {
+            Log.d(TAG, "onResponse e : " + e);
+        }
+
+
     }
 }

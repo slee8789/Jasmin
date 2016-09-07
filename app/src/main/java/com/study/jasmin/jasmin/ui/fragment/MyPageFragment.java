@@ -1,37 +1,43 @@
 package com.study.jasmin.jasmin.ui.fragment;
 
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+                        import android.content.Intent;
+                        import android.os.Bundle;
+                        import android.support.v4.app.Fragment;
+                        import android.util.Log;
+                        import android.view.LayoutInflater;
+                        import android.view.View;
+                        import android.view.ViewGroup;
+                        import android.widget.AdapterView;
+                        import android.widget.ArrayAdapter;
+                        import android.widget.ListView;
 
-import com.study.jasmin.jasmin.R;
-import com.study.jasmin.jasmin.ui.activity.MyActActivity;
-import com.study.jasmin.jasmin.ui.activity.MyPenaltyActivity;
-import com.study.jasmin.jasmin.ui.activity.MyScrabActivity;
+                        import com.study.jasmin.jasmin.R;
+                        import com.study.jasmin.jasmin.ui.activity.MyActActivity;
+                        import com.study.jasmin.jasmin.ui.activity.MyPenaltyActivity;
+                        import com.study.jasmin.jasmin.ui.activity.MyScrabActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyPageFragment extends Fragment {
+                        public class MyPageFragment extends Fragment {
+                            public static final String TAG = "MyPageFragment";
+                            static final String[] LIST_MENU = {"나의 스크랩 자료", "나의 벌금", "나의 활동 내역"};
 
-    static final String[] LIST_MENU = {"나의 스크랩 자료", "나의 벌금", "나의 활동 내역"};
+                            public MyPageFragment() {
+                                // Required empty public constructor
+                            }
 
-    public MyPageFragment() {
-        // Required empty public constructor
-    }
+                            @Override
+                            public void onDestroyView() {
+                                Log.d(TAG,"onDestroyView");
+                                super.onDestroyView();
+                            }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                            @Override
+                            public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+                                Log.d(TAG,"onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mypage, container, false);
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU);

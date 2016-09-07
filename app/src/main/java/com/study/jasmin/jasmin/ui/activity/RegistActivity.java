@@ -10,14 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.rest.RestClient;
 import com.study.jasmin.jasmin.ui.dialog.OneButtonDialog;
-import com.study.jasmin.jasmin.ui.dialog.ProgressDialog;
 import com.study.jasmin.jasmin.util.CheckAvailability;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +30,9 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     public static final String TAG = "RegistActivity";
     private Button btnDoRegister;
     private Button btnMailAuth;
+    private RelativeLayout layoutAuth;
+    private EditText etAuth;
+    private Button btnAuth;
     private EditText etName;
     private String name;
     private EditText etPw;
@@ -36,13 +42,11 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private String mail;
     private RadioButton radioMale;
     private RadioButton radioFemale;
-    private String sex; // 0: male, 1 : female
+    private int sex; // 0: male, 1 : female
     private OneButtonDialog oneButtonDialog;
     private int dialogTitle;
     private int dialogMsg;
-    private ProgressDialog TestProgress;
-    private boolean register;
-//    private JasminGetDataTask jasminGetDataTask;
+    private boolean registerNotAuth = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +59,13 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void findViews() {
+        layoutAuth = (RelativeLayout) findViewById(R.id.regist_layout_auth);
         btnDoRegister = (Button) findViewById(R.id.btn_do_register);
         btnMailAuth = (Button) findViewById(R.id.btn_mail_auth);
         etMail = (EditText) findViewById(R.id.regist_mail);
         etName = (EditText) findViewById(R.id.regist_name);
+        etAuth = (EditText) findViewById(R.id.regist_authcode);
+        btnAuth = (Button) findViewById(R.id.btn_authcode);
         etPw = (EditText) findViewById(R.id.regist_pw);
         etPwCheck = (EditText) findViewById(R.id.regist_pw_check);
         radioMale = (RadioButton) findViewById(R.id.radio_male);
@@ -66,13 +73,14 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initViews() {
+//        btnDoRegister.setBackgroundResource(getResources().);
         btnDoRegister.setOnClickListener(this);
         btnMailAuth.setOnClickListener(this);
+        btnAuth.setOnClickListener(this);
         etMail.setOnClickListener(this);
         etName.setOnClickListener(this);
         etPw.setOnClickListener(this);
         etPwCheck.setOnClickListener(this);
-        TestProgress = new ProgressDialog(this);
     }
 
     @Override
@@ -120,12 +128,14 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 else if(!pwChk) {dialogMsg = R.string.regist_dialog_pw_disharmony;}
                 else if(!pwLengthChk) {dialogMsg = R.string.regist_dialog_more8;}
                 else if(!sexChk) {dialogMsg = R.string.regist_dialog_sex;}
-                //Todo: 메일 인증하기 추가.
+                else if(!registerNotAuth) {
+                    dialogMsg = R.string.regist_msg_not_auth;
+                }
                 else {
                     mail = etMail.getText().toString();
                     pw = etPw.getText().toString();
                     name = etName.getText().toString();
-                    sex = radioMale.isChecked() ? 0+"" : 1+"";
+                    sex = radioMale.isChecked() ? 0 : 1;
 
                     dialogTitle = R.string.regist_regist;
                     dialogMsg = R.string.regist_dialog_ok;
@@ -139,7 +149,21 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 dialogTitle = R.string.regist_do_mail_auth;
                 dialogMsg = R.string.regist_dialog_auth;
                 showOneButtonDialog(dialogTitle, dialogMsg);
-//                TestProgress.show();
+                btnMailAuth.setVisibility(View.GONE);
+                layoutAuth.setVisibility(View.VISIBLE);
+                RestClient.RestService serviceAuth = RestClient.getClient();
+                Call<JsonObject> callAuth = serviceAuth.mailCheck(etMail.getText().toString());
+                callAuth.enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.d(TAG,"Status Code = " + response.code());
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                    }
+                });
                 break;
 
             case R.id.onebutton_ok:
@@ -148,16 +172,37 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 oneButtonDialog.dismiss();
                 oneButtonDialog.cancel();
 
-//                jasminGetDataTask = JasminGetDataTask.getInstance();
-//                jasminGetDataTask.setUrl("api/regiRequest");
-//                jasminGetDataTask.setKeyParams("mail","pw","name","sex");
-//                jasminGetDataTask.setValueParams(mail,pw,name,sex);
-//                jasminGetDataTask.setExecute();
-
                 RestClient.RestService service = RestClient.getClient();
-                Call<JsonObject> call = service.registerResult(mail,pw,name,sex);
+                Call<JsonObject> call = service.registerUser(mail,pw,name,sex);
                 call.enqueue(this);
 
+                break;
+
+            case R.id.btn_authcode:
+                RestClient.RestService serviceAuthOk = RestClient.getClient();
+                Call<JsonObject> callAuthOk = serviceAuthOk.mailAuth(etMail.getText().toString(),Integer.parseInt(etAuth.getText().toString()));
+                callAuthOk.enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.d(TAG, "Status Code = " + response.code());
+                        try {
+                            String strResponse = response.body().toString();
+                            JSONObject jsObject = new JSONObject(strResponse);
+                            if (jsObject.getInt("result") == 1) {
+                                registerNotAuth = true;
+                            }
+                        } catch (JSONException e) {
+                            Log.d(TAG, "e : " + e);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                    }
+                });
+                break;
         }
     }
 
@@ -175,5 +220,17 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onFailure(Call call, Throwable t) {
         Log.d(TAG,"ResponseFail = " + call);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(btnMailAuth.getVisibility() == View.GONE) {
+            btnMailAuth.setVisibility(View.VISIBLE);
+            layoutAuth.setVisibility(View.GONE);
+            return ;
+        }
+        super.onBackPressed();
+
+
     }
 }

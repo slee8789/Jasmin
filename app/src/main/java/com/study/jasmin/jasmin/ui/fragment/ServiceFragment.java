@@ -30,7 +30,11 @@ public class ServiceFragment extends Fragment {
     public ServiceFragment() {
         // Required empty public constructor
     }
-
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG,"onDestroyView");
+        super.onDestroyView();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

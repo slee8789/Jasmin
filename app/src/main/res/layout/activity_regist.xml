@@ -21,8 +21,8 @@
             android:layout_height="60dp"
             android:background="@drawable/round_gray"
             android:hint="@string/regist_email"
-            android:text="test@test.com"
-            android:paddingLeft="30dp" />
+            android:paddingLeft="30dp"
+            android:text="slee8789@naver.com" />
 
 
         <Button
@@ -35,6 +35,37 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
+        <RelativeLayout
+            android:id="@+id/regist_layout_auth"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/regist_authcode"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_toLeftOf="@+id/btn_authcode"
+                android:background="@drawable/round_gray"
+                android:hint="@string/regist_msg_input_authcode"
+                android:inputType="number"
+                android:paddingLeft="30dp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_authcode"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/round_bora"
+                android:text="@string/menu_ok"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/regist_pw"
@@ -45,8 +76,8 @@
             android:hint="@string/regist_password_8to12"
             android:inputType="textPassword"
             android:maxLength="12"
-            android:text="11111111"
-            android:paddingLeft="30dp" />
+            android:paddingLeft="30dp"
+            android:text="11111111" />
 
         <EditText
             android:id="@+id/regist_pw_check"
@@ -56,9 +87,9 @@
             android:background="@drawable/round_gray"
             android:hint="@string/regist_password_8to12_check"
             android:inputType="textPassword"
-            android:text="11111111"
             android:maxLength="12"
-            android:paddingLeft="30dp" />
+            android:paddingLeft="30dp"
+            android:text="11111111" />
 
         <EditText
             android:id="@+id/regist_name"
@@ -66,10 +97,10 @@
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/round_gray"
-            android:privateImeOptions="defaultInputmode=korea"
             android:hint="@string/regist_name"
-            android:text="11111111"
-            android:paddingLeft="30dp" />
+            android:paddingLeft="30dp"
+            android:privateImeOptions="defaultInputmode=korea"
+            android:text="11111111" />
 
 
         <RelativeLayout

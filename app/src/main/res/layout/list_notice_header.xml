@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="@string/notice_group"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -27,14 +27,14 @@
             android:layout_toRightOf="@+id/notice_group_title"
             android:gravity="center"
             android:text="0"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 
         <ImageView
             android:id="@+id/notice_group_write"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"

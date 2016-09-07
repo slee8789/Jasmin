@@ -16,16 +16,14 @@ import com.study.jasmin.jasmin.R;
 /**
  * Created by leesc on 2015-09-08.
  */
-public class CommentUpdateDialog extends Dialog {
+public class JoinDialog extends Dialog {
 
-    private final String TAG = "CommentUpdateDialog";
+    private final String TAG = "JoinDialog";
     private View.OnClickListener buttonOkListener;
-    private View.OnClickListener buttonCancelListener;
     private Button ok;
-    private Button cancel;
-    private EditText comment;
+    private EditText code;
 
-    public CommentUpdateDialog(Context context) {
+    public JoinDialog(Context context) {
         super(context);
 
     }
@@ -35,29 +33,19 @@ public class CommentUpdateDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_comment_update);
+        setContentView(R.layout.dialog_join_study);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        ok = (Button)findViewById(R.id.ok_twobutton);
-        cancel = (Button)findViewById(R.id.cancel_twobutton);
-        comment = (EditText) findViewById(R.id.find_email);
+        ok = (Button)findViewById(R.id.join_ok);
+        code = (EditText) findViewById(R.id.et_code);
         ok.setOnClickListener(buttonOkListener);
-        cancel.setOnClickListener(buttonCancelListener);
-    }
-
-    public void setComment(String comment) {
-        this.comment.setHint(comment);
-    }
-
-    public EditText getComment() {
-        return comment;
     }
 
     public void setOkOnClickListener(View.OnClickListener listener) {
         buttonOkListener = listener;
     }
 
-    public void setCancelOnClickListener(View.OnClickListener listener) {
-        buttonCancelListener = listener;
+    public EditText getCode() {
+        return code;
     }
 
     @Override

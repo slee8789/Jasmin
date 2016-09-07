@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -25,10 +27,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View.OnClickListener, Callback{
+public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View.OnClickListener, Callback,View.OnTouchListener{
     public static final String TAG = "HolderInfoGroupList";
     public TextView groupName;
-    public ImageView groupPhoto;
+//    public ImageView groupPhoto;
+    public WebView groupPhoto;
     private Context context;
     private ArrayList<Object> studyList;
     //    private ProgressDialog Progress;
@@ -53,20 +56,47 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
         context = itemView.getContext();
 //        Progress = ProgressDialog.getInstance(context);
         groupName = (TextView)itemView.findViewById(R.id.group_name);
-        groupPhoto = (ImageView)itemView.findViewById(R.id.group_photo);
+        groupPhoto = (WebView) itemView.findViewById(R.id.group_photo);
+        groupPhoto.setOnTouchListener(this);
+        groupPhoto.setWebViewClient(new WebViewClientClass());
+        groupPhoto.setHorizontalScrollBarEnabled(false); //가로 스크롤
+        groupPhoto.setVerticalScrollBarEnabled(false);   //세로 스크롤
+        groupPhoto.setScrollContainer(false);
+//        mWebView.loadUrl("http://54.201.72.195:8081/examples/study27/cover/testImage.jpg");
+//        groupPhoto = (ImageView)itemView.findViewById(R.id.group_photo);
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.group_photo && event.getAction() == MotionEvent.ACTION_UP) {
+            goToStudy();
+            return false;
+        } else {
+            return (event.getAction() == MotionEvent.ACTION_MOVE);
+        }
+    }
+
+    private class WebViewClientClass extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
+    private void goToStudy() {
+        RestClient.RestService service = RestClient.getClient();
+        studyList = JasminPreference.getInstance(context).getListValue("studyList");
+        Call<JsonObject> call = service.gotoStudy(((Study)studyList.get(getAdapterPosition())).getStudy_no());
+        call.enqueue(this);
     }
 
     @Override
     public void onClick(View view) {
 //        Toast.makeText(view.getContext(), "Clicked group Position = " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 //        Progress.show(); // BadTokenException 에러
-        RestClient.RestService service = RestClient.getClient();
-        studyList = JasminPreference.getInstance(context).getListValue("studyList");
-        selStudyNo = ((Study)studyList.get(getAdapterPosition())).getStudy_no();
-        Log.d(TAG,"studyNo :  " + Integer.toString(selStudyNo));
-        Call<JsonObject> call = service.gotoStudy(((Study)studyList.get(getAdapterPosition())).getStudy_no());
-        call.enqueue(this);
+        goToStudy();
     }
 
     @Override
@@ -81,6 +111,7 @@ public class HolderInfoGroupList extends RecyclerView.ViewHolder implements View
             JSONObject studyObj = studyArr.getJSONObject(0);
             JasminPreference.getInstance(context).putJsonObject("studyInfo", getAdapterPosition(), studyObj.toString());
             JasminPreference.getInstance(context).putJson("memberList",memberObj.toString());
+            selStudyNo = ((Study)studyList.get(getAdapterPosition())).getStudy_no();
 
             //swan add
             if(studyObj != null) {

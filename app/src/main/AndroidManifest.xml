@@ -50,13 +50,17 @@
         <activity
             android:name=".ui.activity.GroupAddActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".ui.activity.GroupNoticeUpdateActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ui.dialog.MoneybookDialog"
             android:theme="@style/AppDialogTheme" />
         <activity
             android:name=".ui.activity.GroupInviteActivity"
             android:label="@string/invite_title" />
-        <activity android:name=".ui.activity.GroupMainActivity"></activity>
+        <activity android:name=".ui.activity.GroupMainActivity"/>
         <activity
             android:name=".ui.activity.GroupReplyActivity"
             android:label="@string/reply_title" />
@@ -89,8 +93,7 @@
         <activity android:name=".ui.activity.SendCustomerCenterActivity" />
         <activity android:name=".ui.activity.SendCustomerCenterActivity2" />
         <activity android:name=".ui.activity.ServiceHelpActivity" />
-        <activity android:name=".ui.activity.GroupSettingAlarmListActivity"
-            />
+        <activity android:name=".ui.activity.GroupSettingAlarmListActivity" />
         <activity android:name=".ui.activity.GroupSettingAlarmAddActivity" />
         <activity
             android:name=".ui.activity.GroupNoticeAddActivity"
@@ -121,7 +124,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ui.activity.GroupManageMoneyEctActivity"></activity>
+        <activity android:name=".ui.activity.GroupManageMoneyEctActivity"/>
     </application>
 
 </manifest>

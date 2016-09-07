@@ -25,8 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -192,11 +190,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mPref.putJson("qnaList", qnaObj.toString());
                 mPref.putJson("userInfo", userObj.toString());
                 mPref.putJson("studyList", studyObj.toString());
-
-                ArrayList<Object> studyLIst = mPref.getListValue("studyList");
-                ArrayList<Object> userInfo = mPref.getListValue("userInfo");
-                ArrayList<Object> qnaList = mPref.getListValue("qnaList");
-
 
                 //오토 로그인 정보 저장 in user phone
                 // AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
