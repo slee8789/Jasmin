@@ -5,67 +5,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Assignment;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class AdaptInfoAssignmentCheckList extends ArrayAdapter<ListInfoAssignmentCheck> {
-    private ArrayList<ListInfoAssignmentCheck> arraySelectInfo;
-    private Context context;
+public class AdaptInfoAssignmentCheckList extends ArrayAdapter<Assignment> {
+    private final String TAG = "AdaptInfoAssignmentCheckList";
+    private int resourceId;
 
-    public interface onButtonClickListener {
-        void onAddBtnClick(ListInfoAssignment selectInfo);
-        // void onSetNameText(SelectInfo selectInfo);
+    private TextView tvName;
+    private RadioGroup radioGroup;
+
+    public AdaptInfoAssignmentCheckList(Context context, int resource, ArrayList<Assignment> list) {
+        super(context, resource, list);
+        this.resourceId = resource;
     }
-
-    public AdaptInfoAssignmentCheckList(Context context, int resource, ArrayList<ListInfoAssignmentCheck> objects) {
-        super(context, resource, objects);
-        this.arraySelectInfo = objects;
-        this.context = context;
-    }
-
-    public AdaptInfoAssignmentCheckList(Context context, int resource) {
-        super(context, resource);
-        // this.arraySelectInfo =objects;
-        this.context = context;
-    }
-
-    private onButtonClickListener adptCallback = null;
-
-
-    public void setOnButtonClickListener(onButtonClickListener callback) {
-        adptCallback = callback;
-    }
-
-    public ArrayList<ListInfoAssignmentCheck> getArraySelectInfo() {
-        return arraySelectInfo;
-    }
-
-    public void setArraySelectInfo(ArrayList<ListInfoAssignmentCheck> arraySelectInfo) {
-        this.arraySelectInfo = arraySelectInfo;
-    }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View view = convertView;
+        final Context context = parent.getContext();
 
-        if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.list_assignment_check_info, null);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(this.resourceId, parent, false);
         }
-        final ListInfoAssignmentCheck listInfo = arraySelectInfo.get(position);
 
-        if (listInfo != null) {
-            TextView name = (TextView) view.findViewById(R.id.assignment_check_name);
-            CheckBox status = (CheckBox) view.findViewById(R.id.assignment_switch);
-            name.setText(listInfo.getName());
-        }
-        return view;
+        findViews(convertView);
+        initViews(position);
+
+        return convertView;
     }
 
+    public void findViews(View view){
+        tvName = (TextView) view.findViewById(R.id.tv_name);
+        radioGroup = (RadioGroup)view.findViewById(R.id.rg_status);
+    }
+
+    public void initViews(int position){
+        Assignment assignment = getItem(position);
+        tvName.setText(assignment.getUser_name());
+        radioGroup.check((assignment.getHomework_state().equals("제출"))?R.id.rb_option1:R.id.rb_option2);
+    }
 }

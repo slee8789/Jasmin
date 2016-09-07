@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:drawingCacheQuality="high">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="20dp"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:id="@id/linearLayout">
 
         <TextView
             android:layout_width="match_parent"
@@ -16,43 +16,58 @@
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:text="과제 체크"
-            android:textAppearance="?android:textAppearanceLarge"
+            android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="2"
             android:background="@color/colorWhite"
-            android:gravity="left"
-            android:text="과제명"
+            android:text="마감일"
             android:textColor="@color/colorBlack"
-            android:textSize="30sp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:text="과제명"
+                android:textColor="@color/colorBlack"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:text="내용"
+            android:textColor="@color/colorBlack"
+            android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold" />
 
         <ListView
             android:id="@+id/lv_assignment_check"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:background="@color/colorWhite"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorBlack"/>
-
+            android:textColor="@color/colorBlack"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorWhite"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <Button
-                android:id="@+id/btn_ok"
+                android:id="@+id/btn_check_ok"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="10dp"
@@ -66,7 +81,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_check_cancel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="10dp"
@@ -79,7 +94,6 @@
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
-
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,55 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/notice_layout"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="50dp"
+    >
+    <TextView
+        android:id="@+id/assignment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="2016-08-02"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:layout_alignParentLeft="true"/>
+
 
     <TextView
         android:id="@+id/assignment_title"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:gravity="center"
+        android:layout_marginRight="10dp"
         android:text="첫번째 과제입니다."
         android:textColor="@color/colorBlack"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/assignment_do_count"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:layout_toLeftOf="@+id/slash"
-        android:text="3"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/slash"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="/"
-        android:layout_toLeftOf="@+id/assignment_count"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/assignment_date"
+        />
 
     <TextView
         android:id="@+id/assignment_count"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:gravity="center"
-        android:text="6"
-        android:layout_toLeftOf="@+id/assignment_do_check"
-        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/assignment_do_check"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="과제체크하기"
-        android:layout_alignParentRight="true"
-
-        android:textSize="20sp" />
+        android:text="6/6"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

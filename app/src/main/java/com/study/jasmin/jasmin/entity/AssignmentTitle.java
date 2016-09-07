@@ -1,34 +1,24 @@
 package com.study.jasmin.jasmin.entity;
 
-public class AssignmentTitle {
+import java.util.ArrayList;
 
+public class AssignmentTitle {
     private int study_no;
     private int homework_no;
-    private String homework_title;
-    private String homework_content;
-    private String homework_start_date;
-    private String homework_end_date;
-    private int homework_money;
+    private int submit_yes;
+    private int submit_no;
+    private String title;
+    private String date;
+    private ArrayList<Assignment> assignmentList;
 
-    public AssignmentTitle() {
-    }
-
-    public AssignmentTitle(int study_no, int homework_no, String homework_title, String homework_content, String homework_start_date, String homework_end_date, int homework_money) {
+    public AssignmentTitle(int study_no, int homework_no, String title, String date, Assignment assignmentList) {
         this.study_no = study_no;
         this.homework_no = homework_no;
-        this.homework_title = homework_title;
-        this.homework_content = homework_content;
-        this.homework_start_date = homework_start_date;
-        this.homework_end_date = homework_end_date;
-        this.homework_money = homework_money;
-    }
-
-    public int getStudy_no() {
-        return study_no;
-    }
-
-    public void setStudy_no(int study_no) {
-        this.study_no = study_no;
+        this.submit_yes = 0;
+        this.submit_no = 0;
+        this.title = title;
+        this.date = date;
+        addAssignmentList(assignmentList);
     }
 
     public int getHomework_no() {
@@ -39,56 +29,77 @@ public class AssignmentTitle {
         this.homework_no = homework_no;
     }
 
-    public String getHomework_title() {
-        return homework_title;
+    public int getStudy_no() {
+        return study_no;
     }
 
-    public void setHomework_title(String homework_title) {
-        this.homework_title = homework_title;
+    public void setStudy_no(int study_no) {
+        this.study_no = study_no;
     }
 
-    public String getHomework_content() {
-        return homework_content;
+    public int getSubmit_yes() {
+        return submit_yes;
     }
 
-    public void setHomework_content(String homework_content) {
-        this.homework_content = homework_content;
+    public void setSubmit_yes(int submit_yes) {
+        this.submit_yes = submit_yes;
     }
 
-    public String getHomework_start_date() {
-        return homework_start_date;
+    public int getSubmit_no() {
+        return submit_no;
     }
 
-    public void setHomework_start_date(String homework_start_date) {
-        this.homework_start_date = homework_start_date;
+    public void setSubmit_no(int submit_no) {
+        this.submit_no = submit_no;
     }
 
-    public String getHomework_end_date() {
-        return homework_end_date;
+    public String getTitle() {
+        return title;
     }
 
-    public void setHomework_end_date(String homework_end_date) {
-        this.homework_end_date = homework_end_date;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getHomework_money() {
-        return homework_money;
+    public String getDate() {
+        return date;
     }
 
-    public void setHomework_money(int homework_money) {
-        this.homework_money = homework_money;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public ArrayList<Assignment> getAssignmentList() {
+        return assignmentList;
+    }
+
+    public void setAssignmentList(ArrayList<Assignment> assignmentList) {
+        this.assignmentList = assignmentList;
+    }
+
+    public void addAssignmentList(Assignment assignment){
+        if(assignmentList == null){
+            assignmentList = new ArrayList<Assignment>();
+        }
+
+        assignmentList.add(assignment);
+
+        if(assignment.getHomework_state().equals("제출")){
+            submit_yes++;
+        }else if(assignment.getHomework_state().equals("미제출")){
+            submit_no++;
+        }
     }
 
     @Override
     public String toString() {
         return "AssignmentTitle{" +
                 "study_no=" + study_no +
-                ", homework_no=" + homework_no +
-                ", homework_title='" + homework_title + '\'' +
-                ", homework_content='" + homework_content + '\'' +
-                ", homework_start_date='" + homework_start_date + '\'' +
-                ", homework_end_date='" + homework_end_date + '\'' +
-                ", homework_money=" + homework_money +
+                ", submit_yes=" + submit_yes +
+                ", submit_no=" + submit_no +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", assignmentList=" + assignmentList +
                 '}';
     }
 }

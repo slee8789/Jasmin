@@ -29,14 +29,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by swan on 2016-08-04.
- */
 public class AssignmentAddDialog extends Dialog implements View.OnClickListener, Callback{
-
     private final String TAG = "AssignmentAddDialog";
-//    private View.OnClickListener buttonOkListener;
-//    private View.OnClickListener buttonCancelListener;
+
     private Button btnOk;
     private Button btnCancel;
     private EditText etTitle;
@@ -70,34 +65,32 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
         datePicker = (DatePicker) findViewById(R.id.datePicker);
     }
 
+
     public void initViews() {
         btnOk.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        datePicker.setClickable(true);
         datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_ok:
-                Log.d(TAG,"click btn_ok~");
                 String formattedDate = JasminUtil.dateYYYY_MM_DD(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth());
                 RestClient.RestService service = RestClient.getClient();
-                int studyNo =JasminPreference.getInstance(getContext()).getSelectedStudyNo();
-                /*
+                int studyNo =JasminPreference.getInstance(getContext()).getSelStudyNo();
                 Call<JsonObject> call = service.insertAssignment(studyNo,
                                                                 etTitle.getText().toString(),
                                                                 etContent.getText().toString(),
-                                                                "20160910",
-                                                                "20160915",
-                                                                3000);
+                                                                formattedDate,
+                                                                formattedDate,
+                                                                -3000);
                 call.enqueue(this);
-                */
                 break;
             case R.id.btn_cancel:
-                Log.d(TAG,"btn_cancel btn_ok");
-                cancel();
-                dismiss();
+                closeDialog();
                 break;
         }
 
@@ -111,8 +104,7 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
             JSONObject jsObject = new JSONObject(gson.toJson(response.body()));
             int result = (int)jsObject.get("result");
             if(result == 1) {
-                cancel();
-                dismiss();
+                closeDialog();
                 Toast.makeText(getContext(),"성공", Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
@@ -120,6 +112,11 @@ public class AssignmentAddDialog extends Dialog implements View.OnClickListener,
         }catch (JSONException e) {
             Log.d(TAG,"e : " + e);
         }
+    }
+
+    public void closeDialog(){
+        cancel();
+        dismiss();
     }
 
     @Override

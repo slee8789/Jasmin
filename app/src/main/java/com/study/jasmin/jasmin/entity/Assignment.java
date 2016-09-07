@@ -120,7 +120,6 @@ public class Assignment implements Serializable {
         this.homework_money = homework_money;
     }
 
-
     public String getUser_name() {
         return user_name;
     }
@@ -153,115 +152,5 @@ public class Assignment implements Serializable {
     }
 
 
-    /*private int homeworkNo;
-    private int userNo;
-    private int studyNo;
-    private String homeworkStartDate;
-    private String homeworkEndDate;
-    private int homeworkState;
-    private String homeworkTitle;
-    private String homeworkContent;
-    private int homeworkMoney;
 
-    @Override
-    public String toString() {
-        return "Assignment{" +
-                "homeworkNo=" + homeworkNo +
-                ", userNo=" + userNo +
-                ", studyNo=" + studyNo +
-                ", homeworkStartDate='" + homeworkStartDate + '\'' +
-                ", homeworkEndDate='" + homeworkEndDate + '\'' +
-                ", homeworkState=" + homeworkState +
-                ", homeworkTitle='" + homeworkTitle + '\'' +
-                ", homeworkContent='" + homeworkContent + '\'' +
-                ", homeworkMoney=" + homeworkMoney +
-                '}';
-    }
-
-    public Assignment() {
-    }
-
-    public Assignment(int homeworkNo, int userNo, int studyNo, String homeworkStartDate, String homeworkEndDate, int homeworkState, String homeworkTitle, String homeworkContent, int homeworkMoney) {
-        this.homeworkNo = homeworkNo;
-        this.userNo = userNo;
-        this.studyNo = studyNo;
-        this.homeworkStartDate = homeworkStartDate;
-        this.homeworkEndDate = homeworkEndDate;
-        this.homeworkState = homeworkState;
-        this.homeworkTitle = homeworkTitle;
-        this.homeworkContent = homeworkContent;
-        this.homeworkMoney = homeworkMoney;
-    }
-
-    public int getHomeworkNo() {
-        return homeworkNo;
-    }
-
-    public void setHomeworkNo(int homeworkNo) {
-        this.homeworkNo = homeworkNo;
-    }
-
-    public int getUserNo() {
-        return userNo;
-    }
-
-    public void setUserNo(int userNo) {
-        this.userNo = userNo;
-    }
-
-    public int getStudyNo() {
-        return studyNo;
-    }
-
-    public void setStudyNo(int studyNo) {
-        this.studyNo = studyNo;
-    }
-
-    public String getHomeworkStartDate() {
-        return homeworkStartDate;
-    }
-
-    public void setHomeworkStartDate(String homeworkStartDate) {
-        this.homeworkStartDate = homeworkStartDate;
-    }
-
-    public String getHomeworkEndDate() {
-        return homeworkEndDate;
-    }
-
-    public void setHomeworkEndDate(String homeworkEndDate) {
-        this.homeworkEndDate = homeworkEndDate;
-    }
-
-    public int getHomeworkState() {
-        return homeworkState;
-    }
-
-    public void setHomeworkState(int homeworkState) {
-        this.homeworkState = homeworkState;
-    }
-
-    public String getHomeworkTitle() {
-        return homeworkTitle;
-    }
-
-    public void setHomeworkTitle(String homeworkTitle) {
-        this.homeworkTitle = homeworkTitle;
-    }
-
-    public String getHomeworkContent() {
-        return homeworkContent;
-    }
-
-    public void setHomeworkContent(String homeworkContent) {
-        this.homeworkContent = homeworkContent;
-    }
-
-    public int getHomeworkMoney() {
-        return homeworkMoney;
-    }
-
-    public void setHomeworkMoney(int homeworkMoney) {
-        this.homeworkMoney = homeworkMoney;
-    }*/
 }

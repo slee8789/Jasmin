@@ -25,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,13 +68,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initViews() {
+        mPref = JasminPreference.getInstance(this);
         LoginProgress = new ProgressDialog(this);
         btnDoLogin.setOnClickListener(this);
         btnKakao.setOnClickListener(this);
         tvFindPassword.setOnClickListener(this);
         cbAuto.setClickable(true);
         cbAuto.setOnClickListener(this);
-        mPref = JasminPreference.getInstance(this);
+        if((boolean)mPref.getValue("autoLogin",false)){
+            cbAuto.setChecked(true);
+        }
     }
 
     @Override
@@ -194,8 +199,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //오토 로그인 정보 저장 in user phone
                 // AutoLogin ; login 성공 시 autoLoin 체크 되있으면 로그인 정보(id,pw)저장
                 if (cbAuto.isChecked()) {
+                    mPref.put("autoLogin",true);
                     mPref.put("autoLoginId", etEmail.getText().toString());
                     mPref.put("autoLoginPw", etPassword.getText().toString());
+                }else{
+                    mPref.put("autoLogin",true);
+                    mPref.put("autoLoginId","");
+                    mPref.put("autoLoginPw","");
                 }
 
                 Intent intent = new Intent(this, MainActivity.class);

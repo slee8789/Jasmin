@@ -16,14 +16,11 @@ import com.study.jasmin.jasmin.ui.dialog.AssignmentCheckDialog;
 import java.util.ArrayList;
 
 public class AdaptInfoAssignmentList extends ArrayAdapter<AssignmentTitle>  {
-    private ArrayList<AssignmentTitle> assignmentList;
     private Context context;
-    TextView title;
-    Button   btnAdd;
+    private TextView date,title,status;
 
     public AdaptInfoAssignmentList(Context context, int resource, ArrayList<AssignmentTitle> objects) {
         super(context, resource, objects);
-        this.assignmentList = objects;
         this.context = context;
     }
 
@@ -44,27 +41,18 @@ public class AdaptInfoAssignmentList extends ArrayAdapter<AssignmentTitle>  {
     }
 
     public void findViews(View view){
-        title = (TextView) view.findViewById(R.id.assignment_title);
-        btnAdd = (Button)view.findViewById(R.id.assignment_do_check);
+        date    = (TextView) view.findViewById(R.id.assignment_date);
+        title   = (TextView) view.findViewById(R.id.assignment_title);
+        status  = (TextView) view.findViewById(R.id.assignment_count);
     }
 
     public void initViews(int position){
         AssignmentTitle listInfo = getItem(position);
-
         if (listInfo != null) {
-            title.setText(listInfo.getHomework_title());
+            date.setText(listInfo.getDate());
+            title.setText(listInfo.getTitle());
+            status.setText(Integer.toString(listInfo.getSubmit_yes())+"/"+Integer.toString(listInfo.getSubmit_no()));
         }
-           /*
-        btnDoCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                AssignmentCheckDialog dialog = new AssignmentCheckDialog(v.getContext(),listInfo.getHomework_title());
-                dialog.show();
-
-            }
-        });
-        */
     }
 
 }

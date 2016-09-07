@@ -78,7 +78,7 @@ public class SettingGroupPenaltyActivity extends AppCompatActivity implements Ca
         try {
             JSONObject jsObject = new JSONObject(response.body().toString());
 
-            if (response.body() != null && response.body() != "" ) {
+            if (response.body() != null || response.body() != "" ) {
                 if(response.body().toString().equals("{\"result\":1}")) {
                     Toast.makeText(SettingGroupPenaltyActivity.this, "성공했습니다", Toast.LENGTH_SHORT).show();
                     mPref.setStudyInfo(new Study[]{studyInfo});

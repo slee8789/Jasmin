@@ -168,6 +168,11 @@ public class RestClient{
         );
 
         @FormUrlEncoded
+        @POST("api/homeworkCheckUpdate")
+        Call<JsonObject> updateCheckAssignment(@Field("homeworkStateList") String homeworkStateList);
+
+
+        @FormUrlEncoded
         @POST("api/attendanceList")
         Call<JsonObject> attendanceList(@Field("studyNo") int studyNo
         );
@@ -195,9 +200,24 @@ public class RestClient{
         );
 
         @FormUrlEncoded
+        @POST("api/getInoutList")
+        Call<JsonObject> moneyEctkList(@Field("studyNo") int studyNo
+        );
+
+
+
+        @FormUrlEncoded
         @POST("api/showPenaltyMoneyList")
         Call<JsonObject> penaltyList(@Field("studyNo") int studyNo
         );
+
+         @FormUrlEncoded
+         @POST("api/penaltyConfirmCheck")
+         Call<JsonObject> penaltyCheck(@Field("penaltyNo")  int penaltyNo,
+                                       @Field("penaltyMoney")  int penaltyMoney,
+                                       @Field("userNo")      int userNo,
+                                       @Field("studyNo")     int studyNo
+         );
 
         @FormUrlEncoded
         @POST("api/alarmList")

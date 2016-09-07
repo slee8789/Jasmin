@@ -10,23 +10,24 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.MoneyEct;
 
-public class MoneybookDialog extends Dialog implements View.OnClickListener{
+public class MoneybookDialog extends Dialog{
     public static final String TAG = "MoneybookDialog";
-
-    private Button ok;
-    private Button cancel;
-    private Button selectGroup;
-    private Button selectMember;
+    private Button   ok, cancel;
     private TextView title;
+    private EditText date, reason, money;
+    private RadioGroup inout;
+    private View.OnClickListener buttonOkListener, buttonCancelListener;
+    private MoneyEct moneyEctInfo;
 
-    private EditText user;
-
-    public MoneybookDialog(Context context) {
+    public MoneybookDialog(Context context, MoneyEct moneyEctInfo) {
         super(context);
+        this.moneyEctInfo = (moneyEctInfo!=null)? moneyEctInfo:null;
     }
 
     @Override
@@ -37,18 +38,29 @@ public class MoneybookDialog extends Dialog implements View.OnClickListener{
         setContentView(R.layout.activity_dialog_moneybook);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        findVeiws();
-
-
+        findViews();
+        initViews();
     }
 
-    public void findVeiws(){
-        title = (TextView) findViewById(R.id.title);
-        ok = (Button)findViewById(R.id.ok_twobutton);
-        cancel = (Button)findViewById(R.id.cancel_twobutton);
-        selectGroup = (Button)findViewById(R.id.btn_select_group);
-        selectMember = (Button)findViewById(R.id.btn_select_member);
-        user = (EditText)findViewById(R.id.et_user);
+    public void findViews(){
+        title   =(TextView) findViewById(R.id.title);
+        ok       =(Button)findViewById(R.id.ok_twobutton);
+        cancel  =(Button)findViewById(R.id.cancel_twobutton);
+        date    =(EditText)findViewById(R.id.et_date);
+        reason  =(EditText)findViewById(R.id.et_comment);
+        money   =(EditText)findViewById(R.id.et_money);
+        inout   =(RadioGroup)findViewById(R.id.rg_inout);
+    }
+
+    public void initViews(){
+        ok.setOnClickListener(buttonOkListener);
+        cancel.setOnClickListener(buttonCancelListener);
+        if(moneyEctInfo != null){
+            date.setText(moneyEctInfo.getInout_date());
+            reason.setText(moneyEctInfo.getInout_reason());
+            money.setText(Integer.toString(Math.abs(moneyEctInfo.getInout_money())));
+            inout.check((moneyEctInfo.getInout_money()>0)?R.id.rb_in:R.id.rb_out);
+        }
     }
 
     public void setComment(String title, String strBtnLeft, String strBtnRight) {
@@ -56,30 +68,23 @@ public class MoneybookDialog extends Dialog implements View.OnClickListener{
         this.ok.setText(strBtnLeft);
         this.cancel.setText(strBtnRight);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.dismiss();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.ok_twobutton:
-                break;
-            case R.id.cancel_twobutton:
-                this.cancel();
-                break;
-            case R.id.btn_select_group:
-                user.setText("그룹명");
-                v.notify();
-                break;
-            case R.id.btn_select_member:
-                String[] names = {"김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나"};
-                //MemberListDialog dialog  = new MemberListDialog(v.getContext(),"멤버리스트",names);
-                //dialog.show();
-                break;
-        }
+    public void setOkOnClickListener(View.OnClickListener listener) {
+        buttonOkListener = listener;
+    }
+
+    public void setCancelOnClickListener(View.OnClickListener listener) {
+        buttonCancelListener = listener;
+    }
+
+    public MoneyEct getMoneyEctInfo(){
+        return moneyEctInfo;
     }
 }
 

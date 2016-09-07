@@ -12,14 +12,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.study.jasmin.jasmin.R;
+import com.study.jasmin.jasmin.entity.Assignment;
 import com.study.jasmin.jasmin.ui.list.AdaptInfoAssignmentCheckList;
-import com.study.jasmin.jasmin.ui.list.ListInfoAssignmentCheck;
 
 import java.util.ArrayList;
 
-/**
- * Created by swan on 2016-08-04.
- */
 public class AssignmentCheckDialog extends Dialog {
     private final String TAG = "AssignmentCheckDialog";
     private View.OnClickListener buttonOkListener;
@@ -27,13 +24,16 @@ public class AssignmentCheckDialog extends Dialog {
     private Button btnOk;
     private Button btnCancel;
     private TextView tvTitle;
+    private TextView tvDate;
+    private TextView tvContent;
     private ListView list;
     private String title;
-    ArrayList<ListInfoAssignmentCheck> items;
+    private ArrayList<Assignment> attendanceList;
 
-    public AssignmentCheckDialog(Context context, String title) {
+    public AssignmentCheckDialog(Context context, String title, ArrayList<Assignment> attendanceList) {
         super(context);
         this.title = title;
+        this.attendanceList = attendanceList;
     }
 
     @Override
@@ -48,7 +48,46 @@ public class AssignmentCheckDialog extends Dialog {
 
         findViews();
         initViews();
+    }
 
+    public void findViews() {
+        tvDate     = (TextView) findViewById(R.id.tv_end_date);
+        tvTitle    = (TextView) findViewById(R.id.tv_title);
+        tvContent  = (TextView) findViewById(R.id.tv_content);
+        list        = (ListView)findViewById(R.id.lv_assignment_check);
+        btnOk       = (Button) findViewById(R.id.btn_check_ok);
+        btnCancel  = (Button) findViewById(R.id.btn_check_cancel);
+    }
+
+    public void initViews() {
+        tvDate.setText("마감일 : "+attendanceList.get(0).getHomework_end_date());
+        tvTitle.setText("제목 : "+attendanceList.get(0).getHomework_title());
+        tvContent.setText("내용 : "+attendanceList.get(0).getHomework_content());
+        btnOk.setOnClickListener(buttonOkListener);
+        btnCancel.setOnClickListener(buttonCancelListener);
+        AdaptInfoAssignmentCheckList adapter = new AdaptInfoAssignmentCheckList(this.getContext(), R.layout.list_assignment_check_info, attendanceList);
+        list.setAdapter(adapter);
+    }
+
+    public String getUpdateQuery(){
+        String strQuery = "";
+
+        for(int i=0; i<attendanceList.size(); i++){
+            Assignment assignment = (Assignment)list.getItemAtPosition(i);
+            //strQuery =  strQuery + "{\"homework_state\":" + assignment.getHomework_state() +
+            strQuery =  strQuery + "{\"homework_state\":" + "제출" +
+                                    ",\"user_no\":" + Integer.toString(assignment.getUser_no()) +
+                                    ",\"homework_no\":" + Integer.toString(assignment.getHomework_no()) +
+                                    "},";
+        }
+        strQuery = (strQuery.length()>0)? "[" + strQuery.substring(0, strQuery.length() - 1) + "]":"";
+
+        return strQuery;
+    }
+
+    public void closeDialog(){
+        cancel();
+        dismiss();
     }
 
     public void setOkOnClickListener(View.OnClickListener listener) {
@@ -58,36 +97,4 @@ public class AssignmentCheckDialog extends Dialog {
     public void setCancelOnClickListener(View.OnClickListener listener) {
         buttonCancelListener = listener;
     }
-
-    public void findViews() {
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        list = (ListView)findViewById(R.id.lv_assignment_check);
-        btnOk = (Button) findViewById(R.id.btn_ok);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
-    }
-
-    public void initViews() {
-        tvTitle.setText(title);
-        btnOk.setOnClickListener(buttonOkListener);
-        btnCancel.setOnClickListener(buttonCancelListener);
-        items = getItemsFromDB();
-        AdaptInfoAssignmentCheckList adapter = new AdaptInfoAssignmentCheckList(this.getContext(), R.layout.list_assignment_check_info, items);
-        list.setAdapter(adapter);
-    }
-
-    public ArrayList<ListInfoAssignmentCheck> getItemsFromDB() {
-
-        ArrayList<ListInfoAssignmentCheck> list = new ArrayList<ListInfoAssignmentCheck>();
-        ListInfoAssignmentCheck item;
-        String[] names = {"김소혜", "최유정", "전소미", "주결경", "임나영", "최유정", "유연정", "정채연", "강미나"};
-
-        for (String s : names) {
-            item = new ListInfoAssignmentCheck();
-            item.setName(s);
-            list.add(item);
-        }
-
-        return list;
-    }
-
 }

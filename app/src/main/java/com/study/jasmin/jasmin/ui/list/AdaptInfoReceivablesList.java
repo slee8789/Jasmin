@@ -13,23 +13,21 @@ import com.study.jasmin.jasmin.entity.Penalty;
 
 import java.util.ArrayList;
 
-public class AdaptInfoReceivablesList extends ArrayAdapter<Object> implements View.OnClickListener{
+public class AdaptInfoReceivablesList extends ArrayAdapter<Object>{
     private Context context;
-    private ListBtnClickListener listBtnClickListener;
+    TextView name, date, reason, money;
+    private ArrayList<Object> penaltyList;
 
-    public interface ListBtnClickListener{
-        void onListBtnClick(ListInfoReceivables listInfoReceivables);
-    }
-
-    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<Object> objects,ListBtnClickListener clickListener) {
+    public AdaptInfoReceivablesList(Context context, int resource, ArrayList<Object> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.listBtnClickListener = clickListener ;
-
+        this.penaltyList = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        Penalty listInfo = (Penalty)getItem(position);
         View view = convertView;
 
         if (view == null) {
@@ -38,32 +36,24 @@ public class AdaptInfoReceivablesList extends ArrayAdapter<Object> implements Vi
             view = layoutInflater.inflate(R.layout.list_receivables_info, null);
         }
 
-        Penalty listInfo = (Penalty)getItem(position);
-
         if (listInfo != null) {
-            TextView name = (TextView) view.findViewById(R.id.receivables_name);
-            TextView date = (TextView) view.findViewById(R.id.receivables_date);
-            TextView reason = (TextView) view.findViewById(R.id.receivables_reason);
-            TextView money = (TextView) view.findViewById(R.id.receivables_money);
-            ImageView cancle = (ImageView)view.findViewById(R.id.receivables_cancel);
-
-            name.setText(listInfo.getUser_name());
-            date.setText(listInfo.getPenalty_date());
-            reason.setText(listInfo.getPenalty_title());
-            money.setText(Integer.toString(-listInfo.getPenalty_money()));
-
-            cancle.setTag(listInfo);
-            cancle.setOnClickListener(this);
+            findViews(view);
+            initViews(listInfo);
         }
-
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (this.listBtnClickListener != null) {
-            this.listBtnClickListener.onListBtnClick((ListInfoReceivables)v.getTag()) ;
-        }
+    public void findViews(View view){
+        name    = (TextView) view.findViewById(R.id.receivables_name);
+        date    = (TextView) view.findViewById(R.id.receivables_date);
+        reason  = (TextView) view.findViewById(R.id.receivables_reason);
+        money   = (TextView) view.findViewById(R.id.receivables_money);
+    }
 
+    public void initViews(Penalty listInfo){
+        name.setText(listInfo.getUser_name());
+        date.setText(listInfo.getPenalty_date());
+        reason.setText(listInfo.getPenalty_title());
+        money.setText(Integer.toString(-listInfo.getPenalty_money()));
     }
 }

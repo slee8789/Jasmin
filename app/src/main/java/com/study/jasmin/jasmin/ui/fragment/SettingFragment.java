@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.study.jasmin.jasmin.R;
 import com.study.jasmin.jasmin.ui.activity.EditInfoActivity;
+import com.study.jasmin.jasmin.ui.activity.IntroActivity;
 import com.study.jasmin.jasmin.ui.activity.LoginActivity;
 import com.study.jasmin.jasmin.util.JasminPreference;
 
@@ -58,8 +59,8 @@ public class SettingFragment extends Fragment {
                         mPref.put("userInfo","");
                         mPref.put("studyList","");
                         mPref.put("autoLogin",false);
-                        startActivity(new Intent(getActivity(),LoginActivity.class));
                         getActivity().finish();
+                        startActivity(new Intent(getActivity(),IntroActivity.class));
                         break;
                     case 2://카카오톡 연동하기
                         //startActivity(new Intent(getActivity(), MyPenaltyActivity.class));

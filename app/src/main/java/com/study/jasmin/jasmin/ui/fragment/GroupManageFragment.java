@@ -97,7 +97,7 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                 callMoneybook();
                 break;
             case R.id.btn_money_ect:
-                startActivity(new Intent(getActivity(), GroupManageMoneyEctActivity.class));
+                callMoneyEct();
                 break;
         }
     }
@@ -144,6 +144,10 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
                         startActivity(intent);
                         break;
                     case R.id.btn_money_ect:
+                        resultObj = jsObject.getJSONArray("inoutList");
+                        mPref.putJson("moneyectList",resultObj.toString());
+                        intent = new Intent(getActivity(),GroupManageMoneyEctActivity.class);
+                        startActivity(intent);
                         break;
                 }
             connectProgress.cancel();
@@ -179,7 +183,6 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
     }
 
     public void callPenalty(){
-        Log.d("","callPenalty()");
         connectProgress.show();
         RestClient.RestService service = RestClient.getClient();
         Call<JsonObject> call = service.penaltyList(mPref.getSelStudyNo());
@@ -190,6 +193,12 @@ public class GroupManageFragment extends Fragment implements View.OnClickListene
         connectProgress.show();
         RestClient.RestService service = RestClient.getClient();
         Call<JsonObject> call = service.assignmentList(mPref.getSelStudyNo());
+        call.enqueue(this);
+    }
+    public void callMoneyEct(){
+        connectProgress.show();
+        RestClient.RestService service = RestClient.getClient();
+        Call<JsonObject> call = service.moneyEctkList(mPref.getSelStudyNo());
         call.enqueue(this);
     }
 
