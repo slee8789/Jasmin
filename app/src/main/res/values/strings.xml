@@ -4,7 +4,7 @@
 
     <!--Intro -->
     <string name="intro_service_name">Jasmin</string>
-    <string name="intro_service_name_detail">서비스에 대한 간략한 설명</string>
+    <string name="intro_service_name_detail">자유로운 스터디 모임</string>
     <string name="intro_register">이메일로 가입하기</string>
     <string name="intro_register_already">이미 Jasmin 계정이 있으신가요?</string>
     <string name="intro_login">로그인 하러 가기!</string>
